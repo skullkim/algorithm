@@ -36,7 +36,6 @@ void teachMaxWords(int rest_chances, int curr_idx){
 		teachMaxWords(rest_chances - 1, curr_idx + 1);
 		teached.erase(should_teach[curr_idx]);
 	}
-	teachMaxWords(rest_chances, curr_idx + 1);
 }
 
 int main(void){
