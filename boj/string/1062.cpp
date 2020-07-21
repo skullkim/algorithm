@@ -57,12 +57,8 @@ int main(void){
 		}
 		words.push_back(str);
 	}
-//	for(int i = 0; i < should_teach.size(); i++) cout << should_teach[i] << ' ';
-//	cout << endl;
 	vector<char>::iterator it = unique(should_teach.begin(), should_teach.end());
 	should_teach.resize(distance(should_teach.begin(), it));
-//	for(int i = 0; i < should_teach.size(); i++) cout << should_teach[i] << ' ';
-//	cout << endl;
 	teachMaxWords(can_teach - MIN_WORDS, 0);
 	cout << can_read;
 }
