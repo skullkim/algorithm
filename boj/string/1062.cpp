@@ -5,13 +5,12 @@
 using namespace std;
 
 
-const int MAX_CHAR = 27;
+const int MAX_CHAR = 26;
 vector<string> words;
 int can_read;
 bool alphabets[MAX_CHAR];
 
 void teachMaxWords(const int & rest_chances, const int & curr_idx){
-	if(curr_idx >= MAX_CHAR) return;
 	if(rest_chances == 0){
 		int readable = 0;
 		for(int w = 0; w < words.size(); w++){
@@ -23,15 +22,9 @@ void teachMaxWords(const int & rest_chances, const int & curr_idx){
 					break;
 				}
 			}
-//			if(can_read){
-//				for(int i = 0; i < MAX_CHAR; i++) if(alphabets[i])cout << static_cast<char>(i + 'a') << " ";
-//				cout << endl;
-//				cout << words[w] << endl;
-//			}
 			if(can_read) readable++;
 		}
 		can_read = max(can_read, readable);
-//		cout << endl;
 		return;
 	}
 	for(int i = curr_idx; i < MAX_CHAR; i++){
