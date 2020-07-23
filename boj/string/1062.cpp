@@ -9,32 +9,41 @@ using namespace std;
 const map<char, bool> must_teach = {
 	{'a', true}, {'n', true}, {'t', true}, {'i', true}, {'c', true}
 };
+const int MAX_CHAR = 27;
 map<char, bool> teached;
 vector<string> words;
 vector<char> should_teach;
 int can_read;
+bool alphabets[MAX_CHAR];
 
 void teachMaxWords(int rest_chances, int curr_idx){
-	if(curr_idx >= should_teach.size()) return;
+	if(curr_idx >= MAX_CHAR) return;
 	if(rest_chances == 0){
 		int readable = 0;
 		for(int w = 0; w < words.size(); w++){
 			bool can_read = true;
 			for(int i = 4; i < words[w].size() - 4; i++){
-				if(!must_teach.count(words[w][i]) && !teached.count(words[w][i])){
+				if(!alphabets[words[w][i] - 'a']){
 					can_read = false;
 					break;
 				}
 			}
+//			if(can_read){
+//				for(int i = 0; i < MAX_CHAR; i++) if(alphabets[i])cout << static_cast<char>(i + 'a') << " ";
+//				cout << endl;
+//				cout << words[w] << endl;
+//			}
 			if(can_read) readable++;
 		}
 		can_read = max(can_read, readable);
+//		cout << endl;
 		return;
 	}
-	if(!must_teach.count(should_teach[curr_idx]) && !teached.count(should_teach[curr_idx])){
-		teached[should_teach[curr_idx]] = true;
+	for(int i = curr_idx; i < MAX_CHAR; i++){
+		if(alphabets[i]) continue;
+		alphabets[i] = true;
 		teachMaxWords(rest_chances - 1, curr_idx + 1);
-		teached.erase(should_teach[curr_idx]);
+		alphabets[i] = false;
 	}
 }
 
@@ -42,6 +51,7 @@ int main(void){
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
 	const int MIN_WORDS = 5;
+	const int TEACH_ALL = 26;
 	int all_wrods, can_teach;
 	string str;
 	cin >> all_wrods >> can_teach;
@@ -49,15 +59,17 @@ int main(void){
 		cout << 0;
 		return 0;
 	}
+	else if(can_teach == TEACH_ALL){
+		cout << can_teach;
+		return 0;
+	}
 	for(int s = 0; s < all_wrods; s++){
 		cin >> str;
-		for(int i = 4; i < str.size() - 4; i++){
-			if(!must_teach.count(str[i])) should_teach.push_back(str[i]);
-		}
 		words.push_back(str);
 	}
-	vector<char>::iterator it = unique(should_teach.begin(), should_teach.end());
-	should_teach.resize(distance(should_teach.begin(), it));
+	alphabets['a' - 'a'] = true; alphabets['n' - 'a'] = true;
+	alphabets['t' - 'a'] = true; alphabets['i' - 'a'] = true;
+	alphabets['c' - 'a'] = true;
 	teachMaxWords(can_teach - MIN_WORDS, 0);
 	cout << can_read;
 }
