@@ -2,27 +2,22 @@
 #include <algorithm>
 #include <string>
 #include <vector>
-#include <map>
 using namespace std;
 
 
-const map<char, bool> must_teach = {
-	{'a', true}, {'n', true}, {'t', true}, {'i', true}, {'c', true}
-};
 const int MAX_CHAR = 27;
-map<char, bool> teached;
 vector<string> words;
-vector<char> should_teach;
 int can_read;
 bool alphabets[MAX_CHAR];
 
-void teachMaxWords(int rest_chances, int curr_idx){
+void teachMaxWords(const int & rest_chances, const int & curr_idx){
 	if(curr_idx >= MAX_CHAR) return;
 	if(rest_chances == 0){
 		int readable = 0;
 		for(int w = 0; w < words.size(); w++){
 			bool can_read = true;
-			for(int i = 4; i < words[w].size() - 4; i++){
+			int words_size = words[w].size() - 4;
+			for(int i = 4; i < words_size; i++){
 				if(!alphabets[words[w][i] - 'a']){
 					can_read = false;
 					break;
