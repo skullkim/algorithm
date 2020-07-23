@@ -15,8 +15,8 @@ void teachMaxWords(const int & rest_chances, const int & curr_idx){
 		int readable = 0;
 		for(int w = 0; w < words.size(); w++){
 			bool can_read = true;
-			int words_size = words[w].size() - 4;
-			for(int i = 4; i < words_size; i++){
+			int words_size = words[w].size();
+			for(int i = 0; i < words_size; i++){
 				if(!alphabets[words[w][i] - 'a']){
 					can_read = false;
 					break;
@@ -39,7 +39,6 @@ int main(void){
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
 	const int MIN_WORDS = 5;
-	const int TEACH_ALL = 26;
 	int all_wrods, can_teach;
 	string str;
 	cin >> all_wrods >> can_teach;
@@ -47,12 +46,14 @@ int main(void){
 		cout << 0;
 		return 0;
 	}
-	else if(can_teach == TEACH_ALL){
+	else if(can_teach == MAX_CHAR){
 		cout << can_teach;
 		return 0;
 	}
 	for(int s = 0; s < all_wrods; s++){
 		cin >> str;
+		str = str.substr(4, str.length());
+		for(int i = 0; i < 4; i++) str.pop_back();
 		words.push_back(str);
 	}
 	alphabets['a' - 'a'] = true; alphabets['n' - 'a'] = true;
