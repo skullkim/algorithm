@@ -13,10 +13,11 @@ bool alphabets[MAX_CHAR];
 void teachMaxWords(const int & rest_chances, const int & curr_idx){
 	if(rest_chances == 0){
 		int readable = 0;
-		for(int w = 0; w < words.size(); w++){
+		int words_num = words.size();
+		for(int w = 0; w < words_num; w++){
 			bool can_read = true;
-			int words_size = words[w].size();
-			for(int i = 0; i < words_size; i++){
+			int words_len = words[w].size();
+			for(int i = 4; i < words_len - 4; i++){
 				if(!alphabets[words[w][i] - 'a']){
 					can_read = false;
 					break;
@@ -30,7 +31,7 @@ void teachMaxWords(const int & rest_chances, const int & curr_idx){
 	for(int i = curr_idx; i < MAX_CHAR; i++){
 		if(alphabets[i]) continue;
 		alphabets[i] = true;
-		teachMaxWords(rest_chances - 1, curr_idx + 1);
+		teachMaxWords(rest_chances - 1, i + 1);
 		alphabets[i] = false;
 	}
 }
@@ -47,13 +48,13 @@ int main(void){
 		return 0;
 	}
 	else if(can_teach == MAX_CHAR){
-		cout << can_teach;
+		cout << all_wrods;
 		return 0;
 	}
 	for(int s = 0; s < all_wrods; s++){
 		cin >> str;
-		str = str.substr(4, str.length());
-		for(int i = 0; i < 4; i++) str.pop_back();
+//		str = str.substr(4, str.length());
+//		for(int i = 0; i < 4; i++) str.pop_back();
 		words.push_back(str);
 	}
 	alphabets['a' - 'a'] = true; alphabets['n' - 'a'] = true;
