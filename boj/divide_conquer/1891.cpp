@@ -67,7 +67,7 @@ int main(void){
 	//cout << dist.x << " " << dist.y << endl;
 	max_pos = pow(2, divide_num);
 	findOriginPosition(divide_num, "", {1, max_pos}, max_pos);
-	findTargetPosition("", {1, max_pos}, max_pos, max_pos);
+	findTargetPosition("", {1, max_pos}, max_pos, 50);
 //cout << origin_pos.y << " " << origin_pos.x;
 	target == "-1" ? cout << -1 : cout << target;
 }
