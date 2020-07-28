@@ -30,22 +30,12 @@ void findOriginPosition(int rest_divide, string curr_pos_num, Pos curr_pos, long
 	if(!has_ans) findOriginPosition(rest_divide - 1, curr_pos_num + "4", {curr_pos.y + gap, curr_pos.x}, gap);
 }
 
-bool isCorrectTarget(Pos curr_pos){
-	Pos gap = {abs(origin_pos.y - curr_pos.y), abs(origin_pos.x - curr_pos.x)};
-	if(gap.y == abs(dist.y) && gap.x == abs(dist.x)){
-		if(dist.y < 0) dist.y *= -1;
-		if(dist.x < 0) dist.x *= -1;
-		if(curr_pos.y - origin_pos.y == dist.y && curr_pos.x - origin_pos.x == dist.x) return true;
-	}
-	return false;
-}
-
 void findTargetPosition(string curr_pos_num, Pos curr_pos, long long gap, int rest_divide){
 	static bool has_ans = false;
 	if(gap == 0 || rest_divide == 0) return;
 	if(0 >= curr_pos.y || curr_pos.y > max_pos || 0 >= curr_pos.x || curr_pos.x > max_pos) return;
 	//cout << curr_pos_num << endl;
-	if(isCorrectTarget(curr_pos)){
+	if(curr_pos.y == target_pos.y && curr_pos.x == target_pos.x){
 		//cout << curr_pos.y << " " << curr_pos.x << endl;
 		target = curr_pos_num;
 		has_ans = true;
@@ -67,7 +57,8 @@ int main(void){
 	//cout << dist.x << " " << dist.y << endl;
 	max_pos = pow(2, divide_num);
 	findOriginPosition(divide_num, "", {1, max_pos}, max_pos);
+	dist.y < 0 ? target_pos.y = origin_pos.y + abs(dist.y) : target_pos.y = origin_pos.y + dist.y * -1;
+	target_pos.x = origin_pos.x + dist.x;
 	findTargetPosition("", {1, max_pos}, max_pos, 50);
-//cout << origin_pos.y << " " << origin_pos.x;
 	target == "-1" ? cout << -1 : cout << target;
 }
