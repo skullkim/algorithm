@@ -59,6 +59,10 @@ int main(void){
 	findOriginPosition(divide_num, "", {1, max_pos}, max_pos);
 	dist.y < 0 ? target_pos.y = origin_pos.y + abs(dist.y) : target_pos.y = origin_pos.y + dist.y * -1;
 	target_pos.x = origin_pos.x + dist.x;
+	if(0 >= target_pos.y || target_pos.y > max_pos || 0 > target_pos.x || target_pos.x > max_pos){
+		cout << -1;
+		return 0;
+	}
 	findTargetPosition("", {1, max_pos}, max_pos, 50);
 	target == "-1" ? cout << -1 : cout << target;
 }
