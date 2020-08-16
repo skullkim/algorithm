@@ -16,7 +16,7 @@ int divide_num;
 string origin, target = "-1";
 Pos dist, origin_pos, target_pos;
 
-void findOriginPosition(int curr_idx, PosRange pos, int range){
+void findOriginPosition(int curr_idx, PosRange pos, long long range){
 	static bool has_ans = false;
 	if(curr_idx > divide_num) return;	
 	if(curr_idx == divide_num){
@@ -50,7 +50,7 @@ void findOriginPosition(int curr_idx, PosRange pos, int range){
 	}
 }
 
-void findTargetPosition(const long long & max_pos, string ans, Pos curr_target_pos, int range){
+void findTargetPosition(const long long & max_pos, string ans, Pos curr_target_pos, long long range){
 	static bool has_ans = false;
 	if(0 >= curr_target_pos.y || curr_target_pos.y > max_pos || 0 >= curr_target_pos.x || curr_target_pos.x > max_pos) return;
 	if(ans.size() == divide_num){
@@ -78,6 +78,10 @@ int main(void){
 	cin >> divide_num >> origin;
 	cin >> dist.x >> dist.y;
 	max_pos = pow(2, divide_num);
+	if(dist.y > max_pos || dist.x > max_pos){
+		cout << -1;
+		return 0;
+	}
 	Pos start_pos = {1, 1};
 	Pos end_pos = {max_pos, max_pos};
 	findOriginPosition(0, {start_pos, end_pos}, max_pos / 2);
