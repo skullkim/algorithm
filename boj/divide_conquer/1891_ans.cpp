@@ -7,27 +7,47 @@ struct Pos{
 	long long y;
 	long long x;
 };
+struct PosRange{
+	Pos start;
+	Pos end;
+};
 long long max_pos;
 int divide_num;
 string origin, target = "-1";
 Pos dist, origin_pos, target_pos;
 
-void findOriginPosition(int rest_divide, string curr_pos_num, Pos curr_pos, long long gap){
+void findOriginPosition(int curr_idx, PosRange pos, int range){
 	static bool has_ans = false;
-	if(gap == 0) return;
-	if(0 >= curr_pos.y || curr_pos.y > max_pos || 0 >= curr_pos.x || curr_pos.x > max_pos) return;
-	if(rest_divide == 0 && curr_pos_num == origin){
-		//cout << curr_pos_num << " " << origin << endl;
-		origin_pos = curr_pos;
+	if(curr_idx > divide_num) return;	
+	if(curr_idx == divide_num){
+		origin_pos = {pos.start.y, pos.start.x};
 		has_ans = true;
 		return;
 	}
-	if(rest_divide == 0) return;
-	gap /= 2;
-	if(!has_ans) findOriginPosition(rest_divide - 1, curr_pos_num + "1", {curr_pos.y, curr_pos.x}, gap);
-	if(!has_ans) findOriginPosition(rest_divide - 1, curr_pos_num + "2", {curr_pos.y, curr_pos.x - gap}, gap);
-	if(!has_ans) findOriginPosition(rest_divide - 1, curr_pos_num + "3", {curr_pos.y + gap, curr_pos.x - gap}, gap);
-	if(!has_ans) findOriginPosition(rest_divide - 1, curr_pos_num + "4", {curr_pos.y + gap, curr_pos.x}, gap);
+	if(!has_ans && origin[curr_idx] == '1'){
+		findOriginPosition(curr_idx + 1, {
+			{pos.start.y, pos.start.x + range},
+			{pos.end.y - range, pos.end.x}
+		}, range / 2);		
+	}
+	if(!has_ans && origin[curr_idx] == '2'){
+		findOriginPosition(curr_idx + 1, {
+			{pos.start.y, pos.start.x},
+			{pos.end.y - range, pos.end.x - range}
+		}, range / 2);	
+	}
+	if(!has_ans && origin[curr_idx] == '3'){
+		findOriginPosition(curr_idx + 1, {
+			{pos.start.y + range, pos.start.x},
+			{pos.end.y, pos.end.x - range}
+		}, range / 2);
+	}
+	if(!has_ans && origin[curr_idx] == '4'){
+		findOriginPosition(curr_idx + 1, {
+			{pos.start.y + range, pos.start.x + range},
+			{pos.end.y, pos.end.x}
+		}, range / 2);
+	}
 }
 
 void findTargetPosition(const long long & max_pos, string ans, Pos curr_target_pos, int range){
@@ -57,12 +77,12 @@ int main(void){
 	cin.tie(NULL);
 	cin >> divide_num >> origin;
 	cin >> dist.x >> dist.y;
-	//cout << dist.x << " " << dist.y << endl;
 	max_pos = pow(2, divide_num);
-	findOriginPosition(divide_num, "", {1, max_pos}, max_pos);
+	Pos start_pos = {1, 1};
+	Pos end_pos = {max_pos, max_pos};
+	findOriginPosition(0, {start_pos, end_pos}, max_pos / 2);
 	dist.y < 0 ? target_pos.y = origin_pos.y + abs(dist.y) : target_pos.y = origin_pos.y + dist.y * -1;
 	target_pos.x = origin_pos.x + dist.x;
- //	cout << target_pos.y << " " << target_pos.x << endl;
 	if(0 >= target_pos.y || target_pos.y > max_pos || 0 > target_pos.x || target_pos.x > max_pos){
 		cout << -1;
 		return 0;
