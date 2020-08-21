@@ -7,7 +7,7 @@ int nodes, deleted_node, root, ans = 0;
 vector<vector<int>> tree(MAX_NODES);
 
 void countLeafNode(int curr_node){
-	if(curr_node >= nodes) return;
+	if(curr_node >= nodes || curr_node == deleted_node) return;
 	if(tree[curr_node].empty()){
 		ans++;
 		return;
