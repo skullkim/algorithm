@@ -8,6 +8,9 @@ vector<vector<int>> tree(MAX_NODES);
 
 void countLeafNode(int curr_node){
 	if(curr_node >= nodes || curr_node == deleted_node) return;
+	if(tree[curr_node].size() == 1 && tree[curr_node][0] == deleted_node){
+		ans++;
+	}
 	if(tree[curr_node].empty()){
 		ans++;
 		return;
