@@ -37,7 +37,6 @@ int main(void){
 		}
 	}
 	cin >> started_people;
-//	memset(rumor_time, -1, sizeof(rumor_time));
 	int tmp;
 	queue<int> curr_rumor;
 	for(int p = 0; p < started_people; p++){
@@ -45,24 +44,22 @@ int main(void){
 		rumor_time[tmp] = 0;
 		curr_rumor.push(tmp);
 	}
-	int time = 0;
 	while(!curr_rumor.empty()){
 		queue<pair<int, int>> trust;
 		int curr_person = curr_rumor.front();
 		curr_rumor.pop();
-		time++;
 		for(int i = 0; i < graph[curr_person].size(); i++){
 			int next_person = graph[curr_person][i];
 			if(rumor_time[next_person] != -1) continue;
 			if(trustRumor(next_person)){
 				pair<int, int> tmp = {next_person, curr_person};
 				trust.push(tmp);
-				//rumor_time[next_person] = time;
-				curr_rumor.push(next_person);
+//				curr_rumor.push(next_person);
 			}
 		}
 		while(!trust.empty()){
 			rumor_time[trust.front().first] = rumor_time[trust.front().second] + 1;
+			curr_rumor.push(trust.front().first);
 			trust.pop();
 		}
 	}
