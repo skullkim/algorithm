@@ -10,6 +10,7 @@ int main(void){
 	cin >> min_num >> max_num;
 	bool cache[MAX_NUM];
 	memset(cache, false, sizeof(cache));
+	cache[1] = true;
 	for(int i = 2; i <= MAX_NUM; i++){
 		if(!cache[i]){
 			for(int j = i + i; j <= MAX_NUM; j += i){
