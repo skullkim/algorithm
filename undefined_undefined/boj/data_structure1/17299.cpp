@@ -9,13 +9,13 @@ int main(void){
 	const int INF = 1e6 + 10;
 	int seq_len;
 	cin >> seq_len;
-	vector<int> seq(seq_len + 1);
-	vector<int> num_freq(seq_len + 1, 0);
+	vector<int> seq(INF + 1);
+	vector<int> num_freq(INF + 1, 0);
 	for(int i = 1; i <= seq_len; i++){
 		cin >> seq[i];
 		num_freq[seq[i]]++;
 	}
-	vector<int> ans(seq_len + 1);
+	vector<int> ans(INF + 1);
 	stack<int> curr_max;
 	curr_max.push(INF);
 	for(int i = seq_len; i >= 1; i--){
