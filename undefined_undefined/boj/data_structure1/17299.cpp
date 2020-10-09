@@ -15,7 +15,7 @@ int main(void){
 		cin >> seq[i];
 		num_freq[seq[i]]++;
 	}
-	vector<int> ans(seq_len);
+	vector<int> ans(seq_len + 1);
 	stack<int> curr_max;
 	curr_max.push(INF);
 	for(int i = seq_len; i >= 1; i--){
