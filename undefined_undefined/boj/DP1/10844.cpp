@@ -13,10 +13,10 @@ int main(void){
 	for(int i = 0; i <= 9; i++) cache[1][i] = 1;
 	for(int i = 2; i <= len; i++){
 		for(int k = 1; k <= 9; k++){
-			cache[i][k] = cache[i - 1][k - 1] + cache[i - 1][k + 1];
+			cache[i][k] = (cache[i - 1][k - 1] + cache[i - 1][k + 1]) % MOD;
 		}
 	}
 	int ans = 0;
 	for(int i = 1; i <= 9; i++) ans += cache[len][i];
-	cout << ans;
+	cout << ans % MOD;
 }
