@@ -21,7 +21,7 @@ int main(void){
 			cache[i][1] = (cache[i - 1][2] + cache[i - 1][3]) % MOD;
 			cache[i][2] = (cache[i - 2][1] + cache[i - 2][3]) % MOD;
 			cache[i][3] = (cache[i - 3][1] + cache[i - 3][2]) % MOD;
-			cache[i][SUM] = cache[i][1] + cache[i][2] + cache[i][3];
+			cache[i][SUM] = cache[i][1] + cache[i][2] + cache[i][3] % MOD;
 		}
 		cout << cache[num][SUM] << "\n";
 	}
