@@ -18,9 +18,9 @@ int main(void){
 		cache[2][1] = 0; cache[2][2] = 1; cache[2][3] = 0; cache[2][SUM] = 1;
 		cache[3][1] = 1; cache[3][2] = 1; cache[3][3] = 1; cache[3][SUM] = 3;
 		for(int i = 4; i <= num; i++){
-			cache[i][1] = cache[i - 1][2] + cache[i - 1][3];
-			cache[i][2] = cache[i - 2][1] + cache[i - 2][3];
-			cache[i][3] = cache[i - 3][1] + cache[i - 3][2];
+			cache[i][1] = (cache[i - 1][2] + cache[i - 1][3]) % MOD;
+			cache[i][2] = (cache[i - 2][1] + cache[i - 2][3]) % MOD;
+			cache[i][3] = (cache[i - 3][1] + cache[i - 3][2]) % MOD;
 			cache[i][SUM] = cache[i][1] + cache[i][2] + cache[i][3];
 		}
 		cout << cache[num][SUM] << "\n";
