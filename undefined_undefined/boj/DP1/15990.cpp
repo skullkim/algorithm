@@ -2,16 +2,16 @@
 #include <cstring>
 using namespace std;
 
-const int MOD = 1e9 + 9;
-const int MAX_NUM = 1e5 + 10;
-const int SUM = 4;
 int main(void){
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
+	const int MOD = 1e9 + 9;
+	const int MAX_NUM = 1e5 + 10;
+	const int SUM = 4;
 	int test_cases;
 	cin >> test_cases;
 	while(test_cases--){
-		long long num;
+		int num;
 		long long cache[MAX_NUM][5];
 		memset(cache, 0, sizeof(cache));
 		cin >> num;
@@ -22,7 +22,7 @@ int main(void){
 			cache[i][1] = (cache[i - 1][2] + cache[i - 1][3]) % MOD;
 			cache[i][2] = (cache[i - 2][1] + cache[i - 2][3]) % MOD;
 			cache[i][3] = (cache[i - 3][1] + cache[i - 3][2]) % MOD;
-			cache[i][SUM] = cache[i][1] + cache[i][2] + cache[i][3] % MOD;
+			cache[i][SUM] = (cache[i][1] + cache[i][2] + cache[i][3]) % MOD;
 		}
 		cout << cache[num][SUM] % MOD << "\n";
 	}
