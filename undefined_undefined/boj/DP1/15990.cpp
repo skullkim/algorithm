@@ -11,7 +11,7 @@ int main(void){
 	int test_cases;
 	cin >> test_cases;
 	while(test_cases--){
-		int num;
+		long long num;
 		long long cache[MAX_NUM][5];
 		memset(cache, 0, sizeof(cache));
 		cin >> num;
