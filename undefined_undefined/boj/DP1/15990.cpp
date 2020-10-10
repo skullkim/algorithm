@@ -3,11 +3,11 @@
 using namespace std;
 
 const int MOD = 1e9 + 9;
+const int MAX_NUM = 1e5 + 10;
+const int SUM = 4;
 int main(void){
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
-	const int MAX_NUM = 1e5 + 10;
-	const int SUM = 4;
 	int test_cases;
 	cin >> test_cases;
 	while(test_cases--){
