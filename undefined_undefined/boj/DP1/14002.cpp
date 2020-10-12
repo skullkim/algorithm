@@ -4,23 +4,41 @@
 #include <algorithm>
 using namespace std;
 
+const int MAX_LEN = 1e3 + 10;
+int seq[MAX_LEN], change[MAX_LEN];
+
+void findNextEle(int curr_idx){
+	if(curr_idx == -1) return;
+	findNextEle(change[curr_idx]);
+	cout << seq[curr_idx] << " ";
+}
+
 int main(void){
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
-	const int MAX_LEN = 1e3 + 10;
-	int len, cache[MAX_LEN], seq[MAX_LEN];
-	memset(cache, 0, sizeof(cache));
+	int len;
 	cin >> len;
-	vector<int>lis;
 	for(int i = 0; i < len; i++) cin >> seq[i];
-	lis.push_back(seq[0]);
-	for(int i = 1; i < len; i++){
-		if(seq[i] <= lis.back()){
-			auto change = lower_bound(lis.begin(), lis.end(), seq[i]);
-			*change = seq[i];
+	int cache[MAX_LEN];
+	memset(cache, 0, sizeof(cache));
+	memset(change, -1, sizeof(change));
+	int lis_len = 0;
+	for(int i = 0; i < len; i++){
+		cache[i] = 1;
+		for(int k = 0; k < i; k++){
+			if(seq[i] > seq[k] && cache[i] < cache[k] + 1){
+				cache[i] = cache[k] + 1;
+				change[i] = k;
+			}
 		}
-		else lis.push_back(seq[i]);
+		lis_len = max(lis_len, cache[i]);
 	}
-	cout << lis.size() << "\n";
-	for(int i = 0; i < lis.size(); i++) cout << lis[i] << " ";
+	cout << lis_len << "\n";
+	for(int i = 0; i < len; i++){
+		if(cache[i] == lis_len){
+			findNextEle(change[i]);
+			cout << seq[i];
+			break;
+		}
+	}
 }
