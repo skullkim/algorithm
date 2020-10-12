@@ -10,8 +10,8 @@ vector<int> lis;
 
 void findNextEle(int curr_idx){
 	if(curr_idx == -1) return;
-	lis.push_back(seq[curr_idx]);
 	findNextEle(change[curr_idx]);
+	cout << seq[curr_idx] << " ";
 }
 
 int main(void){
@@ -34,13 +34,13 @@ int main(void){
 		}
 		lis_len = max(lis_len, cache[i]);
 	}
+	cout << lis_len << "\n";
 	for(int i = 0; i < len; i++){
 		if(cache[i] == lis_len){
-			lis.push_back(seq[i]);
+			//lis.push_back(seq[i]);
 			findNextEle(change[i]);
+			cout << seq[i];
+			break;
 		}
 	}
-	sort(lis.begin(), lis.end());
-	cout << lis_len << "\n";
-	for(int i = 0; i < lis.size(); i++) cout << lis[i] << " ";
 }
