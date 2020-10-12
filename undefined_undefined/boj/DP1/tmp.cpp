@@ -40,6 +40,7 @@ int main(void){
 			findNextEle(change[i]);
 		}
 	}
+	sort(lis.begin(), lis.end());
 	cout << lis_len << "\n";
-	for(int i = lis.size() - 1; i >= 0; i--) cout << lis[i] << " ";
+	for(int i = 0; i < lis.size(); i++) cout << lis[i] << " ";
 }
