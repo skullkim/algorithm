@@ -23,9 +23,26 @@ int main(void){
 		else{
 			if(formular[i] == '('){
 				i++;
+				stack<char> bracket_op;
 				while(formular[i] != ')'){
-					'A' <= formular[i] && formular[i] <= 'Z' ? ans.push_back(formular[i]) : operators.push(formular[i]);
+					if('A' <= formular[i] && formular[i] <= 'Z') ans.push_back(formular[i]);
+					else if(bracket_op.empty()) bracket_op.push(formular[i]);
+					else{
+						if(ope_priority[bracket_op.top()] > ope_priority[formular[i]]){
+							bracket_op.push(formular[i]);
+						}
+						else if(ope_priority[bracket_op.top()] <= ope_priority[formular[i]]){
+							while(!bracket_op.empty()){
+								ans.push_back(bracket_op.top());
+								bracket_op.push(formular[i]);
+							}
+						}
+					}
 					i++;
+				}
+				while(!bracket_op.empty()){
+					ans.push_back(bracket_op.top());
+					bracket_op.pop();
 				}
 			}
 			else if(ope_priority[operators.top()] > ope_priority[formular[i]]){
