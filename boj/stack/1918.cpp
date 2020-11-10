@@ -48,5 +48,4 @@ int main(void){
 		cout << ans.front();
 		ans.pop_front();
 	}
-	cout << endl;
 }
