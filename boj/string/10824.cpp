@@ -15,5 +15,5 @@ int main(void){
 		cin >> tmp;
 		cd += tmp;
 	}
-	cout << stoi(ab) + stoi(cd);
+	cout << stoll(ab) + stoll(cd);
 }
