@@ -10,59 +10,32 @@ int main(void){
 	//operator priority:
 	//0:(), 1:*_/, 2:+_-
 	map<char, int> ope_priority;
-	ope_priority['('] = 0; ope_priority[')'] = 0;
 	ope_priority['*'] = 1; ope_priority['/'] = 1;
 	ope_priority['+'] = 2; ope_priority['-'] = 2;
+	ope_priority['('] = 3; ope_priority[')'] = 3;
 	string formular;
 	cin >> formular;
-	deque<char> ans;
 	stack<char> operators;
 	for(int i = 0; i < formular.size(); i++){
-		if('A' <= formular[i] && formular[i] <= 'Z') ans.push_back(formular[i]);
-		else if(operators.empty()) operators.push(formular[i]);
+		if('A' <= formular[i] && formular[i] <= 'Z') cout << formular[i];
+		else if(formular[i] ==  '(') operators.push(formular[i]);
+		else if(formular[i] == ')'){
+			while(operators.top() != '('){
+				cout << operators.top();
+				operators.pop();
+			}
+			operators.pop();
+		}
 		else{
-			if(formular[i] == '('){
-				i++;
-				stack<char> bracket_op;
-				while(formular[i] != ')'){
-					if('A' <= formular[i] && formular[i] <= 'Z') ans.push_back(formular[i]);
-					else if(bracket_op.empty()) bracket_op.push(formular[i]);
-					else{
-						if(ope_priority[bracket_op.top()] > ope_priority[formular[i]]){
-							bracket_op.push(formular[i]);
-						}
-						else if(ope_priority[bracket_op.top()] <= ope_priority[formular[i]]){
-							while(!bracket_op.empty()){
-								ans.push_back(bracket_op.top());
-								bracket_op.push(formular[i]);
-							}
-						}
-					}
-					i++;
-				}
-				while(!bracket_op.empty()){
-					ans.push_back(bracket_op.top());
-					bracket_op.pop();
-				}
+			while(!operators.empty() && ope_priority[operators.top()] <= ope_priority[formular[i]]){
+				cout << operators.top();
+				operators.pop();
 			}
-			else if(ope_priority[operators.top()] > ope_priority[formular[i]]){
-				operators.push(formular[i]);
-			}
-			else if(ope_priority[operators.top()] <= ope_priority[formular[i]]){
-				while(!operators.empty()){
-					ans.push_back(operators.top());
-					operators.pop();
-				}
-				operators.push(formular[i]);
-			}
+			operators.push(formular[i]);
 		}
 	}
 	while(!operators.empty()){
-		ans.push_back(operators.top());
+		cout << operators.top();
 		operators.pop();
-	}
-	while(!ans.empty()){
-		cout << ans.front();
-		ans.pop_front();
 	}
 }
