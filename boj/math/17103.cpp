@@ -28,7 +28,7 @@ int main(void){
 			continue;
 		}
 		for(int i = 2; i <= (target / 2); i++){
-			if(!prime_num[i] && !prime_num[target - i]) ans++;
+			if(target - i >= 2 && !prime_num[i] && !prime_num[target - i]) ans++;
 		}
 		cout << ans << "\n";
 		cache[target] = ans; 
