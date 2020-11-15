@@ -15,8 +15,6 @@ int main(void){
 			}
 		}
 	}
-	int cache[MAX_NUM];
-	memset(cache, 0, sizeof(MAX_NUM));
 	bool visited[MAX_NUM];
 	int test_cases;
 	cin >> test_cases;
@@ -24,10 +22,6 @@ int main(void){
 		int ans = 0;
 		int target;
 		cin >> target;
-		if(cache[target]){
-			cout << cache[target] << "\n";
-			continue;
-		}
 		memset(visited, false, sizeof(visited));
 		for(int i = 2; i <= target; i++){
 			if(visited[i] || visited[target - i]) continue;
@@ -38,6 +32,5 @@ int main(void){
 		}
 
 		cout << ans << "\n";
-		cache[target] = ans; 
 	}
 }
