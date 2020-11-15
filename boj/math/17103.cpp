@@ -17,6 +17,7 @@ int main(void){
 	}
 	int cache[MAX_NUM];
 	memset(cache, 0, sizeof(MAX_NUM));
+	bool visited[MAX_NUM];
 	int test_cases;
 	cin >> test_cases;
 	while(test_cases--){
@@ -27,9 +28,15 @@ int main(void){
 			cout << cache[target] << "\n";
 			continue;
 		}
-		for(int i = 2; i <= (target / 2); i++){
-			if(target - i >= 2 && !prime_num[i] && !prime_num[target - i]) ans++;
+		memset(visited, false, sizeof(visited));
+		for(int i = 2; i <= target; i++){
+			if(visited[i] || visited[target - i]) continue;
+			if(target - i >= 2 && !prime_num[i] && !prime_num[target - i]){
+				visited[i] = true; visited[target - i] = true;
+				ans++;
+			}		
 		}
+
 		cout << ans << "\n";
 		cache[target] = ans; 
 	}
