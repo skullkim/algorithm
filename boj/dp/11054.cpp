@@ -26,7 +26,7 @@ int main(void){
 	for(int i = len - 1; i >= 0; i--){
 		cache[i] = 0;
 		for(int k = len - 1; k > i; k--){
-			if(seq[k] < seq[i] && cache[k] + 1 > cache[i]){
+			if(seq[k] > seq[i] && cache[k] + 1 > cache[i]){
 				cache[i] = cache[k] + 1;
 				max_rev_len = max(cache[i], max_rev_len);
 			}
