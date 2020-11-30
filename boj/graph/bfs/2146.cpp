@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <queue>
+#include <cmath>
 using namespace std;
 
 struct pos{
@@ -40,32 +41,6 @@ void calTerritoryArea(pos first_pos, const int TERRITORY_NUM){
 	}
 }
 
-int findAns(pos first_pos){
-	int min_path = MAX_LEN;
-	int now_land = graph[first_pos.y][first_pos.x].second;
-	queue<pos> now_pos;
-	now_pos.push(first_pos);
-	visited[first_pos.y][first_pos.x] = 1;
-	while(!now_pos.empty()){
-		pos now = now_pos.front();
-		now_pos.pop();
-		for(int i = 0; i < 4; i++){
-			pos next = {now.y + DIREC[i].y, now.x + DIREC[i].x};
-			if(0 > next.y || next.y >= map_len || 0 > next.x || next.x >= map_len) continue;
-			if(visited[next.y][next.x] || graph[next.y][next.x].second == now_land) continue;
-			if(graph[next.y][next.x].first == LAND && graph[next.y][next.x].second != now_land){
-				min_path = min(min_path, visited[now.y][now.x] - 1);
-				return min_path;
-			}	
-			else{
-				visited[next.y][next.x] = visited[now.y][now.x] + 1;
-				now_pos.push(next);
-			}
-		}
-	}
-	return min_path;
-}
-
 int main(void){
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
@@ -87,8 +62,12 @@ int main(void){
 	}
 	int ans = MAX_LEN;
 	for(int i = 0; i < near_sea.size(); i++){
-		memset(visited, false, sizeof(visited));
-		ans = min(ans, findAns(near_sea[i]));
+		for(int j = 0; j < near_sea.size(); j++){
+			pos land1 = near_sea[i], land2 = near_sea[j];
+			if(j == i || (land1.y == land2.y && land1.x == land2.x)) continue;
+			if(graph[land1.y][land1.x].second == graph[land2.y][land2.x].second) continue;
+			ans = min(ans, abs(land1.y - land2.y) + abs(land1.x - land2.x) - 1);
+		}
 	}
 	cout << ans;
 }
