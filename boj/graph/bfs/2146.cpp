@@ -55,6 +55,7 @@ int findAns(pos first_pos){
 			if(visited[next.y][next.x] || graph[next.y][next.x].second == now_land) continue;
 			if(graph[next.y][next.x].first == LAND && graph[next.y][next.x].second != now_land){
 				min_path = min(min_path, visited[now.y][now.x] - 1);
+				return min_path;
 			}	
 			else{
 				visited[next.y][next.x] = visited[now.y][now.x] + 1;
