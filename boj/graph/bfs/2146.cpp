@@ -14,7 +14,7 @@ const int MAX_LEN = 105;
 const int LAND = 1;
 const int SEA = 0;
 int map_len;
-bool visited[MAX_LEN][MAX_LEN];
+int visited[MAX_LEN][MAX_LEN];
 vector<pos> near_sea;
 vector<vector<pair<int, int>>> graph(MAX_LEN);
 
@@ -24,7 +24,7 @@ void calTerritoryArea(pos first_pos, const int TERRITORY_NUM){
 	while(!now_pos.empty()){
 		pos now = now_pos.front();
 		graph[now.y][now.x].second = TERRITORY_NUM;
-		visited[now.y][now.x] = true;
+		visited[now.y][now.x] = 1;
 		now_pos.pop();
 		for(int i = 0; i < 4; i++){
 			pos next = {now.y + DIREC[i].y, now.x + DIREC[i].x};
@@ -43,29 +43,23 @@ void calTerritoryArea(pos first_pos, const int TERRITORY_NUM){
 int findAns(pos first_pos){
 	int min_path = MAX_LEN;
 	int now_land = graph[first_pos.y][first_pos.x].second;
-	queue<pair<pos, int>> now_pos;
-	now_pos.push(make_pair(first_pos, 0));
+	queue<pos> now_pos;
+	now_pos.push(first_pos);
+	visited[first_pos.y][first_pos.x] = 1;
 	while(!now_pos.empty()){
-		pair<pos, int> now = now_pos.front();
+		pos now = now_pos.front();
 		now_pos.pop();
-		visited[now.first.y][now.first.x] = true;
 		for(int i = 0; i < 4; i++){
-			pos next_pos = {now.first.y + DIREC[i].y, now.first.x + DIREC[i].x};
-			pair<pos, int> next = make_pair(next_pos, now.second + 1);
-			if(0 > next.first.y || next.first.y >= map_len || 0 > next.first.x || next.first.x >= map_len) continue;
-			if(visited[next.first.y][next.first.x] || graph[next.first.y][next.first.x].second == now_land) continue;
-			if(graph[next.first.y][next.first.x].first == LAND && graph[next.first.y][next.first.x].second != now_land){
-				min_path = min(min_path, next.second - 1);
- //				if(min_path == 4 && first_pos.y == 4 && first_pos.x == 3 && next.first.y == 7 && next.first.x == 4){
- //					cout << min_path << endl
- //					<< "first " << first_pos.y << " " << first_pos.x << endl
- //					<< "last " << next_pos.y << " " << next_pos.x << endl << endl;
- //				}
-//				cout << min_path << endl;
-//				cout << "now " << now.first.y << " " << now.first.x << endl
-//					<< "next " << next.first.y << " " << next.first.x << endl << endl;
+			pos next = {now.y + DIREC[i].y, now.x + DIREC[i].x};
+			if(0 > next.y || next.y >= map_len || 0 > next.x || next.x >= map_len) continue;
+			if(visited[next.y][next.x] || graph[next.y][next.x].second == now_land) continue;
+			if(graph[next.y][next.x].first == LAND && graph[next.y][next.x].second != now_land){
+				min_path = min(min_path, visited[now.y][now.x] - 1);
 			}	
-			else now_pos.push(next);
+			else{
+				visited[next.y][next.x] = visited[now.y][now.x] + 1;
+				now_pos.push(next);
+			}
 		}
 	}
 	return min_path;
@@ -95,8 +89,5 @@ int main(void){
 		memset(visited, false, sizeof(visited));
 		ans = min(ans, findAns(near_sea[i]));
 	}
-//memset(visited, false, sizeof(visited));
-//ans = min(ans, findAns(near_sea[0]));
-//cout << near_sea[0].y << " " << near_sea[0].x << endl;
 	cout << ans;
 }
