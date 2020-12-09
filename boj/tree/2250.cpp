@@ -11,12 +11,12 @@ struct Tree{
 	int parent = -1;
 };
 struct Gap{
-	int l_gap = 1e4 + 5;
+	int l_gap = MAX + 5;
 	int r_gap = -1;
 };
 Tree tree[MAX];
 Gap gap[MAX];
-int nodes;
+int nodes, max_level = -1;
 
 int inorderSearch(int curr_node, int level, int curr_col){
 	if(curr_node <= 0) return curr_col;
@@ -24,6 +24,7 @@ int inorderSearch(int curr_node, int level, int curr_col){
 	int pos = left + 1;
 	gap[level].l_gap = min(gap[level].l_gap, pos);
 	gap[level].r_gap = max(gap[level].r_gap, pos);
+	max_level = max(max_level, level);
 	int right = inorderSearch(tree[curr_node].right, level + 1, pos);
 	return right;
 }
@@ -33,10 +34,11 @@ int main(void){
 	cin.tie(NULL);
 	cin >> nodes;
 	Tree tmp;
-	Gap g = {-1, -1}; 
 	for(int n = 0, p; n < nodes; n++){
 		cin >> p >> tmp.left >> tmp.right;
 		tree[p] = tmp;
+		if(tmp.left == -1) tmp.left = 0;
+		if(tmp.right == -1) tmp.right = 0;
 		if(tree[tmp.left].parent == -1) tree[tmp.left].parent = p;
 		if(tree[tmp.right].parent == -1) tree[tmp.right].parent = p;
 	}
@@ -50,7 +52,7 @@ int main(void){
 	inorderSearch(root, 1, 0);
 
 	int max_with = 0, level = 0;
-	for(int i = 1; i <= nodes; i++){
+	for(int i = 1; i <= max_level; i++){
 		int width = gap[i].r_gap - gap[i].l_gap + 1;
 		if(max_with < width){
 			max_with = width;
