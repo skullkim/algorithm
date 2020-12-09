@@ -1,5 +1,6 @@
 #include <iostream>
 #include <algorithm>
+#include <climits>
 using namespace std;
 
 const int MAX = 1e4 + 5;
@@ -11,7 +12,7 @@ struct Tree{
 	int parent = -1;
 };
 struct Gap{
-	int l_gap = MAX + 5;
+	int l_gap = INT_MAX;
 	int r_gap = -1;
 };
 Tree tree[MAX];
@@ -37,8 +38,6 @@ int main(void){
 	for(int n = 0, p; n < nodes; n++){
 		cin >> p >> tmp.left >> tmp.right;
 		tree[p] = tmp;
-		if(tmp.left == -1) tmp.left = 0;
-		if(tmp.right == -1) tmp.right = 0;
 		if(tree[tmp.left].parent == -1) tree[tmp.left].parent = p;
 		if(tree[tmp.right].parent == -1) tree[tmp.right].parent = p;
 	}
