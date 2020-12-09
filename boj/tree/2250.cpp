@@ -7,20 +7,20 @@ const int MAX = 1e4 + 5;
 const bool LEFT = true;
 const bool RIGHT = false;
 struct Tree{
-	int left = -1;
-	int right = -1;
-	int parent = -1;
+	int left;
+	int right;
+	int parent = 0;
 };
 struct Gap{
 	int l_gap = INT_MAX;
-	int r_gap = -1;
+	int r_gap = 0;
 };
 Tree tree[MAX];
 Gap gap[MAX];
 int nodes, max_level = -1, pos = 1;
 
 void inorderSearch(int curr_node, int level){
-	if(curr_node <= 0) return;
+	if(curr_node == -1) return;
 	inorderSearch(tree[curr_node].left, level + 1);
 	pos++;
 	gap[level].l_gap = min(gap[level].l_gap, pos);
@@ -38,12 +38,12 @@ int main(void){
 	for(int n = 0, p; n < nodes; n++){
 		cin >> p >> tmp.left >> tmp.right;
 		tree[p] = tmp;
-		if(tree[tmp.left].parent == -1) tree[tmp.left].parent = p;
-		if(tree[tmp.right].parent == -1) tree[tmp.right].parent = p;
+		if(tmp.left != -1) tree[tmp.left].parent = p;
+		if(tmp.right != -1) tree[tmp.right].parent = p;
 	}
 	int root = -1;
 	for(int i = 1; i <= nodes; i++){
-		if(tree[i].parent == -1){
+		if(tree[i].parent == 0){
 			root = i;
 			break;
 		}
