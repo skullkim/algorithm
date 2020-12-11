@@ -1,27 +1,29 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <map>
 using namespace std;
 
 const int MAX = 1e5 + 10;
 struct Tree{
 	int node;
-	int parent = -1;
 	int cost;
 };
 vector<vector<Tree>> tree(MAX);
 int ans = -1, nodes, root = -1;
-bool visited[MAX][MAX];
+map<pair<int, int>, bool> visited;
+//bool visited[MAX][MAX];
 
 void calMaxCost(int curr_node, int curr_cost){
-	if(visited[curr_node][0]) return;
-	visited[curr_node][0] = true;
 	ans = max(ans, curr_cost);
 	for(int i = 0; i < tree[curr_node].size(); i++){
-		if(visited[curr_node][i]) continue;
-		visited[curr_node][i] = true;
-		visited[i][curr_node] = true;
-		calMaxCost(tree[curr_node][i].node, curr_cost + tree[curr_node][i].cost);
+		Tree next = tree[curr_node][i];
+		pair<int, int> v = make_pair(curr_node, next.node);
+		pair<int, int> v2 = make_pair(next.node, curr_node);
+		if(visited.count(v)) continue;
+		visited[v] = true;
+		visited[v2] = true;
+		calMaxCost(next.node, curr_cost + next.cost);
 	}
 }
 
