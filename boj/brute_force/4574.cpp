@@ -32,7 +32,6 @@ int calSquars(Pos pos){
 bool isAns(){
 	for(int i = 1; i < IDX; i++){
 		for(int k = 1; k < IDX; k++){
-			//if(board[i][k] == 0 || !squars[calSquars({i, k})][k] || !rows[i][k] || !cols[k][i]) return false; 
 			int num = board[i][k];
 			if(num && squars[calSquars({i, k})][num] && rows[i][num] && cols[k][num]) continue;
 			else return false;
@@ -45,8 +44,7 @@ bool is_ans =  false;
 vector<Pos> empty_pos;
 
 void findAns(int empty_idx){
-	if(empty_pos.size() == empty_idx) cout << empty_idx << endl;
-	while(board[empty_pos[empty_idx].y][empty_pos[empty_idx].x]) empty_idx++;
+	while(empty_idx < empty_pos.size() && board[empty_pos[empty_idx].y][empty_pos[empty_idx].x]) empty_idx++;
 	if(empty_pos.size() >= empty_idx && isAns()){
 		is_ans = true;
 		return;
@@ -81,9 +79,14 @@ int main(void){
 	cin.tie(NULL);
 	int puzzles = 1;
 	while(true){
+		cin.clear();
+		dominos = 0;
 		memset(squars, false, sizeof(squars));
 		memset(rows, false, sizeof(rows));
 		memset(cols, false, sizeof(cols));
+		memset(board, 0, sizeof(board));
+		empty_pos.clear();
+		is_ans = false;
 		cin >> dominos;
 		if(!dominos) return 0;
 		int num;
@@ -112,10 +115,13 @@ int main(void){
 			}
 		}
 		findAns(0);
-		cout << "Puzzle " << puzzles++ << "\n";
-		for(int i = 1; i <= 9; i++){
-			for(int k = 1; k <= 9; k++) cout << board[i][k];
-			cout << "\n";
+		if(is_ans){
+			cout << "Puzzle " << puzzles++ << "\n";
+			for(int i = 1; i <= 9; i++){
+				for(int k = 1; k <= 9; k++) cout << board[i][k];
+				cout << "\n";
+			}
+			is_ans = false;
 		}
 	}
 }
