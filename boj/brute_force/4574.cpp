@@ -9,117 +9,88 @@ struct Pos{
 	int x;
 };
 const int IDX = 10;
-const Pos DIREC[4] = {{-1, 0}, {0, -1}, {1, 0}, {0, 1}};
+const int LEN = 9;
+const Pos DIREC[2] = {{1, 0}, {0, 1}};
 int board[IDX][IDX];
-bool squars[IDX][IDX], cols[IDX][IDX], rows[IDX][IDX];
-int dominos;
+bool squars[IDX][IDX], cols[IDX][IDX], rows[IDX][IDX], domino[IDX][IDX];
+bool is_ans = false;
 
-int calSquars(Pos pos){
-	double y = (double)pos.y / 3;
-	double x = (double)pos.x / 3;
-	if(y <= 1.0 && x <= 1.0) return 1;
-	else if(y <= 1.0 && 1.0 < x && x <= 2.0) return 2;
-	else if(y <= 1.0 && 2.0 < x && x <= 3.0) return 3;
-	else if(1.0 < y && y <= 2.0 && x <= 1.0) return 4;
-	else if(1.0 < y && y <= 2.0 && 1.0 < x && x <= 2.0) return 5;
-	else if(1.0 < y && y <= 2.0 && 2.0 < x && x <= 3.0) return 6;
-	else if(2.0 < y && y <= 3.0 && x <= 1.0) return 7;
-	else if(2.0 < y && y <= 3.0 && 1.0 < x && x <= 2.0) return 8;
-	else if(2.0 < y && y <= 3.0 && 2.0 < x && x <= 3.0) return 9;
-	return -1;
+int calSquar(Pos pos){
+	return pos.y / 3 * 3 + pos.x / 3;
 }
 
-bool isAns(){
-	for(int i = 1; i < IDX; i++){
-		for(int k = 1; k < IDX; k++){
-			int num = board[i][k];
-			if(num && squars[calSquars({i, k})][num] && rows[i][num] && cols[k][num]) continue;
-			else return false;
-		}
-	}
-	return true;
-}
-
-bool is_ans =  false;
-vector<Pos> empty_pos;
-
-void findAns(int empty_idx){
-	while(empty_idx < empty_pos.size() && board[empty_pos[empty_idx].y][empty_pos[empty_idx].x]) empty_idx++;
-	if(empty_pos.size() >= empty_idx && isAns()){
+void findAns(int curr_s){
+	if(curr_s == LEN * LEN){
 		is_ans = true;
 		return;
 	}
-	Pos curr_pos = empty_pos[empty_idx];
-	for(int i = 1; i < IDX; i++){
-		int curr_sqr = calSquars(curr_pos);
-		if(squars[curr_sqr][i] || rows[curr_pos.y][i] || cols[curr_pos.x][i]) continue;
-		board[curr_pos.y][curr_pos.x] = i;
-		squars[curr_sqr][i] = true; rows[curr_pos.y][i] = true; cols[curr_pos.x][i] = true;
-		for(int k = 0; k < 4; k++){
-			Pos next_pos = {curr_pos.y + DIREC[k].y, curr_pos.x + DIREC[k].x};
-			int next_sqr = calSquars(next_pos);
-			if(0 >= next_pos.y || next_pos.y >= IDX || 0 >= next_pos.x || next_pos.x >= IDX || board[next_pos.y][next_pos.x]) continue;
-			for(int n = 1; n < IDX; n++){
-				if(squars[next_sqr][n] || rows[next_pos.y][n] || cols[next_pos.x][n]) continue;
-				board[next_pos.y][next_pos.x] = n;
-				squars[next_sqr][n] = true; rows[next_pos.y][n] = true; cols[next_pos.x][n] = true;
-				findAns(empty_idx + 1);
+	Pos curr = {curr_s / LEN, curr_s % LEN};
+	if(board[curr.y][curr.x]){
+		findAns(curr_s + 1);
+		return;
+	}
+	for(int d = 0; d < 2; d++){
+		Pos next = {curr.y + DIREC[d].y, curr.x + DIREC[d].x};
+		if(0 > next.y || next.y >= LEN || 0 > next.x || next.x >= LEN || board[next.y][next.x]) continue;
+		for(int i = 1; i <= LEN; i++){
+			for(int k = 1; k <= LEN; k++){
+				if(i == k || domino[i][k]) continue;
+				int s1 = calSquar(curr), s2 = calSquar(next);
+				if(squars[s1][i] || rows[curr.y][i] || cols[curr.x][i]) continue;
+				if(squars[s2][k] || rows[next.y][k] || cols[next.x][k]) continue;
+				squars[s1][i] = true; rows[curr.y][i] = true; cols[curr.x][i] = true;
+				squars[s2][k] = true; rows[next.y][k] = true; cols[next.x][k] = true;
+				domino[i][k] = true; domino[k][i] = true;
+				board[curr.y][curr.x] = i; board[next.y][next.x] = k;
+				findAns(curr_s + 1);
 				if(is_ans) return;
-				board[next_pos.y][next_pos.x] = 0;
-				squars[next_sqr][n] = false; rows[next_pos.y][n] = false; cols[next_pos.x][n] = false;
+				squars[s1][i] = false; rows[curr.y][i] = false; cols[curr.x][i] = false;
+				squars[s2][k] = false; rows[next.y][k] = false; cols[next.x][k] = false;
+				domino[i][k] = false; domino[k][i] = false;
+				board[curr.y][curr.x] = 0; board[next.y][next.x] = 0;
 			}
 		}
-		board[curr_pos.y][curr_pos.x] = 0;
-		squars[curr_sqr][i] = false; rows[curr_pos.y][i] = false; cols[curr_pos.x][i] = false;
 	}
 }
 
 int main(void){
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
-	int puzzles = 1;
+	int dominos;
 	while(true){
-		cin.clear();
-		dominos = 0;
+		cin >> dominos;
+		if(!dominos) return 0;
 		memset(squars, false, sizeof(squars));
 		memset(rows, false, sizeof(rows));
 		memset(cols, false, sizeof(cols));
+		memset(domino, false, sizeof(domino));
 		memset(board, 0, sizeof(board));
-		empty_pos.clear();
-		is_ans = false;
-		cin >> dominos;
-		if(!dominos) return 0;
-		int num;
-		string loc;
+		string loc1, loc2;
+		int num1, num2;
 		for(int i = 0; i < dominos; i++){
-			for(int k = 0; k < 2; k++){
-				cin >> num >> loc;
-				Pos p = {loc[0] - 'A' + 1, loc[1] - '0'};
-				board[p.y][p.x] = num;
-				squars[calSquars(p)][num] = true;
-				rows[p.y][num] = true;
-				cols[p.x][num] = true;
-			}
-		}
-		for(int i = 1; i <= 9; i++){
-			cin >> loc;
-			Pos p = {loc[0] - 'A' + 1, loc[1] - '0'};
-			board[p.y][p.x] = i;
-			squars[calSquars(p)][i] = true;
-			rows[p.y][i] = true;
-			cols[p.x][i] = true;
+			cin >> num1 >> loc1 >> num2 >> loc2;
+			Pos pos1 = {loc1[0] - 'A', loc1[1] - '1'};
+			Pos pos2 = {loc2[0] - 'A', loc2[1] - '1'};
+			int s1 = calSquar(pos1), s2 = calSquar(pos2);
+			squars[s1][num1] = true; rows[pos1.y][num1] = true; cols[pos1.x][num1] = true;
+			squars[s2][num2] = true; rows[pos2.y][num2] = true; cols[pos2.x][num2] = true;
+			board[pos1.y][pos1.x] = num1; board[pos2.y][pos2.x] = num2;
+			domino[num1][num2] = true; domino[num2][num1] = true;
 		}
 		for(int i = 1; i < IDX; i++){
-			for(int k = 1; k < IDX; k++){
-				if(board[i][k] == 0) empty_pos.push_back({i, k});
-			}
+			cin >> loc1;
+			Pos pos = {loc1[0] - 'A', loc1[1] - '1'};
+			int s = calSquar(pos);
+			squars[s][i] = true; rows[pos.y][i] = true; cols[pos.x][i] = true;
+			board[pos.y][pos.x] = i;
 		}
 		findAns(0);
 		if(is_ans){
-			cout << "Puzzle " << puzzles++ << "\n";
-			for(int i = 1; i <= 9; i++){
-				for(int k = 1; k <= 9; k++) cout << board[i][k];
-				cout << "\n";
+			static int sudokus = 1;
+			cout << "Puzzle " << sudokus++ << "\n";
+			for(int i = 0; i < LEN; i++){
+				for(int k = 0; k < LEN; k++) cout << board[i][k];
+				cout << endl;
 			}
 			is_ans = false;
 		}
