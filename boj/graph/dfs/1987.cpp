@@ -21,8 +21,8 @@ void calMaxLen(Pos curr, int len){
 		if(0 > next.y || next.y >= row || 0 > next.x || next.x >= col) continue;
 		if(visited[next.y][next.x] || alph_vi[board[next.y][next.x] - 'A']) continue;
 		calMaxLen(next, len + 1);
-		visited[next.y][next.x] = true;
-		alph_vi[board[next.y][next.x] - 'A'] = true;
+		visited[next.y][next.x] = false;
+		alph_vi[board[next.y][next.x] - 'A'] = false;
 		
 	}
 }
