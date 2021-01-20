@@ -13,7 +13,7 @@ int main(void){
 	for(int i = 2; i <= n; i++){
 		cache[i] = cache[i - 1] + 1;
 		if(i % 3 == 0) cache[i] = min(cache[i / 3] + 1, cache[i]);
-		else if(i % 2 == 0) cache[i] = min(cache[i / 2] + 1, cache[i]);
+		if(i % 2 == 0) cache[i] = min(cache[i / 2] + 1, cache[i]);
 	}
 	cout << cache[n];
 }
