@@ -16,7 +16,7 @@ int main(void){
 		cin >> v[i];
 	}
 	for(int i = idx - 1; i >= 0; i--){
-		while(st.top() < v[i]) st.pop();
+		while(st.top() <= v[i]) st.pop();
 		if(st.top() == 1e7) an[i] = -1;
 		else an[i] = st.top();
 		st.push(v[i]);
