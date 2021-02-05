@@ -16,7 +16,7 @@ int main(void){
 		cin >> n;
 		vector<int> v(n);
 		for(int i = 0; i < n; i++) cin >> v[i];
-		int ans = 0;
+		long long ans = 0;
 		for(int i = 0; i < n; i++){
 			for(int k = i + 1; k < n; k++){
 				ans += gcd(v[i], v[k]);
