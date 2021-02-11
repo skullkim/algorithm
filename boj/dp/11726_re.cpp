@@ -13,7 +13,7 @@ int f(int v){
 	int &c = cache[v];
 	if(c != -1) return c;
 	c = 0;
-	c = (f(v - 1) + f(v - 2)); 
+	c = (f(v - 1) + f(v - 2)) % MOD; 
 	return c;
 }
 
