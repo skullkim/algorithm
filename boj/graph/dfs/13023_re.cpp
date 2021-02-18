@@ -21,6 +21,7 @@ void fu(int cun, int dp){
 		fu(ne, dp + 1);
 		if(an) return;
 	}
+	v[cun] = false;
 }
 
 int main(void){
