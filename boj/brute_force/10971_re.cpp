@@ -18,6 +18,7 @@ void f(const int &st, int cur, int s, int cnt){
 		if(v[i] || !ne) continue;
 		f(st, i, s + ne, cnt + 1);
 	}
+	v[cur] = false;
 }
 
 int main(void){
