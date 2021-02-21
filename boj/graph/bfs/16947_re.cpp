@@ -62,8 +62,6 @@ int main(void){
 		dfs(i, i, 0);
 		if(is_c) cs[i] = true;
 	}
-	for(int i = 1; i <= n; i++) cout << v[i] << " ";
-	cout << endl;
 	for(int i = 1; i <= n; i++){
 		memset(v, false, sizeof(v));
 		cs[i] ? cout << 0 << " " : cout << bfs(i) << " ";
