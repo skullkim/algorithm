@@ -12,6 +12,10 @@ void bfs(void){
 	while(!q.empty()){
 		pair<int, int> now = q.front();
 		q.pop();
+		if(now.first == t){
+			cout << c[now.first][now.second];
+			return;
+		}
 		pair<int, int> ne[3] = {
 			make_pair(now.first, now.first),
 			make_pair(now.first + now.second, now.first),
@@ -21,10 +25,10 @@ void bfs(void){
 			if(0 >= ne[i].first || ne[i].first >= M || c[ne[i].first][ne[i].second] != -1) continue;
 			c[ne[i].first][ne[i].second] = c[now.first][now.second] + 1;
 			q.push(ne[i]);
-			if(ne[i].first == t){
-				cout << c[ne[i].first][ne[i].second] + 1;
-				return;
-			}
+			// if(ne[i].first == t){
+			// 	cout << c[ne[i].first][ne[i].second] + 1;
+			// 	return;
+			// }
 		}
 	}
 }
@@ -34,6 +38,7 @@ int main(void){
 	cin.tie(NULL);
 	cin >> t;
 	memset(c, -1, sizeof(c));
+	c[1][0] = 0;
 	//for(int i = 1; i <= t * 2; i++) c[i] = M * M;
 	//c[1] = 0;
 	bfs();
