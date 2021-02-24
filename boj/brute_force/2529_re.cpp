@@ -6,7 +6,7 @@ using namespace std;
 
 const int M = 15;
 int tcl;
-string tc, min_a="1000000000000", max_a = "0", tmp = "";
+string tc, min_a="9876543211", max_a = "0", tmp = "";
 bool v[M];
 
 void f(int cur){
@@ -39,7 +39,11 @@ int main(void){
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
 	cin >> tcl;
-	cin >> tc;
+	char ch;
+	for(int i = 0; i < tcl; i++){
+		cin >> ch;
+		tc += ch;
+	}
 	for(int i = 0; i <= 9; i++){
 		memset(v, false, sizeof(v));
 		tmp = "";
