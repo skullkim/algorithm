@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <algorithm>
+#include <cstring>
 using namespace std;
 
 const int M = 15;
@@ -10,12 +11,13 @@ bool v[M];
 
 void f(int cur){
 	if(cur == tcl){
-		if(tmp > max_a) max_a = tmp;
-		if(tmp < min_a) min_a = tmp;
+		//cout << tmp << endl;
+		//if(tmp.size() == tcl + 1){
+			if(stoll(tmp) > stoll(max_a)) max_a = tmp;
+			if(stoll(tmp) < stoll(min_a)) min_a = tmp;
+		//}
 		return;
 	}
-	//cout << cur << endl;
-		//cout << tmp.back();
 	for(int i = 0; i <= 9; i++){
 		if(v[i]) continue;
 		v[i] = true;
@@ -23,13 +25,11 @@ void f(int cur){
 			tmp += (i + '0');
 			f(cur + 1);
 			tmp.pop_back();
-			
 		}
 		else if(tc[cur] == '<' && (tmp.back() - '0') < i){
 			tmp += (i + '0');
 			f(cur + 1);
 			tmp.pop_back();
-						
 		}
 		v[i] = false;
 	}
@@ -40,8 +40,9 @@ int main(void){
 	cin.tie(NULL);
 	cin >> tcl;
 	cin >> tc;
-	//(int i =0 ; i < tc.size(); i++) cout << tc[i];
 	for(int i = 0; i <= 9; i++){
+		memset(v, false, sizeof(v));
+		tmp = "";
 		tmp += i + '0';
 		v[i] = true;
 		f(0);
