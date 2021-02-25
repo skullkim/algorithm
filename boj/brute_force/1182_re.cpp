@@ -8,7 +8,6 @@ void f(int sum, int idx, int sz){
 	if(idx > n) return;
 	if(sz >= 1 && sum == s){
 		an++;
-		return;
 	}
 	for(int i = idx; i < n; i++){
 		if(b[i]) continue;
