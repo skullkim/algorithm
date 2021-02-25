@@ -5,6 +5,7 @@ int n, s, arr[25], an = 0;
 bool b[25];
 
 void f(int sum, int idx, int sz){
+	if(idx > n) return;
 	if(sz >= 1 && sum == s){
 		an++;
 		return;
