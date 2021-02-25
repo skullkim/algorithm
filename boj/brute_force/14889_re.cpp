@@ -1,29 +1,44 @@
 #include <iostream>
-#include <algorithm>
 #include <cmath>
+#include <vector>
+#include <algorithm>
 using namespace std;
 
-const int MAX = 25;
-int n, a[MAX][MAX], an = MAX * 100;
-bool v[MAX];
+const int M = 25;
+int n, an = M * 100 * M;
+int arr[M][M];
+vector<int> t1, t2;
+bool v[M];
 
-void f(int b, int id){
-	if(id >= n) return;
-	if(b == n / 2){
-		int s1 = 0, s2 = 0;
-		for(int i = 0; i < n; i++){
-			for(int k = 0; k < n; k++){
-				if(v[i] && v[k]) s1 += a[i][k];
-				else if(!v[i] && !v[k]) s2 += a[i][k];
+void f(void){
+	if(t1.size() + t2.size() == n && t1.size() == t2.size()){
+		int a = 0, b = 0;
+		for(int i = 0; i < n / 2; i++){
+			for(int k = 0; k < n / 2; k++){
+				if(i == k) continue;
+				a += arr[t1[i]][t1[k]];
 			}
 		}
-		int ab = abs(s1 - s2);
-		an = min(ab, an);
+		for(int i = 0; i < n / 2; i++){
+			for(int k = 0; k < n / 2; k++){
+				if(i == k) continue;
+				b += arr[t2[i]][t2[k]];
+			}
+		}
+		an = min(an, abs(a - b));
+		return;
 	}
-	v[id] = true;
-	f(b + 1, id + 1);
-	v[id] = false;
-	f(b, id + 1);
+	for(int i = 0; i < n; i++){
+		if(v[i]) continue;
+		v[i] = true;
+		t1.push_back(i);
+		f();
+		t1.pop_back();
+		t2.push_back(i);
+		f();
+		t2.pop_back();
+		v[i] = false;
+	}
 }
 
 int main(void){
@@ -31,8 +46,10 @@ int main(void){
 	cin.tie(NULL);
 	cin >> n;
 	for(int i = 0; i < n; i++){
-		for(int k = 0; k < n; k++) cin >> a[i][k];
+		for(int k = 0; k < n; k++){
+			cin >> arr[i][k];	
+		}
 	}
-	f(0, 0);	
+	f();
 	cout << an;
 }
