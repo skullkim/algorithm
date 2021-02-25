@@ -7,38 +7,25 @@ using namespace std;
 const int M = 25;
 int n, an = M * 100 * M;
 int arr[M][M];
-vector<int> t1, t2;
 bool v[M];
 
-void f(void){
-	if(t1.size() + t2.size() == n && t1.size() == t2.size()){
-		int a = 0, b = 0;
-		for(int i = 0; i < n / 2; i++){
-			for(int k = 0; k < n / 2; k++){
-				if(i == k) continue;
-				a += arr[t1[i]][t1[k]];
+void f(int a, int idx){
+	if(idx >= n) return;
+	if(a == n / 2){
+		int t1 = 0, t2 =0; 
+		for(int i= 0 ; i < n; i++){
+			for(int k = 0; k < n; k++){
+				if(v[i] && v[k]) t1 += arr[i][k];
+				else if(!v[i] && !v[k]) t2 += arr[i][k];
 			}
-		}
-		for(int i = 0; i < n / 2; i++){
-			for(int k = 0; k < n / 2; k++){
-				if(i == k) continue;
-				b += arr[t2[i]][t2[k]];
-			}
-		}
-		an = min(an, abs(a - b));
+		}	
+		an = min(an, abs(t1 - t2));
 		return;
 	}
-	for(int i = 0; i < n; i++){
-		if(v[i]) continue;
-		v[i] = true;
-		t1.push_back(i);
-		f();
-		t1.pop_back();
-		t2.push_back(i);
-		f();
-		t2.pop_back();
-		v[i] = false;
-	}
+	v[idx] = true;
+	f(a + 1, idx + 1);
+	v[idx] = false;
+	f(a, idx + 1);
 }
 
 int main(void){
@@ -50,6 +37,6 @@ int main(void){
 			cin >> arr[i][k];	
 		}
 	}
-	f();
+	f(0, 0);
 	cout << an;
 }
