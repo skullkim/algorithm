@@ -15,7 +15,7 @@ int main(void){
 	}
 	c[0] = arr[0];
 	for(int i= 0; i < n; i++){
-		c[i] = max(c[i], c[i - 1] + arr[i]);
+		c[i] = max(arr[i], c[i - 1] + arr[i]);
 		an = max(an, c[i]);
 	}
 	cout << an;
