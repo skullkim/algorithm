@@ -48,65 +48,76 @@ void moveBlocksCol(int board[MAX][MAX], deque<int>& dq, const int& C, const int&
 	return;
 }
 
+void copyArray(int a[MAX][MAX], int b[MAX][MAX]){
+	for(int i = 0; i < MAX; i++){
+		for(int k = 0; k < MAX; k++) b[i][k] = a[i][k];
+	}
+}
+
 void playGame(int board[MAX][MAX], int moves){
 	if(moves >= 5) return;
 	for(int i = 0; i < 4; i++){
 		Pos next = DIRECTION[i];
+		int arr[MAX][MAX];
 		switch (i){
 			case UP:{
+				copyArray(board, arr);
 				deque<int> dq;
 				bool combined = false;
 				for(int c = 0; c < len; c++){
 					for(int r = 0; r < len; r++){
 						if(!board[r][c]) continue;
 						Pos tmp = {r, c};
-						combined = findBlocks(board, dq, combined, tmp);			
+						combined = findBlocks(arr, dq, combined, tmp);			
 					}
-					moveBlocksCol(board, dq, c, UP);
+					moveBlocksCol(arr, dq, c, UP);
 				}
 				break;
 			}
 			case DOWN:{
+				copyArray(board, arr);
 				deque<int> dq;
 				int combined = false;
 				for(int c = 0; c < len; c++){
 					for(int r = len - 1; r >= 0; r--){
 						if(!board[r][c]) continue;
 						Pos tmp = {r, c};
-						combined = findBlocks(board, dq, combined, tmp);
+						combined = findBlocks(arr, dq, combined, tmp);
 					}
-					moveBlocksCol(board, dq, c, DOWN);
+					moveBlocksCol(arr, dq, c, DOWN);
 				}
 				break;
 			}
 			case LEFT:{
+				copyArray(board, arr);
 				deque<int> dq;
 				int combined = false;
 				for(int r = 0; r < len; r++){
 					for(int c = 0; c < len; c++){
 						if(!board[r][c]) continue;
 						Pos tmp = {r, c};
-						combined = findBlocks(board, dq, combined, tmp);
+						combined = findBlocks(arr, dq, combined, tmp);
 					}
-					moveBlocksRow(board, dq, r, LEFT);
+					moveBlocksRow(arr, dq, r, LEFT);
 				}
 				break;
 			}
 			case RIGHT:{
+				copyArray(board, arr);
 				deque<int> dq;
 				int combined = false;
 				for(int r = 0; r < len; r++){
 					for(int c = len - 1; c >= 0; c--){
 						if(!board[r][c]) continue;
 						Pos tmp = {r, c};
-						combined = findBlocks(board, dq, combined, tmp);
+						combined = findBlocks(arr, dq, combined, tmp);
 					}
-					moveBlocksRow(board, dq, r, RIGHT);
+					moveBlocksRow(arr, dq, r, RIGHT);
 				}
 				break;
 			}
 		}
-		playGame(board, moves + 1);
+		playGame(arr, moves + 1);
 	}
 }
 
