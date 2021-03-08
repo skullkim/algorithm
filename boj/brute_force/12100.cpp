@@ -56,43 +56,17 @@ void playGame(int board[MAX][MAX], int moves){
 			case UP:{
 				deque<int> dq;
 				bool combined = false;
-				for(int r = 0; r < len; r++){
-					for(int c = 0; c < len; c++){
-						if(!board[r][c]) continue;
-						Pos tmp = {r, c};
-						combined = findBlocks(board, dq, combined, tmp);			
-					}
-					moveBlocksRow(board, dq, r, UP);
-				}
-				break;
-			}
-			case DOWN:{
-				deque<int> dq;
-				int combined = false;
-				for(int r = 0; r < len; r++){
-					for(int c = len - 1; c >= 0; c--){
-						if(!board[r][c]) continue;
-						Pos tmp = {r, c};
-						combined = findBlocks(board, dq, combined, tmp);
-					}
-					moveBlocksRow(board, dq, r, DOWN);
-				}
-				break;
-			}
-			case LEFT:{
-				deque<int> dq;
-				int combined = false;
 				for(int c = 0; c < len; c++){
 					for(int r = 0; r < len; r++){
 						if(!board[r][c]) continue;
 						Pos tmp = {r, c};
-						combined = findBlocks(board, dq, combined, tmp);
+						combined = findBlocks(board, dq, combined, tmp);			
 					}
-					moveBlocksCol(board, dq, c, LEFT);
+					moveBlocksCol(board, dq, c, UP);
 				}
 				break;
 			}
-			case RIGHT:{
+			case DOWN:{
 				deque<int> dq;
 				int combined = false;
 				for(int c = 0; c < len; c++){
@@ -101,7 +75,33 @@ void playGame(int board[MAX][MAX], int moves){
 						Pos tmp = {r, c};
 						combined = findBlocks(board, dq, combined, tmp);
 					}
-					moveBlocksCol(board, dq, c, RIGHT);
+					moveBlocksCol(board, dq, c, DOWN);
+				}
+				break;
+			}
+			case LEFT:{
+				deque<int> dq;
+				int combined = false;
+				for(int r = 0; r < len; r++){
+					for(int c = 0; c < len; c++){
+						if(!board[r][c]) continue;
+						Pos tmp = {r, c};
+						combined = findBlocks(board, dq, combined, tmp);
+					}
+					moveBlocksRow(board, dq, r, LEFT);
+				}
+				break;
+			}
+			case RIGHT:{
+				deque<int> dq;
+				int combined = false;
+				for(int r = 0; r < len; r++){
+					for(int c = len - 1; c >= 0; c--){
+						if(!board[r][c]) continue;
+						Pos tmp = {r, c};
+						combined = findBlocks(board, dq, combined, tmp);
+					}
+					moveBlocksRow(board, dq, r, RIGHT);
 				}
 				break;
 			}
