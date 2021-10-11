@@ -8,7 +8,7 @@ public class Main{
 	public static void f(int cnt) throws IOException {
 		if(cnt == m) {
 			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-			for(Integer i : al) {
+			for(int i : al) {
 				bw.write(i + " ");
 				bw.flush();
 			}
