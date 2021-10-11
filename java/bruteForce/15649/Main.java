@@ -5,7 +5,7 @@ public class Main {
 	static final int MAX = 10;
 	static int n, m;
 	static boolean vi[];
-	static ArrayList<Integer> ans = new ArrayList<Integer>();
+	ArrayList<Integer> ans = new ArrayList<Integer>();
 
 	static public void func(int prev, int cnt) {
 		if(cnt == m) {
