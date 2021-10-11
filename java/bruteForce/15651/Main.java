@@ -5,12 +5,15 @@ public class Main{
 	static int n, m;
 	static ArrayList<Integer> al = new ArrayList<>();
 
-	public static void f(int cnt) {
+	public static void f(int cnt) throws IOException {
 		if(cnt == m) {
+			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 			for(Integer i : al) {
-				System.out.print(i + " ");
+				bw.write(i + " ");
+				bw.flush();
 			}
-			System.out.println();
+			bw.write("\n");
+			bw.flush();
 			return;
 		}
 
