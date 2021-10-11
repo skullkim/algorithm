@@ -4,22 +4,20 @@ import java.util.*;
 public class Main{
 	static int n, m;
 	static ArrayList<Integer> al = new ArrayList<>();
+	static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-	public static void f(int cnt) throws IOException {
+	public static void f(int cnt, int num) throws IOException {
 		if(cnt == m) {
-			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-			for(int i : al) {
-				bw.write(i + " ");
-				bw.flush();
+			for(int i = 0; i < al.size(); i++) {
+				bw.write(al.get(i) + " ");
 			}
 			bw.write("\n");
-			bw.flush();
 			return;
 		}
-
+		
 		for(int i = 1; i <= n; i++) {
 			al.add(i);
-			f(cnt + 1);
+			f(cnt + 1, i);
 			al.remove(al.size() - 1);
 		}
 	}
@@ -30,7 +28,8 @@ public class Main{
 		StringTokenizer tz = new StringTokenizer(br.readLine());
 		n = Integer.parseInt(tz.nextToken());
 		m = Integer.parseInt(tz.nextToken());
-		f(0);
+		f(0, 0);
+		bw.flush();
 	}
 }
 
