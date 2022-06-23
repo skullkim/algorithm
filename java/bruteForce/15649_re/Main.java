@@ -3,9 +3,9 @@ import java.util.*;
 
 public class Main {
 
-    public static int n, m;
+    static int n, m;
     static boolean[] vi = new boolean[9];
-    public static ArrayList<Integer> arr = new ArrayList<>();
+    static ArrayList<Integer> arr = new ArrayList<>();
 
     static void f(int currN) {
         if (arr.size() == m) {
