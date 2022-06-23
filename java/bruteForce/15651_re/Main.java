@@ -5,13 +5,14 @@ public class Main {
 
     static int n, m;
     static ArrayList<Integer> arr = new ArrayList<>();
+    static BufferedWriter w = new BufferedWriter(new OutputStreamWriter(System.out));
 
-    static void f() {
+    static void f() throws IOException {
         if (arr.size() == m) {
             for (Integer nn : arr) {
-                System.out.print(nn + " ");
+                w.write(nn + " ");
             }
-            System.out.println();
+            w.write("\n");
             return;
         }
 
@@ -28,5 +29,6 @@ public class Main {
         n = Integer.parseInt(st.nextToken());
         m = Integer.parseInt(st.nextToken());
         f();
+        w.flush();
     }
 }
