@@ -5,15 +5,15 @@ public class Main {
 
     static int s, ans;
     static String[][] g = new String[50][50];
-    static int[] dx = {-1, 1, 0, 0};
-    static int[] dy = {0, 0, -1, 1};
+    static int[] dy = {0, 1};
+    static int[] dx = {1, 0};
     static BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
     static BufferedWriter w = new BufferedWriter(new OutputStreamWriter(System.out));
 
     public static void f() {
         for (int i = 0; i < s; i++) {
             for (int k = 0; k < s; k++) {
-                for (int n = 0; n < 4; n++) {
+                for (int n = 0; n < 2; n++) {
                     int nx = k + dx[n];
                     int ny = i + dy[n];
                     if (0 > ny || ny >= s || 0 > nx || nx >= s) continue;
@@ -40,12 +40,10 @@ public class Main {
                     t = g[i][k];
                     same = 1;
                 }
+                ans = Math.max(ans, same);
             }
-            ans = Math.max(ans, same);
-        }
 
-        for (int i = 0; i < s; i++) {
-            String t = g[0][i];
+            t = g[0][i];
             same = 0;
             for (int k = 0; k < s; k++) {
                 if (t.equals(g[k][i])) same++;
@@ -53,8 +51,8 @@ public class Main {
                     t = g[k][i];
                     same = 1;
                 }
+                ans = Math.max(ans, same);
             }
-            ans = Math.max(ans, same);
         }
     }
 
