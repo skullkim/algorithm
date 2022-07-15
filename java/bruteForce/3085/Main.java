@@ -36,7 +36,10 @@ public class Main {
             same = 0;
             for (int k = 0; k < s; k++) {
                 if (t.equals(g[i][k])) same++;
-                else break;
+                else {
+                    t = g[i][k];
+                    same = 1;
+                }
             }
             ans = Math.max(ans, same);
         }
@@ -46,7 +49,10 @@ public class Main {
             same = 0;
             for (int k = 0; k < s; k++) {
                 if (t.equals(g[k][i])) same++;
-                else break;
+                else {
+                    t = g[k][i];
+                    same = 1;
+                }
             }
             ans = Math.max(ans, same);
         }
