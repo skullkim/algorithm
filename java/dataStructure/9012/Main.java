@@ -11,7 +11,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         StringTokenizer st = new StringTokenizer(r.readLine());
         n = Integer.parseInt(st.nextToken());
-        while (n-- > 0) {
+        for  (int k = 0; k < n; k++) {
             st = new StringTokenizer(r.readLine());
             b = st.nextToken();
             int ans = 0;
