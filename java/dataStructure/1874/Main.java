@@ -11,11 +11,9 @@ public class Main {
     static BufferedWriter w = new BufferedWriter(new OutputStreamWriter(System.out));
 
     public static void main(String[] args) throws IOException {
-        StringTokenizer st = new StringTokenizer(r.readLine());
-        n = Integer.parseInt(st.nextToken());
+        n = Integer.parseInt(r.readLine());
         for (int i = 1; i <= n; i++) {
-            st = new StringTokenizer(r.readLine());
-            ex.add(Integer.parseInt(st.nextToken()));
+            ex.add(Integer.parseInt(r.readLine()));
         }
         int idx = 0;
         String ans = "";
