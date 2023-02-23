@@ -4,42 +4,34 @@
 
 using namespace std;
 
-string a, b, c = "";
-bool v[20];
+string a, b, ans = "-1";
+bool vi[100];
 
-char findLargest(int ch) {
-	int ans = 0;
-	int i;
-	for (i = 0; i < a.size(); i++){
-		int an = a[i] - '0';
-		if (an <= ch && an > ans && !v[i]) {
-			ans = an;
-		}
+void f(string c) {
+	if (c.size() == a.size() && stoi(c) < stoi(b) && c > ans) {
+		ans = c;
 	}
-	v[i] = true;
-	return ans + '0';
+
+	for (int i = 0; i < a.size(); i++) {
+		if (vi[i] || (c.size() == 0 && a[i] == '0')) continue;
+		vi[i] = true;
+		c.push_back(a[i]);
+		f(c);
+		c.pop_back();
+		vi[i] = false;
+	}
 }
 
 int main(void) {
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
 
-	cin >> a >> b;
+	string tmp;
+	cin >> tmp;
+	a = tmp;
+	cin >> tmp;
+	b = tmp;
 
-	if (a.size() > b.size() || a == b) {
-		cout << -1;
-		return 0;
-	}
-
-
-	while(c.size() < b.size() && c.size() < a.size()) {
-		int idx = c.size();
-		char tmp = findLargest(b[idx] - '0');
-		if (c.size() == 0 && tmp == '0') {
-			cout << -1;
-			return 0;
-		}
-		c += tmp;
-	}
-	cout << c;
+	f("");
+	cout << ans;
 }
