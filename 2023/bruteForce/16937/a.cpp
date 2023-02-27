@@ -6,7 +6,7 @@
 using namespace std;
 
 int row, col, ans = 0, maxSize = 0;
-vector<pii> stickers, st;
+vector<pii> stickers, st(2);
 bool vi[110];
 
 bool compareSize(pii f, pii s) {
@@ -47,8 +47,6 @@ void f(int used, int size) {
 int main(void) {
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
-
-	st.resize(2);
 
 	cin >> row >> col;
 	maxSize = row * col;
