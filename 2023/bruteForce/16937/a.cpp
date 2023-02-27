@@ -36,7 +36,7 @@ void f(int used, int size) {
 		int stickerSize = stickers[i].first * stickers[i].second;
 		if (maxSize - stickerSize < 0) continue;
 		vi[i] = true;
-		st[i] = stickers[i];
+		st[used] = stickers[i];
 		maxSize -= stickerSize;
 		f(used + 1, size + stickerSize);
 		vi[i] = false;
