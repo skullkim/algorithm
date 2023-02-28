@@ -6,7 +6,7 @@
 using namespace std;
 
 int row, col, ans = 0, maxSize = 0;
-vector<pii> stickers, st(2);
+vector<pii> stickers, st;
 bool vi[110];
 
 bool compareSize(pii f, pii s) {
@@ -16,12 +16,13 @@ bool compareSize(pii f, pii s) {
 		|| (f.second+s.second <= col && tmp.first < row);
 }
 
-void f(int used, int size) {
-	if (used == 2) {
+void f(int size) {
+	if (st.size() == 2) {
 		pii f = st[0];
 		pii s = st[1];
 		pii rf = make_pair(f.second, f.first);
 		pii rs = make_pair(s.second, s.first);
+		if (size > maxSize) return;
 		if (compareSize(f, s)
 				|| compareSize(f, rs)
 				|| compareSize(rf, s)
@@ -34,13 +35,11 @@ void f(int used, int size) {
 	for (int i = 0; i < stickers.size(); i++) {
 		if (vi[i]) continue;
 		int stickerSize = stickers[i].first * stickers[i].second;
-		if (maxSize - stickerSize < 0) continue;
 		vi[i] = true;
-		st[used] = stickers[i];
-		maxSize -= stickerSize;
-		f(used + 1, size + stickerSize);
+		st.push_back(stickers[i]);
+		f(size + stickerSize);
+		st.pop_back();
 		vi[i] = false;
-		maxSize += stickerSize;
 	}
 }
 
@@ -57,6 +56,6 @@ int main(void) {
 		stickers.push_back(make_pair(r, c));
 	}
 
-	f(0, 0);
+	f(0);
 	cout << ans;
 }
