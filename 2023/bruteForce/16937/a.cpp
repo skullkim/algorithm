@@ -13,7 +13,7 @@ bool compareSize(pii f, pii s) {
 	pii tmp = make_pair(max(f.first, s.first), max(f.second, s.second));
 	return (f.first+s.first <= row && f.second+s.second <= col)
 		|| (f.first+s.first <= row && tmp.second <= col)
-		|| (f.second+s.second <= col && tmp.first < row);
+		|| (f.second+s.second <= col && tmp.first <= row);
 }
 
 void f(int size) {
