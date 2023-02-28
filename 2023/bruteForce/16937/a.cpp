@@ -53,9 +53,9 @@ int main(void) {
 	cin >> n;
 	for (int i = 0, r, c; i < n; i++) {
 		cin >> r >> c;
+		if (r * c > row * col) continue;
 		stickers.push_back(make_pair(r, c));
 	}
-
-	f(0);
+	if (stickers.size() >= 2) f(0);
 	cout << ans;
 }
