@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <cstring>
 
 using namespace std;
 
@@ -20,9 +21,10 @@ void f(int node, int depth) {
 		if (vi[nextN]) continue;
 		vi[nextN] = true;
 		f(nextN, depth + 1);
-		if (hasAns) return;
 		vi[nextN] = false;
+		if (hasAns) return;
 	}
+	vi[node] = false;
 }
 
 int main(void) {
@@ -40,6 +42,7 @@ int main(void) {
 
 	for (int i = 0; i < n; i++) {
 		if (hasAns) break;
+		memset(vi, false, sizeof(vi));
 		f(i, 1);
 	}
 
