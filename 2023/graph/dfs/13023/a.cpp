@@ -14,11 +14,13 @@ void f(int node, int depth) {
 		return;
 	}
 
+	vi[node] = true;
 	for (int i = 0; i < g[node].size(); i++) {
 		int nextN = g[node][i];
 		if (vi[nextN]) continue;
 		vi[nextN] = true;
 		f(nextN, depth + 1);
+		if (hasAns) return;
 		vi[nextN] = false;
 	}
 }
