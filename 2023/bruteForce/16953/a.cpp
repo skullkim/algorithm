@@ -1,13 +1,14 @@
 #include <iostream>
 #include <algorithm>
+#define ll long long
 
 using namespace std;
 
-const int INF = 987654321;
-int ans = INF;
-int first, t;
+const ll INF = 9876543210;
+ll ans = INF;
+ll first, t;
 
-void f(int currNum, int cnt) {
+void f(ll currNum, ll cnt) {
 	if (currNum > t) return;
 	if (currNum == t) {
 		ans = min(ans, cnt);
