@@ -27,6 +27,7 @@ int main(void) {
 	for (int i = 0, n1, n2; i < m; i++) {
 		cin >> n1 >> n2;
 		graph[n1].push_back(n2);
+		graph[n2].push_back(n1);
 	}
 
 	for (int i = 1; i <= n; i++) {
