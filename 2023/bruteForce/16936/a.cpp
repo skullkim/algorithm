@@ -59,14 +59,15 @@ int main(void) {
 	cin.tie(NULL);
 
 	cin >> n;
-	for (int i = 0, tmp; i < n; i++) {
+	ll tmp;
+	for (int i = 0; i < n; i++) {
 		cin >> tmp;
 		seq.push_back(tmp);
 	}
 
 	for (int i = 0; i < n; i++) {
 		vector<ll> ans;
-		//cout << seq[i] << endl;
+//		cout << seq[i] << endl;
 		f(i, ans);
 		if (hasAns) return 0;
 		fail = false;
