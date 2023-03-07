@@ -6,19 +6,25 @@
 using namespace std;
 
 int n, minN, maxN, x, ans = 0;
+bool vi[17];
 vector<ll> v;
 
 void f(int idx, vector<int> t, ll sum, ll maxNN, ll minNN) {
 	if (t.size() > n || sum > maxN) return;
-	if (t.size() <= n && minN <= sum && sum <= maxN && (maxNN - minNN) >= x) {
+	if (2 <= t.size() && t.size() <= n 
+			&& minN <= sum && sum <= maxN 
+			&& (maxNN - minNN) >= x) {
 		ans++;
 		return;
 	}
 
 	for (int i = idx; i < n; i++) {
+		if (vi[i]) continue;
+		vi[i] = true;
 		t.push_back(v[i]);
 		f(i + 1, t, sum + v[i], max(maxNN, v[i]), min(minNN, v[i]));
 		t.pop_back();
+		vi[i] = false;
 	}
 }
 
