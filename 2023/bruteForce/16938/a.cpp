@@ -1,13 +1,14 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#define ll long long
 
 using namespace std;
 
 int n, minN, maxN, x, ans = 0;
-vector<int> v;
+vector<ll> v;
 
-void f(int idx, vector<int> t, int sum, int maxNN, int minNN) {
+void f(int idx, vector<int> t, ll sum, ll maxNN, ll minNN) {
 	if (t.size() > n || sum > maxN) return;
 	if (t.size() <= n && minN <= sum && sum <= maxN && (maxNN - minNN) >= x) {
 		ans++;
@@ -32,6 +33,6 @@ int main(void) {
 	}
 	
 	vector<int> t;
-	f(0, t, 0, 0, 987654321);
+	f(0, t, 0, 0, 9876543210);
 	cout << ans;
 }
