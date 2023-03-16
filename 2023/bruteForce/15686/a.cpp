@@ -9,7 +9,7 @@ struct Pos {int y; int x;};
 
 int n, m, ans = 987654321;;
 vector<Pos> homes, chickens;
-bool vi[20];
+bool vi[60];
 
 void minF(vector<Pos> chi) {
 	int tmpAns = 0;
