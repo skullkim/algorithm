@@ -36,7 +36,7 @@ void f(int idx, vector<Pos> t) {
 		minF(t);
 	}
 
-	for (int i = idx; i < n; i++) {
+	for (int i = idx; i < chickens.size(); i++) {
 		if (vi[i]) continue;
 		vi[i] = true;
 		t.push_back(chickens[i]);
