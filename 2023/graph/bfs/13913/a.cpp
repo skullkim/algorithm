@@ -26,15 +26,18 @@ int main(void) {
 			for (int i = 0; i < pv.first.size(); i++) {
 				cout << pv.first[i] << " ";
 			}
+			return 0;
 		}
 		int currP = pv.first.back();
 
-		for (int i = 0; i < pv.first.size(); i++) {
-			cout << pv.first[i] << " ";
-		}
-		cout << endl;
-		cout << "=======================================" << endl;
-
+//		if (pv.first.size() == 5) {
+//			for (int i = 0; i < pv.first.size(); i++) {
+//				cout << pv.first[i] << " ";
+//			}
+//			cout << endl;
+//			cout << "=======================================" << endl;
+//		}
+		
 		int arr[] = {currP + 1, currP -1, currP * 2};
 		for (int i = 0; i < 3; i++) {
 			int nextP = arr[i];
