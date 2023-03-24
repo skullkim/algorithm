@@ -41,9 +41,10 @@ int main(void) {
 		int arr[] = {currP + 1, currP -1, currP * 2};
 		for (int i = 0; i < 3; i++) {
 			int nextP = arr[i];
-			if (0 > nextP || nextP > 100000 || nextP > 2*broP || vi[nextP]) continue;
+			if (0 > nextP || nextP > 100000 || vi[nextP]) continue;
 			vi[nextP] = true;
-			vector<int> v (pv.first.begin(), pv.first.end());
+//			vector<int> v (pv.first.begin(), pv.first.end());
+			vector<int> v = pv.first;
 			v.push_back(nextP);
 			pvi tp = make_pair(v, pv.second + 1);
 			q.push(tp);
