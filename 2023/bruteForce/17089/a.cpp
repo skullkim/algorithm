@@ -10,9 +10,11 @@ bool vi[MAX];
 void dfs(int currNode, vector<int> selectedNodes, const int firstSelectedNode) {
 	if (selectedNodes.size() == 3) {
 		int lastSelectedNode = selectedNodes.back();
-		if (!g[lastSelectedNode][firstSelectedNode]) return;
+		int n1 = firstSelectedNode, n2 = selectedNodes[1], n3 = selectedNodes[2];
+		if (!g[n1][n2] || !g[n1][n3] || !g[n2][n3]) return;
+//		if (!g[lastSelectedNode][firstSelectedNode]) return;
 		int sum = 0;
-//
+
 //		for (int i =0; i < selectedNodes.size(); i++) {
 //			cout << selectedNodes[i] << "  ";
 //		}
@@ -57,6 +59,7 @@ int main(void) {
 		vector<int> v;
 		v.push_back(i);
 		dfs(i, v, i);
+		if (answer != -1) break;
 	}
 	cout << answer;
 }
