@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const int MAX = 4001;
+const int MAX = 4010;
 int nodes, edges, answer = -1;
 vector<vector<int>> graph;
 bool g[MAX][MAX];
@@ -12,13 +12,13 @@ void dfs(int currNode, vector<int> selectedNodes, const int firstSelectedNode) {
 		int lastSelectedNode = selectedNodes.back();
 		if (!g[lastSelectedNode][firstSelectedNode]) return;
 		int sum = 0;
-
-		for (int i =0; i < selectedNodes.size(); i++) {
-			cout << selectedNodes[i] << "  ";
-		}
-		cout << endl;
-		cout << "========================================" << endl;
-
+//
+//		for (int i =0; i < selectedNodes.size(); i++) {
+//			cout << selectedNodes[i] << "  ";
+//		}
+//		cout << endl;
+//		cout << "========================================" << endl;
+//
 		for (int i = 0; i < selectedNodes.size(); i++) {
 			sum += (graph[selectedNodes[i]].size() - 2);
 		}
@@ -43,9 +43,9 @@ int main(void) {
 	cin.tie(NULL);
 
 	cin >> nodes >> edges;
-	graph.resize(nodes + 1);
+	graph.resize(MAX);
 	for (int i = 0, n1, n2; i < nodes; i++) {
-		cin >> n1 >> n1;
+		cin >> n1 >> n2;
 		graph[n1].push_back(n2);
 		graph[n2].push_back(n1);
 		g[n1][n2] = true;
@@ -58,4 +58,5 @@ int main(void) {
 		v.push_back(i);
 		dfs(i, v, i);
 	}
+	cout << answer;
 }
