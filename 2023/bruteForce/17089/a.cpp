@@ -2,7 +2,8 @@
 using namespace std;
 
 const int MAX = 4010;
-int nodes, edges, answer = -1;
+const int INF = 987654321;
+int nodes, edges, answer = INF;
 vector<vector<int>> graph;
 bool g[MAX][MAX];
 bool vi[MAX]; 
@@ -24,7 +25,7 @@ void dfs(int currNode, vector<int> selectedNodes, const int firstSelectedNode) {
 		for (int i = 0; i < selectedNodes.size(); i++) {
 			sum += (graph[selectedNodes[i]].size() - 2);
 		}
-		answer = sum;
+		answer = min(answer, sum);
 		return;
 	}
 
@@ -34,7 +35,6 @@ void dfs(int currNode, vector<int> selectedNodes, const int firstSelectedNode) {
 		if (vi[nextNode]) continue;
 		selectedNodes.push_back(nextNode);
 		dfs(nextNode, selectedNodes, firstSelectedNode);
-		if (answer != -1) return;
 		vi[currNode] = false;
 		selectedNodes.pop_back();
 	}
@@ -59,7 +59,7 @@ int main(void) {
 		vector<int> v;
 		v.push_back(i);
 		dfs(i, v, i);
-		if (answer != -1) break;
 	}
-	cout << answer;
+
+	answer == INF ? cout << -1 : cout << answer;
 }
