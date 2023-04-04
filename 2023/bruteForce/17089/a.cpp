@@ -8,12 +8,11 @@ vector<vector<int>> graph;
 bool g[MAX][MAX];
 bool vi[MAX]; 
 
-void dfs(int currNode, vector<int> selectedNodes, const int firstSelectedNode) {
+void dfs(int currNode, vector<int> selectedNodes) {
 	if (selectedNodes.size() == 3) {
 		int lastSelectedNode = selectedNodes.back();
-		int n1 = firstSelectedNode, n2 = selectedNodes[1], n3 = selectedNodes[2];
+		int n1 = selectedNodes[0], n2 = selectedNodes[1], n3 = selectedNodes[2];
 		if (!g[n1][n2] || !g[n1][n3] || !g[n2][n3]) return;
-//		if (!g[lastSelectedNode][firstSelectedNode]) return;
 		int sum = 0;
 
 //		for (int i =0; i < selectedNodes.size(); i++) {
@@ -29,12 +28,12 @@ void dfs(int currNode, vector<int> selectedNodes, const int firstSelectedNode) {
 		return;
 	}
 
-	vi[currNode] = true;
 	for (int i = 0; i < graph[currNode].size(); i++) {
 		int nextNode = graph[currNode][i];
 		if (vi[nextNode]) continue;
+		vi[currNode] = true;
 		selectedNodes.push_back(nextNode);
-		dfs(nextNode, selectedNodes, firstSelectedNode);
+		dfs(nextNode, selectedNodes);
 		vi[currNode] = false;
 		selectedNodes.pop_back();
 	}
@@ -58,7 +57,8 @@ int main(void) {
 		memset(vi, false, sizeof(vi));
 		vector<int> v;
 		v.push_back(i);
-		dfs(i, v, i);
+		vi[i] = true;
+		dfs(i, v);
 	}
 
 	answer == INF ? cout << -1 : cout << answer;
