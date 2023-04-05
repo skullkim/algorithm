@@ -8,34 +8,32 @@ vector<vector<int>> graph;
 bool g[MAX][MAX];
 bool vi[MAX]; 
 
-void dfs(int currNode, vector<int> selectedNodes) {
-	if (selectedNodes.size() == 3) {
-		int lastSelectedNode = selectedNodes.back();
-		int n1 = selectedNodes[0], n2 = selectedNodes[1], n3 = selectedNodes[2];
-		if (!g[n1][n2] || !g[n1][n3] || !g[n2][n3]) return;
+void f(int currNode, vector<int> sn) {
+	if (sn.size() == 3) {
+		int lastSelectedNode = sn.back();
+		int n1 = sn[0], n2 = sn[1], n3 = sn[2];
 		int sum = 0;
 
-//		for (int i =0; i < selectedNodes.size(); i++) {
-//			cout << selectedNodes[i] << "  ";
+//		for (int i =0; i < sn.size(); i++) {
+//			cout << sn[i] << "  ";
 //		}
 //		cout << endl;
 //		cout << "========================================" << endl;
 //
-		for (int i = 0; i < selectedNodes.size(); i++) {
-			sum += (graph[selectedNodes[i]].size() - 2);
+		for (int i = 0; i < sn.size(); i++) {
+			sum += (graph[sn[i]].size() - 2);
 		}
 		answer = min(answer, sum);
 		return;
 	}
 
-	for (int i = 0; i < graph[currNode].size(); i++) {
-		int nextNode = graph[currNode][i];
-		if (vi[nextNode]) continue;
-		vi[currNode] = true;
-		selectedNodes.push_back(nextNode);
-		dfs(nextNode, selectedNodes);
-		vi[currNode] = false;
-		selectedNodes.pop_back();
+	for (int i = currNode + 1; i < nodes; i++) {
+		int selectedSize = sn.size();
+		if (selectedSize == 1 && !g[sn[0]][i]) continue;
+		if (selectedSize == 2 && (!g[sn[0]][i] || !g[sn[1]][i])) continue;
+		sn.push_back(i);
+		f(i, sn);
+		sn.pop_back();
 	}
 }
 
@@ -53,13 +51,8 @@ int main(void) {
 		g[n2][n1] = true;
 	}
 
-	for (int i = 1; i <= nodes; i++) {
-		memset(vi, false, sizeof(vi));
-		vector<int> v;
-		v.push_back(i);
-		vi[i] = true;
-		dfs(i, v);
-	}
+	vector<int> v;
+	f(0, v);
 
 	answer == INF ? cout << -1 : cout << answer;
 }
