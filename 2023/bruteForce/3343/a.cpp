@@ -12,14 +12,21 @@ long long target;
 long long answer = 1e+18 + 2;
 Flower f1, f2;
 
-void f(long long currTarget, long long currAmount) {
+long long currTarget, currAmount = 0;
+
+void f() {
 	if (currTarget <= 0) {
 		answer = min(currAmount, answer);
 		return;
 	}
 
-	f(currTarget - f1.flowers, currAmount + f1.amount);
-	f(currTarget - f2.flowers, currAmount + f2.amount);
+	currTarget -= f1.flowers; currAmount += f1.amount;
+	f();
+	currTarget += f1.flowers; currAmount -= f1.amount;
+
+	currTarget -= f2.flowers; currAmount += f2.amount;
+	f();
+	currTarget += f2.flowers; currAmount -= f2.amount;
 }
 
 int main(void) {
@@ -32,6 +39,8 @@ int main(void) {
 	cin >> flowers >> amount;
 	f2 = {flowers, amount};
 
-	f(target, 0);
+	currTarget = target;
+
+	f();
 	cout << answer;
 }
