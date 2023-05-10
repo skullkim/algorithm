@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <cmath>
 using namespace std;
 
 struct Pos {
@@ -36,6 +37,16 @@ void printCloudy(vector<Pos> c) {
 	cout << endl << endl;
 }
 
+void printBoard() {
+	for (int i = 0; i < n; i++) {
+		for (int k = 0; k < n; k++) {
+			cout << board[i][k] << " ";
+		}
+		cout << endl;
+	}
+	cout << endl;
+}
+
 vector<Pos> generateFirstCloudy(int n) {
 	vector<Pos> cloudy;
 	for (int i = 0; i < 4; i++) {
@@ -47,38 +58,48 @@ vector<Pos> generateFirstCloudy(int n) {
 
 vector<Pos> moveCloud(MovingInfo movingInfo, vector<Pos> currCloudy) {
 	vector<Pos> cloudy;
-	cout << "curr:" << endl;
-	printCloudy(currCloudy);
+//	cout << "curr:" << endl;
+//	printCloudy(currCloudy);
 	for (int i = 0; i < currCloudy.size(); i++) {
 		Pos next = currCloudy[i];
 		Pos pos = {next.y + DIRECTIONS[movingInfo.direction].y * movingInfo.spaces,
 			next.x + DIRECTIONS[movingInfo.direction].x * movingInfo.spaces};
-		if (pos.y < 0) pos.y = n + pos.y;
+		if (pos.y < 0) pos.y = abs(n + pos.y);
 		else if (pos.y >=0) pos.y = pos.y % n;
 		if (pos.x < 0) pos.x = n + pos.x;
 		else if (pos.x >=0) pos.x = pos.x % n;
 		cloudy.push_back(pos);
 	}
-	cout << "new:" << endl;
-	printCloudy(cloudy);
+//	cout << "new:" << endl;
+//	printCloudy(cloudy);
 	return cloudy;
 }
 
 void rain(vector<Pos> currCloudy) {
+//	cout << "board before rain:" << endl;
+//	printBoard();
 	for (int i = 0; i < currCloudy.size(); i++) {
 		Pos pos = currCloudy[i];
 		board[pos.y][pos.x]++;
 	}
+//	cout << "board after rain:" << endl;
+//	printBoard();
 }
 
 void copyWater(vector<Pos> currCloudy) {
+//	cout << "before copy:" << endl;
+//	printBoard();
 	for (int i = 0; i < currCloudy.size(); i++) {
+		int wateredBoards = 0;
 		for (int k = 0; k < 4; k++) {
 			Pos pos = {currCloudy[i].y + COPYABLE[k].y, currCloudy[i].x + COPYABLE[k].x};
-			if (0 > pos.y || pos.y >= n || 0 > pos.x || pos.x >= n) continue;
-			board[currCloudy[i].y][currCloudy[i].x] += board[pos.y][pos.x];
+			if (0 > pos.y || pos.y > n || 0 > pos.x || pos.x > n || !board[pos.y][pos.x]) continue;
+			wateredBoards++;
 		}
+		board[currCloudy[i].y][currCloudy[i].x] += wateredBoards; 
 	}
+//	cout << "after copy:" << endl;
+//	printBoard();
 }
 
 vector<Pos> generateNewCloudy(vector<Pos> currCloudy) {
@@ -118,11 +139,17 @@ int main(void) {
 		rain(currCloudy);
 		copyWater(currCloudy);
 		currCloudy = generateNewCloudy(currCloudy);
+		cout << "final:" << endl;
+		printBoard();
 	}
 
 	int sum = 0;
 	for (int i = 0; i < n; i++) {
-		for (int k = 0; k < n; k++) sum += board[i][k];
+		for (int k = 0; k < n; k++) {
+		cout << board[i][k] << " ";	
+			sum += board[i][k];
+		}
+		cout << endl;
 	}
 	cout << sum;
 }
