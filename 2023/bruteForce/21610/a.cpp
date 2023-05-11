@@ -56,22 +56,34 @@ vector<Pos> generateFirstCloudy(int n) {
 	return cloudy;
 }
 
+int move(int currPos, int direction, int amount) {
+	for (int i = 0; i < amount; i++) {
+		currPos += direction;
+		if (currPos >= n) currPos = 0;
+		else if (currPos < 0) currPos = n - 1;
+	}
+	return currPos;
+}
+
 vector<Pos> moveCloud(MovingInfo movingInfo, vector<Pos> currCloudy) {
 	vector<Pos> cloudy;
-//	cout << "curr:" << endl;
-//	printCloudy(currCloudy);
 	for (int i = 0; i < currCloudy.size(); i++) {
-		Pos next = currCloudy[i];
-		Pos pos = {next.y + DIRECTIONS[movingInfo.direction].y * movingInfo.spaces,
-			next.x + DIRECTIONS[movingInfo.direction].x * movingInfo.spaces};
-		if (pos.y < 0) pos.y = abs(n + pos.y);
-		else if (pos.y >=0) pos.y = pos.y % n;
-		if (pos.x < 0) pos.x = n + pos.x;
-		else if (pos.x >=0) pos.x = pos.x % n;
-		cloudy.push_back(pos);
+		Pos pos = currCloudy[i];
+		Pos movingAmount = {DIRECTIONS[movingInfo.direction].y * movingInfo.spaces,
+			DIRECTIONS[movingInfo.direction].x * movingInfo.spaces};
+//		cout << "moving amount:" << endl;
+//		cout << movingAmount.y << " " << movingAmount.x << endl;
+		int y = move(pos.y, DIRECTIONS[movingInfo.direction].y, abs(movingAmount.y));
+		int x = move(pos.x, DIRECTIONS[movingInfo.direction].x, abs(movingAmount.x));
+		Pos next = {y, x};
+//		Pos pos = {next.y + DIRECTIONS[movingInfo.direction].y * movingInfo.spaces,
+//			next.x + DIRECTIONS[movingInfo.direction].x * movingInfo.spaces};
+//		if (pos.y < 0) pos.y = abs(n + pos.y);
+//		else if (pos.y >=0) pos.y = pos.y % n;
+//		if (pos.x < 0) pos.x = n + pos.x;
+//		else if (pos.x >=0) pos.x = pos.x % n;
+		cloudy.push_back(next);
 	}
-//	cout << "new:" << endl;
-//	printCloudy(cloudy);
 	return cloudy;
 }
 
@@ -135,21 +147,31 @@ int main(void) {
 	vector<Pos> currCloudy = generateFirstCloudy(n);
 	for (int i = 0; i < movingInfos.size(); i++) {
 		MovingInfo movingInfo = movingInfos[i];
+
+		vector<Pos> oldCloudy = currCloudy;
+
 		currCloudy = moveCloud(movingInfo, currCloudy);
+
+//		cout << movingInfo.direction << " " << movingInfo.spaces << endl;
+//		for (int i = 0; i < currCloudy.size(); i++) {
+//			cout << oldCloudy[i].y << " " << oldCloudy[i].x << " -> "
+//				<< currCloudy[i].y << " " << currCloudy[i].x << endl;
+//		}
+
 		rain(currCloudy);
 		copyWater(currCloudy);
 		currCloudy = generateNewCloudy(currCloudy);
-		cout << "final:" << endl;
-		printBoard();
+//		cout << "final:" << endl;
+//		printBoard();
 	}
 
 	int sum = 0;
 	for (int i = 0; i < n; i++) {
 		for (int k = 0; k < n; k++) {
-		cout << board[i][k] << " ";	
+//		cout << board[i][k] << " ";	
 			sum += board[i][k];
 		}
-		cout << endl;
+//		cout << endl;
 	}
 	cout << sum;
 }
