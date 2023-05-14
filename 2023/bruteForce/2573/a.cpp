@@ -1,5 +1,7 @@
 #include <iostream>
 #include <vector>
+#include <queue>
+#include <cstring>
 
 using namespace std;
 
@@ -13,6 +15,29 @@ const int MAX_IDX = 301;
 int rows, cols;
 vector<vector<int>> board(MAX_IDX);
 vector<Pos> ices;
+
+bool isTwoIceBurgs(vector<Pos> ices) {
+	if (ices.size() == 0) return false;
+	bool vi[MAX_IDX][MAX_IDX];
+	memset(vi, false, sizeof(vi));
+	queue<Pos> q;
+	int visited = 0;
+	q.push(ices[0]);
+	while (!q.empty()) {
+		Pos currPos = q.front();
+		q.pop();
+		vi[currPos.y][currPos.x] = true;
+		visited++;
+		for (int i = 0; i < 4; i++) {
+			Pos next = {currPos.y + DI[i].y, currPos.x + DI[i].x};
+			if (0 > next.y || next.y >= rows || 0 > next.x || next.x >= cols) continue;
+			if (vi[next.y][next.x]) continue;
+			q.push(next);
+		}
+	}
+	cout << "vi: " << visited << endl;
+	return visited != ices.size();
+}
 
 
 int main(void) {
@@ -46,43 +71,20 @@ int main(void) {
 				if (board[neighbor.y][neighbor.x]) continue;
 				seas++;
 			}
-//
-//			cout << "seas: " << seas << endl;
-//			cout << currPos.y << " " << currPos.x << endl;
-//			cout << "iceBurg:" << iceBurgs << endl;
-//			for (int i = 0; i < rows; i++) {
-//				for (int k = 0; k < cols; k++) {
-//					cout << tmpBoard[i][k] << " ";
-//				}
-//				cout << endl;
-//			}
-//			cout << endl;
-
-
-
-			if (seas == 4) iceBurgs++;
-			if (iceBurgs >= 2) break;
+//			if (seas == 4) iceBurgs++;
+//			if (iceBurgs >= 2) break;
 			tmpBoard[currPos.y][currPos.x] = iceHeight - seas >= 0 ? iceHeight - seas : 0;
 		}
 		board = tmpBoard;
 
-//		cout << "=============================================" << endl;
-//		cout << "iceBurg:" << iceBurgs << endl;
-//		for (int i = 0; i < rows; i++) {
-//			for (int k = 0; k < cols; k++) {
-//				cout << board[i][k] << " ";
-//			}
-//			cout << endl;
-//		}
-//		cout << endl;
-
-		if (iceBurgs >=2) break;
+//		if (iceBurgs >=2) break;
 		vector<Pos> tmp;
 		for (int i = 0; i < ices.size(); i++) {
 			if (board[ices[i].y][ices[i].x] == 0) continue;
 			tmp.push_back(ices[i]);
 		}
 		ices = tmp;
+		if (isTwoIceBurgs(ices)) break;
 		if (ices.size() == 0) {
 			years = 0;
 			break;
