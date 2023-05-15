@@ -16,6 +16,25 @@ int rows, cols;
 vector<vector<int>> board(MAX_IDX);
 vector<Pos> ices;
 
+void printBoard() {
+	cout << "board:" << endl;
+	for (int i = 0; i < rows; i++) {
+		for (int k = 0; k < cols; k++) {
+			cout << board[i][k] << " ";
+		}
+		cout << endl;
+	}
+	cout << endl;
+}
+
+void printIce(vector<Pos> ices) {
+	cout << "ices:" << endl;
+	for (int i = 0; i < ices.size(); i++) {
+		cout << ices[i].y << " " << ices[i].x << endl;
+	}
+	cout << endl;
+}
+
 bool isTwoIceBurgs(vector<Pos> ices) {
 	if (ices.size() == 0) return false;
 	bool vi[MAX_IDX][MAX_IDX];
@@ -31,11 +50,12 @@ bool isTwoIceBurgs(vector<Pos> ices) {
 		for (int i = 0; i < 4; i++) {
 			Pos next = {currPos.y + DI[i].y, currPos.x + DI[i].x};
 			if (0 > next.y || next.y >= rows || 0 > next.x || next.x >= cols) continue;
-			if (vi[next.y][next.x]) continue;
+			if (vi[next.y][next.x] || !board[next.y][next.x]) continue;
+			vi[next.y][next.x] = true;
 			q.push(next);
 		}
 	}
-	cout << "vi: " << visited << endl;
+//	cout << "vi: " << visited << " " << ices.size() << endl;
 	return visited != ices.size();
 }
 
@@ -58,6 +78,7 @@ int main(void) {
 	
 	int years = 0;
 	while(true) {
+		if (isTwoIceBurgs(ices)) break;
 		int iceBurgs = 0;
 		vector<vector<int>> tmpBoard = board;
 		for (int i = 0; i < ices.size(); i++) {
@@ -71,25 +92,20 @@ int main(void) {
 				if (board[neighbor.y][neighbor.x]) continue;
 				seas++;
 			}
-//			if (seas == 4) iceBurgs++;
-//			if (iceBurgs >= 2) break;
 			tmpBoard[currPos.y][currPos.x] = iceHeight - seas >= 0 ? iceHeight - seas : 0;
 		}
 		board = tmpBoard;
-
-//		if (iceBurgs >=2) break;
 		vector<Pos> tmp;
 		for (int i = 0; i < ices.size(); i++) {
 			if (board[ices[i].y][ices[i].x] == 0) continue;
 			tmp.push_back(ices[i]);
 		}
 		ices = tmp;
-		if (isTwoIceBurgs(ices)) break;
+		years++;
 		if (ices.size() == 0) {
 			years = 0;
 			break;
 		}
-		years++;
 	}
 	cout << years;
 }
