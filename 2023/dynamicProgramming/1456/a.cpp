@@ -16,18 +16,17 @@ int main(void) {
 	int start, end;
 	cin >> start >> end;
 	
-	memset(isPrime, true, sizeof(isPrime));
 
-	isPrime[0] = false; isPrime[1] = false;
+	isPrime[0] = true; isPrime[1] = true;
 	for (ll i = 2; i < MAX_IDX; i++) {
-		if (!isPrime[i]) continue;
-		for (ll k = i * i; k < MAX_IDX; k += i) isPrime[k] = false;
+		if (isPrime[i]) continue;
+		for (ll k = i * i; k < MAX_IDX; k += i) isPrime[k] = true;
 	}
 
 	int ans = 0;
 	for (ll k = 2; k < MAX_IDX; k++) {
 		if (k * k > end) break;
-		if (!isPrime[k]) continue;
+		if (isPrime[k]) continue;
 		ll prime = k * k;
 		while(prime <= end) {
 			if (start <= prime) {
