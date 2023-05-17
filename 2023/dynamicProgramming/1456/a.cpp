@@ -26,9 +26,9 @@ int main(void) {
 
 	int ans = 0;
 	for (ll k = 2; k < MAX_IDX; k++) {
+		if (k * k > end) break;
 		if (!isPrime[k]) continue;
 		ll prime = k * k;
-		if (prime > end) break;
 		while(prime <= end) {
 			if (start <= prime) {
 				ans++;
