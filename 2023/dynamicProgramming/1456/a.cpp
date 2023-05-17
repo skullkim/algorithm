@@ -18,10 +18,14 @@ int main(void) {
 	
 	memset(isPrime, true, sizeof(isPrime));
 
+	for (int i = 0; i < MAX_IDX; i++) {
+		if (!isPrime[i]) cout << i << endl;
+	}
+
 	isPrime[0] = false; isPrime[1] = false;
 	for (ll i = 2; i < MAX_IDX; i++) {
 		if (!isPrime[i]) continue;
-		for (ll k = i + i; k < MAX_IDX; k += i) isPrime[k] = false;
+		for (ll k = i * i; k < MAX_IDX; k += i) isPrime[k] = false;
 	}
 
 	int ans = 0;
