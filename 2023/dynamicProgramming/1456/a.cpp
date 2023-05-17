@@ -18,10 +18,6 @@ int main(void) {
 	
 	memset(isPrime, true, sizeof(isPrime));
 
-	for (int i = 0; i < MAX_IDX; i++) {
-		if (!isPrime[i]) cout << i << endl;
-	}
-
 	isPrime[0] = false; isPrime[1] = false;
 	for (ll i = 2; i < MAX_IDX; i++) {
 		if (!isPrime[i]) continue;
