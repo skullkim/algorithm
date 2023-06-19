@@ -4,27 +4,29 @@
 
 using namespace std;
 
+typedef long long ll;
 
 int main(void) {
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
 
-	int treeNum, targetAmount;
-	vector<int> trees;
+	ll treeNum, targetAmount;
+	vector<ll> trees;
 
-	int start = 0, end = 0;
+	ll start = 0, end = 0;
+	ll tmp;
 	cin >> treeNum >> targetAmount;
-	for (int i = 0, tmp; i < treeNum; i++) {
+	for (int i = 0; i < treeNum; i++) {
 		cin >> tmp;
 		trees.push_back(tmp);
 		end = max(end, tmp);
 	}
 
-	pair<int, int> ans = make_pair(0, 1e9 + 2);
-	int mid = 0;
+	pair<ll, ll> ans = make_pair(0, 1e9 + 2);
+	ll mid = 0;
 	while (start <= end) {
 		mid = (start + end) / 2;
-		long long sum = 0;
+		ll sum = 0;
 		for (int i = 0; i < treeNum; i++) {
 			if ((trees[i] - mid) <= 0) continue;
 			sum += (trees[i] - mid);
