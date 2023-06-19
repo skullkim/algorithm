@@ -22,7 +22,7 @@ int main(void) {
 		end = max(end, tmp);
 	}
 
-	pair<ll, ll> ans = make_pair(0, 1e9 + 2);
+	ll ans = 0;
 	ll mid = 0;
 	while (start <= end) {
 		mid = (start + end) / 2;
@@ -34,16 +34,10 @@ int main(void) {
 		
 		if (sum < targetAmount) {
 			end = mid - 1;
-		} else if (sum > targetAmount) {
+		} else if (sum >= targetAmount) {
 			start = mid + 1;
-			if (ans.second > sum) {
-				ans.first = mid;
-				ans.second = sum;
-			}
-		} else {
-			ans.first = mid;
-			break;
-		}
+			ans = max(ans, mid);
+		}	
 	}
-	cout << ans.first;
+	cout << ans;
 }
