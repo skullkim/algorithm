@@ -22,13 +22,13 @@ int main(void) {
 		}
 	}
 
-	long long start = 0, end = 1e9;
-	long long ans = 1e10 + 2;
+	int start = 0, end = 1e9, mid;
+	int ans = 1e9 + 2, tmp, usedBlueraies;
 	while (start <= end) {
-		long long mid = (start + end) / 2;
+		mid = (start + end) / 2;
 
-		long long tmp = 0;
-		int usedBlueraies = 1;
+		tmp = 0;
+		usedBlueraies = 1;
 		for (int i = 0; i < videoNum; i++) {
 			if (tmp + videos[i] > mid) {
 				usedBlueraies++;
