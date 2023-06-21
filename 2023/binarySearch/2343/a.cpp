@@ -33,8 +33,6 @@ int main(void) {
 			if (tmp + videos[i] > mid) {
 				usedBlueraies++;
 				tmp = 0;
-				i--;
-				continue;
 			}
 			tmp += videos[i];
 		}
