@@ -22,30 +22,29 @@ int main(void) {
 		}
 	}
 
-	long long start = 0, end = limit;
+	long long start = 0, end = 1e9;
 	long long ans = 1e10 + 2;
 	while (start <= end) {
 		long long mid = (start + end) / 2;
 
 		long long tmp = 0;
-		int usedBlueraies = 0;
+		int usedBlueraies = 1;
 		for (int i = 0; i < videoNum; i++) {
 			if (tmp + videos[i] > mid) {
 				usedBlueraies++;
 				tmp = 0;
+				i--;
 				continue;
 			}
 			tmp += videos[i];
 		}
 
-		cout << start << " " << mid << " " << end << " " << usedBlueraies << endl;
+		//cout << start << " " << mid << " " << end << " " << usedBlueraies << endl;
 
 		if (usedBlueraies > blueRaies) {
 			start = mid + 1;
 		} else if (usedBlueraies <= blueRaies) {
-			if (usedBlueraies == blueRaies) {
-				ans = min(ans, mid);
-			}
+			ans = min(ans, mid);
 			end = mid - 1;
 		}
 	}
