@@ -12,20 +12,21 @@ int main(void) {
 
 	cin >> videoNum >> blueRaies;
 	int limit = 0, tmp2 = 0;
+	int start = -1, end;
 	for (int i = 0, tmp; i < videoNum; i++) {
 		cin >> tmp;
 		videos.push_back(tmp);
 		tmp2 += videos[i];
+		start = max(start, tmp);
 	}
-
-	int start = 0, end = tmp2;
+	end = tmp2;
 	int mid;
 	int tmp, usedBlueraies;
 	while (start <= end) {
 		mid = (start + end) / 2;
 
 		tmp = 0;
-		usedBlueraies = 1;
+		usedBlueraies = 0;
 		for (int i = 0; i < videoNum; i++) {
 			if (tmp + videos[i] > mid) {
 				usedBlueraies++;
@@ -33,6 +34,7 @@ int main(void) {
 			}
 			tmp += videos[i];
 		}
+		if (tmp > 0) usedBlueraies++;
 
 //cout << start << " " << mid << " " << end << " " << usedBlueraies << endl;
 
