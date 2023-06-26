@@ -12,15 +12,13 @@ int main(void) {
 	int checkPoints, travlers;
 	vector<ll> waitingTimes;
 
-	ll maxWaitingTime = -1, tmp;
 	cin >> checkPoints >> travlers;
-	for (int i = 0; i < checkPoints; i++) {
+	for (int i = 0, tmp; i < checkPoints; i++) {
 		cin >> tmp;
 		waitingTimes.push_back(tmp);
-		maxWaitingTime = max(maxWaitingTime, tmp);
 	}
 
-	ll start = 1, end = maxWaitingTime * travlers, mid, ans;
+	ll start = 1, end = 1e18, mid, ans;
 	while (start <= end) {
 		mid = (start + end) / 2;
 
