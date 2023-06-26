@@ -10,11 +10,11 @@ int main(void) {
 	cin.tie(NULL);
 
 	int checkPoints, travlers;
-	vector<int> waitingTimes;
+	vector<ll> waitingTimes;
 
-	int maxWaitingTime = -1;
+	ll maxWaitingTime = -1, tmp;
 	cin >> checkPoints >> travlers;
-	for (int i = 0, tmp; i < checkPoints; i++) {
+	for (int i = 0; i < checkPoints; i++) {
 		cin >> tmp;
 		waitingTimes.push_back(tmp);
 		maxWaitingTime = max(maxWaitingTime, tmp);
