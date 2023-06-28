@@ -1,2 +1,4 @@
 *.class
 *.java.swp
+a.out
+*.cpp.swp

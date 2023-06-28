@@ -31,7 +31,6 @@ void f(int idx, vector<int> t, int sum) {
 		if ((curMax - curMin) >= x) {
 			ans++;
 		}
-		return;
 	}
 
 	for (int i = idx; i < n; i++) {
