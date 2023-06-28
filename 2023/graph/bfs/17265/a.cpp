@@ -46,7 +46,7 @@ int main(void) {
 		}
 	}
 
-	int maxVal = -1, minVal = 1e9;
+	int maxVal = -1e9, minVal = 1e9;
 	Pos start = {0, 0};
 	pps p = make_pair(start, board[start.y][start.x]);
 	queue<pps> q;
