@@ -16,12 +16,20 @@ bool isInAns[MAX_CITIES];
 bool isBoombTarget(const int& target) {
 	if (!isDestroied[target]) return false;
 	vector<int> linkedCities = graph[target];
-	if (linkedCities.size() == 0) return true;
 	bool ans = false;
+	if (!isInAns[target]) {
+		ans = true;
+		isInAns[target] = true;
+		destroiedCities--;
+	}
 	for (int i = 0; i < linkedCities.size(); i++) {
 		int currCity = linkedCities[i];
 		if (!isDestroied[currCity]) return false;
-		else if (!isInAns[currCity]) ans = true;
+		else if (isDestroied[currCity] && !isInAns[currCity]) {
+			ans = true;
+			isInAns[currCity] = true;
+			destroiedCities--;
+		}
 	}
 	return ans;
 }
@@ -52,17 +60,18 @@ int main(void) {
 		if (!isBoombTarget(i)) continue;
 //		cout << i << endl;
 		ans.push_back(i);
-		if (!isInAns[i]) {
-			isInAns[i] = true;
-			destroiedCities--;
-		}
-		for (int k = 0; k < graph[i].size(); k++) {
-			if (isInAns[graph[i][k]]) continue;
-			isInAns[graph[i][k]] = true;
-			destroiedCities--;
-		}
+
+//		if (!isInAns[i]) {
+//			isInAns[i] = true;
+//			destroiedCities--;
+//		}
+//		for (int k = 0; k < graph[i].size(); k++) {
+//			if (isInAns[graph[i][k]]) continue;
+//			isInAns[graph[i][k]] = true;
+//			destroiedCities--;
+//		}
 	}
-	if (destroiedCities != 0) {
+	if (ans.size() == 0) {
 		cout << -1;
 		return 0;
 	}
