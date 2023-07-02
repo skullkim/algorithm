@@ -16,6 +16,7 @@ bool isInAns[MAX_CITIES];
 bool isBoombTarget(const int& target) {
 	if (!isDestroied[target]) return false;
 	vector<int> linkedCities = graph[target];
+	if (linkedCities.size() == 0) return true;
 	bool ans = false;
 	for (int i = 0; i < linkedCities.size(); i++) {
 		int currCity = linkedCities[i];
