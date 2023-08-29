@@ -1,12 +1,16 @@
 #include <iostream>
 #include <map>
+#include <cmath>
 using namespace std;
-
-const int MAX_NUMBER = 1e5;
 
 int row, col;
 int graph[10][10];
 map<int, bool> squareNumbers;
+
+bool isSquareNumber(int number) {
+	int rootNumber = (int)sqrt(number);
+	return rootNumber * rootNumber == number;
+}
 
 int generateMaxSquareNumber(int currRow, int rowGap, int currCol, int colGap) {
 	int number = 0;
@@ -14,7 +18,7 @@ int generateMaxSquareNumber(int currRow, int rowGap, int currCol, int colGap) {
 	while ((0 <= currRow && currRow < row) && (0 <= currCol && currCol < col)) {
 		number *= 10;
 		number += graph[currRow][currCol];
-		if (squareNumbers[number]) {
+		if (isSquareNumber(number)) {
 			maxNumber = max(maxNumber, number);
 		}
 		currRow += rowGap;
@@ -27,10 +31,6 @@ int main(void) {
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
 	
-	for (int i = 0; i <= MAX_NUMBER; i++) {
-		squareNumbers[i * i] = true;
-	}
-
 	cin >> row >> col;
 	string tmp;
 	for (int i = 0; i < row; i++) {
