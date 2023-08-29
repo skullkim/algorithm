@@ -42,7 +42,7 @@ int main(void) {
 
 	int ans = -1;	
 
-	if (row == 1 && col == 1) ans = graph[0][0];
+	if (row == 1 && col == 1 && isSquareNumber(graph[0][0])) ans = graph[0][0];
 
 	for (int startRow = 0; startRow < row; startRow++) {
 		for (int startCol = 0; startCol < col; startCol++) {
