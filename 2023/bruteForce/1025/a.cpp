@@ -11,7 +11,6 @@ map<int, bool> squareNumbers;
 int generateMaxSquareNumber(int currRow, int rowGap, int currCol, int colGap) {
 	int number = 0;
 	int maxNumber = -1;
-
 	while ((0 <= currRow && currRow < row) && (0 <= currCol && currCol < col)) {
 		number *= 10;
 		number += graph[currRow][currCol];
@@ -42,6 +41,9 @@ int main(void) {
 	}
 
 	int ans = -1;	
+
+	if (row == 1 && col == 1) ans = graph[0][0];
+
 	for (int startRow = 0; startRow < row; startRow++) {
 		for (int startCol = 0; startCol < col; startCol++) {
 			for (int rowGap = 0; rowGap < row; rowGap++) {
