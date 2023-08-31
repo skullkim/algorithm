@@ -91,7 +91,7 @@ void generateSimilarNumber(int startPoint) {
 	allNumbers.push_back(possibleNumbers);
 }
 
-int ans = 0;
+long long ans = 0;
 int cases = 0;
 void generateAllPossibleNumbers(vector<int> number, int digits) {
 	if (digits == allNumbers.size()) {
@@ -142,5 +142,5 @@ int main(void) {
 	generateAllPossibleNumbers(tmp, 0);
 
 	//cout << (double)ans / (double)cases;
-	printf("%.10lf", (double)ans/cases);
+	printf("%.6lf", (double)ans/cases);
 }
