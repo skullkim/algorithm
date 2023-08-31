@@ -124,12 +124,17 @@ int main(void) {
 		generateSimilarNumber(startIndex);
 	}
 
-	for (int i = 0; i < allNumbers.size(); i++) {
-		cout << i + 1 << "번째:";
-		for (int k = 0; k < allNumbers[i].size(); k++) {
-			cout << allNumbers[i][k] << ", ";
-		}
-		cout << endl;
+//	for (int i = 0; i < allNumbers.size(); i++) {
+//		cout << i + 1 << "번째:";
+//		for (int k = 0; k < allNumbers[i].size(); k++) {
+//			cout << allNumbers[i][k] << ", ";
+//		}
+//		cout << endl;
+//	}
+	
+	if (!allNumbers.size()) {
+		cout << -1;
+		return 0;
 	}
 
 	vector<int> tmp;
