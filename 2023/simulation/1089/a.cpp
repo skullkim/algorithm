@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstdio>
 #include <vector>
 using namespace std;
 
@@ -140,5 +141,6 @@ int main(void) {
 	vector<int> tmp;
 	generateAllPossibleNumbers(tmp, 0);
 
-	cout << (double)ans / (double)cases;
+	//cout << (double)ans / (double)cases;
+	printf("%.10lf", (double)ans/cases);
 }
