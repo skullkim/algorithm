@@ -142,5 +142,5 @@ int main(void) {
 	generateAllPossibleNumbers(tmp, 0);
 
 	//cout << (double)ans / (double)cases;
-	printf("%.6lf", (double)ans/cases);
+	printf("%.10lf", (double)ans/cases);
 }
