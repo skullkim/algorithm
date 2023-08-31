@@ -11,21 +11,29 @@ vector<vector<int>> graph(MAX_NODES);
 int nodes;
 int populations[MAX_NODES];
 
-void dfs(int node, bool vi[]) {
+bool canVisit(int node, vector<int> area) {
+	for (int i = 0; i < area.size(); i++) {
+		if (area[i] == node) return true;
+	}
+	return false;
+}
+
+void dfs(int node, bool vi[], vector<int> visitableArea) {
 	if (vi[node]) return;
 
 	vi[node] = true;
 
 	for (int i = 0; i < graph[node].size(); i++) {
 		int nextNode = graph[node][i];
-		dfs(nextNode, vi);
+		if (!canVisit(nextNode, visitableArea)) continue;
+		dfs(nextNode, vi, visitableArea);
 	}
 }
 
 bool areAllConnected(vector<int> area) {
 	bool vi[MAX_NODES];
 	memset(vi, false, sizeof(vi));
-	dfs(area[0], vi);
+	dfs(area[0], vi, area);
 
 //	for (int i = 1; i < nodes; i++) {
 //		cout << i << ":" << vi[i] << ", ";
