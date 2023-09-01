@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstdio>
 #include <vector>
+#include <cmath>
 using namespace std;
 
 const string NUMBERS[10][5] = {
@@ -92,26 +93,6 @@ void generateSimilarNumber(int startPoint) {
 }
 
 long long ans = 0;
-int cases = 0;
-void generateAllPossibleNumbers(vector<int> number, int digits) {
-	if (digits == allNumbers.size()) {
-		int sum = 0;
-		for (int i = 0; i < number.size(); i++) {
-			sum *= 10;
-			sum += number[i];
-		}
-		ans += sum;
-		cases++;
-		return;
-	}
-
-	for (int i = 0; i < allNumbers[digits].size(); i++) {
-		number.push_back(allNumbers[digits][i]);
-		generateAllPossibleNumbers(number, digits + 1);
-		number.pop_back();
-	}
-}
-
 int main(void) {
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
@@ -125,22 +106,26 @@ int main(void) {
 		generateSimilarNumber(startIndex);
 	}
 
-//	for (int i = 0; i < allNumbers.size(); i++) {
-//		cout << i + 1 << "번째:";
-//		for (int k = 0; k < allNumbers[i].size(); k++) {
-//			cout << allNumbers[i][k] << ", ";
-//		}
-//		cout << endl;
-//	}
-	
 	if (!allNumbers.size()) {
 		cout << -1;
 		return 0;
 	}
 
-	vector<int> tmp;
-	generateAllPossibleNumbers(tmp, 0);
+	int possibleCases = 1;
+	for (int i = 0; i < allNumbers.size(); i++) {
+		possibleCases *= allNumbers[i].size();
+	}
+	
+	int digits = pow(10, allNumbers.size() - 1);
+	for (int i = 0; i < allNumbers.size(); i++) {
+		int uses = possibleCases / allNumbers[i].size();
+		int sum = 0;
+		for (int k = 0; k < allNumbers[i].size(); k++) {
+			sum += allNumbers[i][k];
+		}
+		ans += ((long long)uses * sum * digits);
+		digits /= 10;
+	}
 
-	//cout << (double)ans / (double)cases;
-	printf("%.10lf", (double)ans/cases);
+	printf("%.10lf", (double)ans/possibleCases);
 }
