@@ -18,13 +18,18 @@ int main(void) {
 
 	stable_sort(numbers.begin(), numbers.end());
 
+	for (int i = 0; i < n; i++) {
+		cout << numbers[i] << " ";
+	}
+	cout << endl;
+
 	int ans = 0;
 	for (int i = 0, target; i < n; i++) {
 		target = numbers[i];
 		int start = 0, end = n - 1;
 		while (true) {
-			if (numbers[start] == target) start++;
-			else if (numbers[end] == target) end--;
+			if (start == i) start++;
+			else if (end == i) end--;
 			if (start >= end) break;
 
 			int sum = numbers[start] + numbers[end];
