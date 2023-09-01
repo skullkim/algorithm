@@ -24,18 +24,16 @@ int main(void) {
 		int start = 0, end = n - 1;
 		while (true) {
 			if (numbers[start] == target) start++;
-			if (numbers[end] == target) end--;
+			else if (numbers[end] == target) end--;
 			if (start >= end) break;
 
 			int sum = numbers[start] + numbers[end];
-			if(sum <= target) {
-				if (sum == target) {
-					ans++;
-					break;
-				}
-				start++;
+			if(sum < target) start++;
+			else if(sum > target) end--;
+			else {
+				ans++;
+				break;
 			}
-			else end--;
 		}
 	}
 
