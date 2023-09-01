@@ -88,7 +88,6 @@ void generateSimilarNumber(int startPoint) {
 		if (!isSimilarNumber) continue;
 		possibleNumbers.push_back(i);
 	}
-	if (possibleNumbers.size() == 0) return;
 	allNumbers.push_back(possibleNumbers);
 }
 
@@ -104,6 +103,10 @@ int main(void) {
 
 	for (int startIndex = 0; startIndex < 4 * floors; startIndex += 4) {
 		generateSimilarNumber(startIndex);
+		if (allNumbers.back().size() == 0) {
+			cout << -1;
+			return 0;
+		}
 	}
 
 	if (!allNumbers.size()) {
