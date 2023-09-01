@@ -18,11 +18,6 @@ int main(void) {
 
 	stable_sort(numbers.begin(), numbers.end());
 
-	for (int i = 0; i < n; i++) {
-		cout << numbers[i] << " ";
-	}
-	cout << endl;
-
 	int ans = 0;
 	for (int i = 0, target; i < n; i++) {
 		target = numbers[i];
