@@ -127,5 +127,5 @@ int main(void) {
 		digits /= 10;
 	}
 
-	printf("%.10lf", (double)ans/possibleCases);
+	cout << (double)ans / possibleCases;
 }
