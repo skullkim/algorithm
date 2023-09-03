@@ -26,9 +26,11 @@ int main(void) {
 		map<char, int> boardChar;
 		for (int i = 0; i < board.size(); i++) {
 			char c = board[i];
-			if (!boardChar[c]) boardChar[c] = 1;
+			if (!boardChar[c]) {
+				boardChar[c] = 1;
+				priority[c] = 1;
+			}
 			else boardChar[c]++;
-			priority[c] = 0;
 		}
 
 		vector<string> existWords;
@@ -40,7 +42,7 @@ int main(void) {
 				if (!ch[c]) ch[c] = 1;
 				else ch[c]++;
 
-				if (ch[c] > boardChar[c]) {
+				if (ch[c] > boardChar[c] || !priority[c]) {
 					canMake = false;
 					break;
 				}
@@ -59,15 +61,15 @@ int main(void) {
 					if (board[i] != existWords[k][c]) continue;
 					priority[board[i]]++;
 					//cout << board[i] << " " << priority[board[i]] << endl;
-					minUsed = min(minUsed, priority[board[i]]);
-					maxUsed = max(maxUsed, priority[board[i]]);
+					minUsed = min(minUsed, priority[board[i]] - 1);
+					maxUsed = max(maxUsed, priority[board[i]] - 1);
 					break;
 				}
 			}
 		}
 
 		for (int i = 0; i < board.size(); i++) {
-			if (!priority[board[i]]) {
+			if (priority[board[i]] == 1) {
 				minUsed = 0;
 				break;
 			}
@@ -75,8 +77,8 @@ int main(void) {
 
 		string minUsedChar = "", maxUsedChar = "";
 		for (auto it : priority) {
-			if (minUsed == it.second) minUsedChar += it.first;
-			if (maxUsed == it.second) maxUsedChar += it.first;
+			if (minUsed == it.second - 1) minUsedChar += it.first;
+			if (maxUsed == it.second - 1) maxUsedChar += it.first;
 		}
 		cout << minUsedChar << " " << minUsed << " " 
 			<< maxUsedChar << " " << maxUsed << "\n";
