@@ -1,14 +1,54 @@
 #include <iostream>
 #include <algorithm>
 #include <map>
+#include <vector>
 using namespace std;
 
-vector<string> dictionary;
+map<char, int> countBoardChar(string board) {
+	map<char, int> boardChar;
+	for (int i = 0; i < board.size(); i++) {
+		char ch = board[i];
+		if (!boardChar[ch]) boardChar[ch] = 1;
+		else boardChar[ch]++;
+	}
+	return boardChar;
+}
+
+vector<string> filterNonExistentWords(map<char, int> boardChars, vector<string> dictionary) {
+	vector<string> existedWords;
+	for (int dicIdx = 0; dicIdx < dictionary.size(); dicIdx++) {
+		bool exist = true;
+		map<char, int> chCount;
+		for (int c = 0; c < dictionary[dicIdx].size(); c++) {
+			char ch = dictionary[dicIdx][c];
+			if (!boardChars[ch]) {
+				exist = false;
+				break;
+			}
+			if (!chCount[ch]) chCount[ch] = 1;
+			else chCount[ch]++;
+		}
+
+		for (auto ch : chCount) {
+			if (boardChars[ch.first] < ch.second) {
+				exist = false;
+				break;
+			}
+		}
+
+		if (exist) existedWords.push_back(dictionary[dicIdx]);
+	}
+
+	return existedWords;
+}
 
 int main(void) {
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
-	
+
+	const int MAX = 210000;
+
+	vector<string> dictionary;
 	string str;
 	while (true) {
 		cin >> str;
@@ -17,70 +57,51 @@ int main(void) {
 	}
 
 	while (true) {
-		map<char, int> priority;
 		string board;
 		cin >> board;
 
 		if (board == "#") break;
 
-		map<char, int> boardChar;
-		for (int i = 0; i < board.size(); i++) {
-			char c = board[i];
-			if (!boardChar[c]) {
-				boardChar[c] = 1;
-				priority[c] = 1;
-			}
-			else boardChar[c]++;
-		}
+		map<char, int> boardChars = countBoardChar(board);
+		vector<string> existedWords = filterNonExistentWords(boardChars, dictionary);
 
-		vector<string> existWords;
-		for (int i = 0; i < dictionary.size(); i++) {
-			map<char, int> ch;
-			bool canMake = true;
-			for (int k = 0; k < dictionary[i].size(); k++) {
-				char c = dictionary[i][k];
-				if (!ch[c]) ch[c] = 1;
-				else ch[c]++;
-
-				if (ch[c] > boardChar[c] || !priority[c]) {
-					canMake = false;
-					break;
-				}
-			}
-			if (canMake) existWords.push_back(dictionary[i]);
-		}
-
-		map<char, bool> vi;
-		int minUsed = 200010, maxUsed = 0;
-		for (int i = 0; i < board.size(); i++) {
-			if (vi[board[i]]) continue;
-			vi[board[i]] = true;
-			for (int k = 0; k < existWords.size(); k++) {
-				bool hasSameChar = false;
-				for (int c = 0; c < existWords[k].size(); c++) {
-					if (board[i] != existWords[k][c]) continue;
-					priority[board[i]]++;
-					//cout << board[i] << " " << priority[board[i]] << endl;
-					minUsed = min(minUsed, priority[board[i]] - 1);
-					maxUsed = max(maxUsed, priority[board[i]] - 1);
-					break;
+		map<char, int> used;
+		int minUsed = MAX, maxUsed = 0;
+		int uniqueChars = boardChars.size();
+		for (auto b : boardChars) {
+			char boardChar = b.first;
+			used[boardChar] = 0;
+			for (int k = 0; k < existedWords.size(); k++) {
+				bool hasChar = false;
+				for (int c = 0; c < existedWords[k].size(); c++) {
+					char ch = existedWords[k][c];
+					if (boardChar != ch) continue;
+					if (!used[ch]) {
+						used[ch] = 1;
+						uniqueChars--;
+					}
+					else used[ch]++;
+					minUsed = min(minUsed, used[ch]);
+					maxUsed = max(maxUsed, used[ch]);
+					hasChar = true;
+					if (hasChar) {
+						break;
+					}
 				}
 			}
 		}
-
-		for (int i = 0; i < board.size(); i++) {
-			if (priority[board[i]] == 1) {
-				minUsed = 0;
-				break;
-			}
+		
+		if (uniqueChars) {
+			minUsed = 0;
 		}
 
-		string minUsedChar = "", maxUsedChar = "";
-		for (auto it : priority) {
-			if (minUsed == it.second - 1) minUsedChar += it.first;
-			if (maxUsed == it.second - 1) maxUsedChar += it.first;
+		string minUsedChars = "", maxUsedChars = "";
+		for (auto u : used) {
+			if (minUsed == u.second) minUsedChars += u.first;
+			if (maxUsed == u.second) maxUsedChars += u.first;
 		}
-		cout << minUsedChar << " " << minUsed << " " 
-			<< maxUsedChar << " " << maxUsed << "\n";
+		
+		cout << minUsedChars << " " << minUsed << " "
+			<< maxUsedChars << " " << maxUsed << "\n";
 	}
 }
