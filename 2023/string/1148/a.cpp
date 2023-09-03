@@ -49,7 +49,7 @@ int main(void) {
 		}
 
 		map<char, bool> vi;
-		int minUsed = 200010, maxUsed = -1;
+		int minUsed = 200010, maxUsed = 0;
 		for (int i = 0; i < board.size(); i++) {
 			if (vi[board[i]]) continue;
 			vi[board[i]] = true;
@@ -76,7 +76,7 @@ int main(void) {
 		string minUsedChar = "", maxUsedChar = "";
 		for (auto it : priority) {
 			if (minUsed == it.second) minUsedChar += it.first;
-			else if (maxUsed == it.second) maxUsedChar += it.first;
+			if (maxUsed == it.second) maxUsedChar += it.first;
 		}
 		cout << minUsedChar << " " << minUsed << " " 
 			<< maxUsedChar << " " << maxUsed << "\n";
