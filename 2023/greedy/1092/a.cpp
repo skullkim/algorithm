@@ -42,8 +42,10 @@ int main(void) {
 	while (totalBoxes > 0) {
 		for (int c = 0; c < craneNum; c++) {
 			int craneWeight = cranes[c];
-			auto it = lower_bound(boxes.begin(), boxes.end(), craneWeight);
+			auto it = lower_bound(boxes.begin(), boxes.end(), craneWeight + 1);
 			int idx = (it - boxes.begin());
+			idx--;
+			if (idx < 0) continue;
 			if (idx >= boxes.size()) idx = boxes.size() - 1;
 			while(vi[idx]) idx--;
 			if (boxes[idx] <= craneWeight) {
