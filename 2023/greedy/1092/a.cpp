@@ -11,7 +11,7 @@ int main(void) {
 	
 	int craneNum, boxNum;
 	vector<int> cranes;
-	list<int> boxes;
+	vector<int> boxes;
 
 	int craneMaxWeight = -1;
 	cin >> craneNum;
@@ -35,37 +35,19 @@ int main(void) {
 	}
 
 	stable_sort(cranes.begin(), cranes.end(), greater<>());
-	boxes.sort(greater<>());
+	stable_sort(boxes.begin(), boxes.end(), greater<>());
 
 	int ans = 0;
 	while (!boxes.empty()) {
-		for (int i = 0; i < craneNum; i++) {
-			int craneWeight = cranes[i];
-			list<int>::iterator start = boxes.begin();
-			for (list<int>::iterator box = start; box != boxes.end(); box++) {
-				if (*box <= craneWeight)  {
-					list<int>::iterator it = box;
-					box--;
-					start = box;
-					boxes.erase(it);
-					break;
-				}
+		for (int i = 0; i < cranes.size(); i++) {
+			for (int k = 0; k < boxes.size(); k++) {
+				if (cranes[i] < boxes[k]) continue;
+				boxes.erase(boxes.begin() + k);
+				break;
 			}
 		}
 		ans++;
 	}
 	
-//	while (!boxes.empty()) {
-//		for (int i = 0; i < craneNum && !boxes.empty(); i++) {
-//			int craneWeight = cranes[i];
-//			if (boxes.front() <= craneWeight) {
-//				cout << craneWeight << " " << boxes.front() << endl;
-//				boxes.pop_front();
-//			}
-//		}
-//		cout << "===================" << endl;
-//		ans++;
-//	}
-
 	cout << ans;
 }
