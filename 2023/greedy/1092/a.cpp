@@ -41,10 +41,12 @@ int main(void) {
 	while (!boxes.empty()) {
 		for (int i = 0; i < craneNum; i++) {
 			int craneWeight = cranes[i];
-			for (list<int>::iterator box = boxes.begin(); box != boxes.end(); box++) {
+			list<int>::iterator start = boxes.begin();
+			for (list<int>::iterator box = start; box != boxes.end(); box++) {
 				if (*box <= craneWeight)  {
 					list<int>::iterator it = box;
 					box--;
+					start = box;
 					boxes.erase(it);
 					break;
 				}
