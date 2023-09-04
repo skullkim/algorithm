@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <list>
 #include <algorithm>
 #include <cstring>
 using namespace std;
@@ -9,7 +10,8 @@ int main(void) {
 	cin.tie(NULL);
 	
 	int craneNum, boxNum;
-	vector<int> cranes, boxes;
+	vector<int> cranes;
+	list<int> boxes;
 
 	int craneMaxWeight = -1;
 	cin >> craneNum;
@@ -33,27 +35,35 @@ int main(void) {
 	}
 
 	stable_sort(cranes.begin(), cranes.end(), greater<>());
-	stable_sort(boxes.begin(), boxes.end());
+	boxes.sort(greater<>());
 
-	bool vi[boxes.size()];
-	memset(vi, false, sizeof(vi));
-	int totalBoxes = boxes.size();
 	int ans = 0;
-	while (totalBoxes > 0) {
-		for (int c = 0; c < craneNum; c++) {
-			int craneWeight = cranes[c];
-			auto it = lower_bound(boxes.begin(), boxes.end(), craneWeight + 1);
-			int idx = (it - boxes.begin());
-			idx--;
-			if (idx < 0) continue;
-			if (idx >= boxes.size()) idx = boxes.size() - 1;
-			while(vi[idx]) idx--;
-			if (boxes[idx] <= craneWeight) {
-				vi[idx] = true;
-				totalBoxes--;
+	while (!boxes.empty()) {
+		for (int i = 0; i < craneNum; i++) {
+			int craneWeight = cranes[i];
+			for (list<int>::iterator box = boxes.begin(); box != boxes.end(); box++) {
+				if (*box <= craneWeight)  {
+					list<int>::iterator it = box;
+					box--;
+					boxes.erase(it);
+					break;
+				}
 			}
 		}
 		ans++;
 	}
-	cout << ans << "\n";
+	
+//	while (!boxes.empty()) {
+//		for (int i = 0; i < craneNum && !boxes.empty(); i++) {
+//			int craneWeight = cranes[i];
+//			if (boxes.front() <= craneWeight) {
+//				cout << craneWeight << " " << boxes.front() << endl;
+//				boxes.pop_front();
+//			}
+//		}
+//		cout << "===================" << endl;
+//		ans++;
+//	}
+
+	cout << ans;
 }
