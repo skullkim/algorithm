@@ -19,7 +19,7 @@ int main(void) {
 	int moves;
 	cin >> moves;
 
-	for (int target = 0; target < n; target++) {
+	for (int target = 0; target < n && moves > 0; target++) {
 		pair<int, int> maxVal = make_pair(numbers[target], target);
 		for (int i = target + 1; i <= target + moves && i < n; i++) {
 			if (maxVal.first >= numbers[i]) continue;
