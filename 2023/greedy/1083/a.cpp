@@ -25,9 +25,9 @@ int main(void) {
 			if (maxVal.first >= numbers[i]) continue;
 			maxVal = make_pair(numbers[i], i);
 		}
-		if (maxVal.first != numbers[target] && maxVal.second != target) {
-			swap(numbers[target], numbers[maxVal.second]);
-			moves -= (maxVal.second - target);
+		for (int k = maxVal.second; k > target; k--) {
+			swap(numbers[k], numbers[k - 1]);
+			moves--;
 		}
 	}
 	
