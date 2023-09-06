@@ -56,7 +56,6 @@ int main(void) {
 			}
 		}
 		if (n == 0) {
-			cout << ans;
 			break;
 		}
 	}
