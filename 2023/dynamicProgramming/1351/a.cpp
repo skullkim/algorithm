@@ -21,4 +21,5 @@ int main(void) {
 	cin >> n >> p >> q;
 	cache[0] = 1;
 	cout << f(n);
+	return 0;
 }
