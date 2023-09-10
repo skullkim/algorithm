@@ -2,12 +2,12 @@
 #include <map>
 using namespace std;
 
-const int MAX_IDX = 1e12 + 1;
+typedef long long ll;
 
-map<int, int> cache;
-int n, p, q;
+map<ll, ll> cache;
+ll n, p, q;
 
-int f(int idx) {
+ll f(ll idx) {
 	if (cache[idx]) return cache[idx];
 
 	cache[idx] = f(idx / p) + f(idx / q);
