@@ -17,7 +17,8 @@ int parents[MAX_NODES];
 
 int findParent(int currNode) {
 	if (parents[currNode] == currNode) return currNode;
-	return findParent(parents[currNode]);
+	parents[currNode] = findParent(parents[currNode]);
+	return parents[currNode];
 }
 
 void unionNode(int node1, int node2) {
