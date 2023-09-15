@@ -31,7 +31,7 @@ int main(void) {
 		cout << "Scenario " << scenarioes << ":\n";
 		int people;
 		cin >> people;
-		for (int i = 0; i <= people; i++) {
+		for (int i = 0; i < MAX_IDX; i++) {
 			parents[i] = i;
 		}
 
