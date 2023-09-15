@@ -15,9 +15,8 @@ void unionNode(int node1, int node2) {
 	int node1Parent = findParent(node1);
 	int node2Parent = findParent(node2);
 
-	if (node1Parent != node2Parent) {
-		parents[node1Parent] = node2Parent;
-	}
+	if (node1Parent < node2Parent) parents[node2Parent] = node1Parent;
+	else parents[node1Parent] = node2Parent;
 }
 
 int main(void) {
@@ -48,7 +47,7 @@ int main(void) {
 			cin >> p1 >> p2;
 			int p1Parent = findParent(p1);
 			int p2Parent = findParent(p2);
-			p1Parent != p2Parent ? cout << 0 << "\n" : cout << 1 << "\n";
+			cout << (p1Parent == p2Parent) << "\n";
 		}
 		cout << "\n";
 	}
