@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-const int MAX_IDX = 1e7;
+const int MAX_IDX = 1e7 + 10;
 
 int parents[MAX_IDX];
 
@@ -26,8 +26,8 @@ int main(void) {
 	int scenarioes;
 	cin >> scenarioes;
 
-	while (scenarioes--) {
-		cout << "Scenario " << scenarioes << ":\n";
+	for (int scenario = 1; scenario <= scenarioes; scenario++) {
+		cout << "Scenario " << scenario << ":\n";
 		int people;
 		cin >> people;
 		for (int i = 0; i < MAX_IDX; i++) {
