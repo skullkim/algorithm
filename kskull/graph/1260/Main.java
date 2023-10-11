@@ -75,6 +75,10 @@ public class Main {
             graph.get(node2).add(node1);
         }
 
+        for (int i = 0; i <= nodes; i++) {
+            Collections.sort(graph.get(i));
+        }
+
 //        for (int i = 0; i < graph.size(); i++) {
 //            for (int k = 0; k < graph.get(i).size(); k++) {
 //                bw.write(graph.get(i).get(k) + " ");
@@ -83,7 +87,6 @@ public class Main {
 //        }
 
         initVi(nodes);
-
         answer = new ArrayList<>();
         dfs(entryPoint);
         print();
