@@ -78,6 +78,8 @@ public class Main {
             }
         }
 
+        Collections.sort(houses);
+
         bw.write(houses.size() + "\n");
         for (int i = 0; i < houses.size(); i++) {
             bw.write(houses.get(i) + "\n");
