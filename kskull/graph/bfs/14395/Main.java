@@ -25,21 +25,21 @@ public class Main {
         public Calculation calculate(int op) {
             switch (op) {
                 case MULTIPLY:
-                    if (vi.get(result * result) != null) return null;
+                    if (vi.getOrDefault(result * result, false) == true) return null;
                     vi.put(result * result, true);
                     return new Calculation(result * result, operation + "*");
                 case PLUS:
-                    if (vi.get(result + result) != null) return null;
+                    if (vi.getOrDefault(result + result, false) == true) return null;
                     vi.put(result + result, true);
                     return new Calculation(result + result, operation + "+");
                 case MINUS:
-                    if (vi.get(result - result) != null) return null;
+                    if (vi.getOrDefault(result - result, false) == true) return null;
                     vi.put(result - result, true);
                     return new Calculation(result - result, operation + "-");
                 case DIVISION:
-                    if (result == 0 || vi.get(result / result) != null) return null;
+                    if (result == 0 || vi.getOrDefault(result / result, false) == true) return null;
                     vi.put(result / result, true);
-                    return new Calculation(result / result, operation);
+                    return new Calculation(result / result, operation + "/");
             }
             return null;
         }
@@ -49,8 +49,8 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         st = new StringTokenizer(br.readLine());
-        int givenNumber = Integer.parseInt(st.nextToken());
-        int target = Integer.parseInt(st.nextToken());
+        long givenNumber = Integer.parseInt(st.nextToken());
+        long target = Integer.parseInt(st.nextToken());
         if (givenNumber == target) {
             bw.write("0" + "\n");
             bw.flush();
@@ -59,10 +59,13 @@ public class Main {
 
         Calculation answer = null;
         Calculation start = new Calculation(givenNumber, "");
+        vi.put(givenNumber, true);
         q.add(start);
         while (!q.isEmpty()) {
             Calculation cal = q.poll();
 
+            if (cal.result > 1e9) continue;
+        
             if (cal.result == target) {
                 answer = cal;
                 break;
@@ -76,7 +79,7 @@ public class Main {
         }
 
         if (answer == null) {
-            bw.write("-1\n");
+            bw.write("-1" + "\n");
             bw.flush();
             return;
         }
