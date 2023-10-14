@@ -66,15 +66,16 @@ public class Main {
             Calculation calculation = q.poll();
 
             //bw.write(calculation.operation + ", " + calculation.result + ", " + calculation.operation.length() + "\n");
-            if (answerLength != 0 && calculation.operation.length() > answerLength) break;
+            //if (answerLength != 0 && calculation.operation.length() > answerLength) break;
             if (calculation.result <= 0) break;
             if (calculation.result == target 
-                    && (answer.result == -1 || answer.operation.compareTo(calculation.operation) > 0)) {
+                    && (answer.result == -1 || answer.operation.compareTo(calculation.operation) > 0)
+                    && (answer.operation.isBlank() || answer.operation.length() >= calculation.operation.length())) {
                 answer.operation = calculation.operation;
                 answer.result = target;
-                if (answerLength == 0) {
-                    answerLength = calculation.operation.length();
-                }
+//                if (answerLength == 0) {
+//                    answerLength = calculation.operation.length();
+//                }
             }
 
             for (int i = 0; i < 4; i++) {
