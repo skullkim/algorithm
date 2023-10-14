@@ -22,43 +22,26 @@ public class Main {
             this.operation = operation;
         }
 
-        public Boolean isVisited(int op) {
-            if (result == 0) return false;
+        public Calculation calculate(int op) {
             switch (op) {
                 case MULTIPLY:
-                    return vi.get(result * result);
+                    if (vi.get(result * result) != null) return null;
+                    vi.put(result * result, true);
+                    return new Calculation(result * result, operation + "*");
                 case PLUS:
-                    return vi.get(result + result);
+                    if (vi.get(result + result) != null) return null;
+                    vi.put(result + result, true);
+                    return new Calculation(result + result, operation + "+");
                 case MINUS:
-                    return vi.get(result - result);
+                    if (vi.get(result - result) != null) return null;
+                    vi.put(result - result, true);
+                    return new Calculation(result - result, operation + "-");
                 case DIVISION:
-                    return vi.get(result / result);
+                    if (result == 0 || vi.get(result / result) != null) return null;
+                    vi.put(result / result, true);
+                    return new Calculation(result / result, operation);
             }
-            return false;
-        }
-
-        public Calculation caculate(int op) {
-            Calculation tmp = new Calculation(this.result, this.operation);
-            switch (op) {
-                case MULTIPLY:
-                    tmp.result *= tmp.result;
-                    tmp.operation += "*";
-                    break;
-                case PLUS:
-                    tmp.result += tmp.result;
-                    tmp.operation += "+";
-                    break;
-                case MINUS:
-                    tmp.result -= tmp.result;
-                    tmp.operation += " -";
-                    break;
-                case 3:
-                    if (tmp.result == 0) break;
-                    tmp.result /= tmp.result;
-                    tmp.operation += "/";
-                    break;
-            }
-           return tmp;
+            return null;
         }
     };
 
@@ -74,30 +57,25 @@ public class Main {
             return;
         }
 
-        q.add(new Calculation(givenNumber, ""));
-        Calculation answer = new Calculation(-1, "");
-        int answerLength = 0;
+        Calculation answer = null;
+        Calculation start = new Calculation(givenNumber, "");
+        q.add(start);
         while (!q.isEmpty()) {
-            Calculation calculation = q.poll();
+            Calculation cal = q.poll();
 
-            if (calculation.result <= 0) break;
-            if (calculation.result == target) {
-                answer.operation = calculation.operation;
-                answer.result = target;
+            if (cal.result == target) {
+                answer = cal;
+                break;
             }
 
-            for (int i = 0; i < 4; i++) {
-                if (calculation.isVisited(i) != null) continue;
-                Calculation nextCalculation = calculation.caculate(i);
-                vi.put(nextCalculation.result, true);
-                if (nextCalculation.result == calculation.result
-                        || nextCalculation.result == 0
-                        || nextCalculation.result == givenNumber) continue;
+            for (int op = 0; op < 4; op++) {
+                Calculation nextCalculation = cal.calculate(op);
+                if (nextCalculation == null) continue;
                 q.add(nextCalculation);
             }
         }
 
-        if (answer.result != target) {
+        if (answer == null) {
             bw.write("-1\n");
             bw.flush();
             return;
