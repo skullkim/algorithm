@@ -62,13 +62,12 @@ public class Main {
         q.add(new Calculation(givenNumber, ""));
         Calculation answer = new Calculation(-1, "");
         int answerLength = 0;
-        int a = 0;
         while (!q.isEmpty()) {
             Calculation calculation = q.poll();
 
             //bw.write(calculation.operation + ", " + calculation.result + ", " + calculation.operation.length() + "\n");
             if (answerLength != 0 && calculation.operation.length() > answerLength) break;
-            if (calculation.result < 0) break;
+            if (calculation.result <= 0) break;
             if (calculation.result == target 
                     && (answer.result == -1 || answer.operation.compareTo(calculation.operation) > 0)) {
                 answer.operation = calculation.operation;
@@ -85,7 +84,6 @@ public class Main {
                         || nextCalculation.result == givenNumber) continue;
                 q.add(nextCalculation);
             }
-            a++;
         }
 
         if (answer.result != target) {
