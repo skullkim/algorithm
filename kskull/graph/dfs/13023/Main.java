@@ -22,6 +22,7 @@ public class Main {
             int nextNode = graph.get(currNode).get(i);
             if (vi[nextNode]) continue;
             dfs(nextNode, depth + 1, vi);
+            if (hasAns) return;
         }
     }
 
