@@ -24,6 +24,7 @@ public class Main {
             dfs(nextNode, depth + 1, vi);
             if (hasAns) return;
         }
+        vi[currNode] = false;
     }
 
     public static void main(String[] args) throws IOException {
