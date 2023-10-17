@@ -110,6 +110,13 @@ public class Main {
                 graph[i][k] = Integer.parseInt(st.nextToken());
             }
         }
+
+        if (graph[houseSize - 1][houseSize - 1] == WALL) {
+            bw.write("0\n");
+            bw.flush();
+            return;
+        }
+
         graph[0][0] = PIPE;
         graph[0][1] = PIPE;
 
