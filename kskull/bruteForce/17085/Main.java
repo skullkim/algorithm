@@ -13,7 +13,7 @@ public class Main {
 
     static int row;
     static int col;
-    static int answer = -1;
+    static int answer = 0;
 
     static class Pos {
         public int y;
