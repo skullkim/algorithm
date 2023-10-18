@@ -67,8 +67,9 @@ public class Main {
     static int calculateCrossSize(Pos pos1, Pos pos2) {
         char[][] g = copyGraph();
         g[pos1.y][pos1.x] = PUT;
-
+        
         int i = 1;
+        int ii = 1;
         while (true) {
             if (!canExpand(pos1, i, g)) {
                 break;
@@ -78,22 +79,11 @@ public class Main {
                 g[nextPos.y][nextPos.x] = PUT;
             }
             i++;
-        }
-//
-//        for (int r = 0; r < row; r++) {
-//            for (int c = 0; c < col; c++) {
-//                System.out.print(g[r][c] + " ");
-//            }
-//            System.out.println();
-//        }
-//        System.out.println();
 
-        if (g[pos2.y][pos2.x] != CAN_PUT) {
-            return 0;
-        }
-        g[pos2.y][pos2.x] = PUT;
-        int ii = 1;
-        while (true) {
+            if (g[pos2.y][pos2.x] != CAN_PUT) {
+                return 0;
+            }
+            g[pos2.y][pos2.x] = PUT;
             if (!canExpand(pos2, ii, g)) {
                 break;
             }
@@ -106,7 +96,15 @@ public class Main {
 
         int cross1Size = 1 + (i - 1) * 4;
         int cross2Size = 1 + (ii - 1) * 4;
-
+        if (cross1Size * cross2Size == 9) {
+            for (int r = 0; r < row; r++) {
+                for (int c = 0; c < col; c++) {
+                    System.out.print(g[r][c] + " ");
+                }
+                System.out.println();
+            }
+            System.out.println();
+        }
         return cross1Size * cross2Size;
     }
 
