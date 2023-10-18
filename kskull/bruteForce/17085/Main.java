@@ -79,7 +79,18 @@ public class Main {
             }
             i++;
         }
+//
+//        for (int r = 0; r < row; r++) {
+//            for (int c = 0; c < col; c++) {
+//                System.out.print(g[r][c] + " ");
+//            }
+//            System.out.println();
+//        }
+//        System.out.println();
 
+        if (g[pos2.y][pos2.x] != CAN_PUT) {
+            return 0;
+        }
         g[pos2.y][pos2.x] = PUT;
         int ii = 1;
         while (true) {
