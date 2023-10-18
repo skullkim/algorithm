@@ -96,16 +96,51 @@ public class Main {
 
         int cross1Size = 1 + (i - 1) * 4;
         int cross2Size = 1 + (ii - 1) * 4;
-        if (cross1Size * cross2Size == 9) {
-            for (int r = 0; r < row; r++) {
-                for (int c = 0; c < col; c++) {
-                    System.out.print(g[r][c] + " ");
-                }
-                System.out.println();
+        int size1 = cross1Size * cross2Size;
+    
+        g = copyGraph();
+        i = 1;
+        g[pos1.y][pos1.x] = PUT;
+        while (true) {
+            if (!canExpand(pos1, i, g)) {
+                break;
             }
-            System.out.println();
+            for (int k = 0; k < 4; k++) {
+                Pos nextPos = new Pos(pos1.y + DIREC.get(k).y * i, pos1.x + DIREC.get(k).x * i);
+                g[nextPos.y][nextPos.x] = PUT;
+            }
+            i++;
         }
-        return cross1Size * cross2Size;
+
+        ii = 1;
+        if (g[pos2.y][pos2.x] != CAN_PUT) {
+            return 0;
+        }
+        g[pos2.y][pos2.x] = PUT;
+        while (true) {
+            if (!canExpand(pos2, ii, g)) {
+                break;
+            }
+            for (int k = 0; k < 4; k++) {
+                Pos nextPos = new Pos(pos2.y + DIREC.get(k).y * ii, pos2.x + DIREC.get(k).x * ii);
+                g[nextPos.y][nextPos.x] = PUT;
+            }
+            ii++;
+        }
+        cross1Size = 1 + (i - 1) * 4;
+        cross2Size = 1 + (ii - 1) * 4;
+        int size2 = cross1Size * cross2Size;
+
+//        if (cross1Size * cross2Size == 9) {
+//            for (int r = 0; r < row; r++) {
+//                for (int c = 0; c < col; c++) {
+//                    System.out.print(g[r][c] + " ");
+//                }
+//                System.out.println();
+//            }
+//            System.out.println();
+//        }
+        return Math.max(size1, size2); 
     }
 
     static void calculateSize(Pos pos1, Pos pos2) {
