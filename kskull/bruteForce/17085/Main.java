@@ -104,7 +104,7 @@ public class Main {
     }
 
     static void selectTwoPosition(ArrayList<Pos> poses, int idx) {
-        if (idx >= positiones.size()) return;
+        if (idx > positiones.size()) return;
         if (poses.size() == 2) {
             Pos pos1 = poses.get(0);
             Pos pos2 = poses.get(1);
@@ -131,6 +131,7 @@ public class Main {
                 positiones.add(new Pos(i, k));
             }
         }
+
 
         selectTwoPosition(new ArrayList<>(), 0);
         bw.write(answer + "\n");
