@@ -36,21 +36,15 @@ public class Main {
         DIREC.add(new Pos(0, -1));
     }
 
-    static boolean canExpand(Pos pos, int i, char[][] g) {
-        boolean a = false;
-        if (pos.y == 2 && pos.x == 4) a = true;
-        for (int k = 0; k < 4; k++) {
-            Pos nextPos = new Pos(pos.y + DIREC.get(k).y * i, pos.x + DIREC.get(k).x * i);
-            if (0 > nextPos.y || nextPos.y >= row || 0 > nextPos.x || nextPos.x >= col) {
-                 return false;
+    static void print(char[][] g) {
+        for (int i = 0; i < row; i++) {
+            for (int k = 0; k < col; k++) {
+                System.out.print(g[i][k] + " ");
             }
-            if (g[nextPos.y][nextPos.x] != CAN_PUT) {
-                return false;
-            }
+            System.out.println();
         }
-        return true;
+        System.out.println();
     }
-
     static ArrayList<Pos> positiones = new ArrayList<>();
     static char[][] graph = new char[MAX_SIZE][MAX_SIZE];
 
@@ -64,87 +58,40 @@ public class Main {
         return tmp;
     }
 
-    static int calculateCrossSize(Pos pos1, Pos pos2) {
-        char[][] g = copyGraph();
-        g[pos1.y][pos1.x] = PUT;
-        
-        int i = 1;
-        int ii = 1;
-        while (true) {
-            if (!canExpand(pos1, i, g)) {
-                break;
-            }
-            for (int k = 0; k < 4; k++) {
-                Pos nextPos = new Pos(pos1.y + DIREC.get(k).y * i, pos1.x + DIREC.get(k).x * i);
-                g[nextPos.y][nextPos.x] = PUT;
-            }
-            i++;
-
-            if (g[pos2.y][pos2.x] != CAN_PUT) {
-                return 0;
-            }
-            g[pos2.y][pos2.x] = PUT;
-            if (!canExpand(pos2, ii, g)) {
-                break;
-            }
-            for (int k = 0; k < 4; k++) {
-                Pos nextPos = new Pos(pos2.y + DIREC.get(k).y * ii, pos2.x + DIREC.get(k).x * ii);
-                g[nextPos.y][nextPos.x] = PUT;
-            }
-            ii++;
+    static boolean canExpand(char[][] g, Pos pos, int crossSize) {
+        boolean a = false;
+        for (int i = 0; i < 4; i++) {
+            Pos nextPos = new Pos(pos.y + DIREC.get(i).y * crossSize, pos.x + DIREC.get(i).x * crossSize);
+            if (0 > nextPos.y || nextPos.y >= row || 0 > nextPos.x || nextPos.x >= col) return false;
+            if (g[nextPos.y][nextPos.x] != CAN_PUT) return false;
         }
-
-        int cross1Size = 1 + (i - 1) * 4;
-        int cross2Size = 1 + (ii - 1) * 4;
-        int size1 = cross1Size * cross2Size;
-    
-        g = copyGraph();
-        i = 1;
-        g[pos1.y][pos1.x] = PUT;
-        while (true) {
-            if (!canExpand(pos1, i, g)) {
-                break;
-            }
-            for (int k = 0; k < 4; k++) {
-                Pos nextPos = new Pos(pos1.y + DIREC.get(k).y * i, pos1.x + DIREC.get(k).x * i);
-                g[nextPos.y][nextPos.x] = PUT;
-            }
-            i++;
-        }
-
-        ii = 1;
-        if (g[pos2.y][pos2.x] != CAN_PUT) {
-            return 0;
-        }
-        g[pos2.y][pos2.x] = PUT;
-        while (true) {
-            if (!canExpand(pos2, ii, g)) {
-                break;
-            }
-            for (int k = 0; k < 4; k++) {
-                Pos nextPos = new Pos(pos2.y + DIREC.get(k).y * ii, pos2.x + DIREC.get(k).x * ii);
-                g[nextPos.y][nextPos.x] = PUT;
-            }
-            ii++;
-        }
-        cross1Size = 1 + (i - 1) * 4;
-        cross2Size = 1 + (ii - 1) * 4;
-        int size2 = cross1Size * cross2Size;
-
-//        if (cross1Size * cross2Size == 9) {
-//            for (int r = 0; r < row; r++) {
-//                for (int c = 0; c < col; c++) {
-//                    System.out.print(g[r][c] + " ");
-//                }
-//                System.out.println();
-//            }
-//            System.out.println();
-//        }
-        return Math.max(size1, size2); 
+        return true;
     }
 
-    static void calculateSize(Pos pos1, Pos pos2) {
-         answer = Math.max(answer, Math.max(calculateCrossSize(pos1, pos2), calculateCrossSize(pos2, pos1)));
+    static void calculateCrossSize(Pos pos1, Pos pos2) {
+        char[][] g = copyGraph();
+        int cross1Size = 0;
+        while (true) {
+            if (!canExpand(g, pos1, cross1Size)) {
+                break;
+            }
+            for (int i = 0; i < 4; i++) {
+                Pos nextPos = new Pos(pos1.y + DIREC.get(i).y * cross1Size, pos1.x + DIREC.get(i).x * cross1Size);
+                g[nextPos.y][nextPos.x] = PUT;
+            }
+            cross1Size++;
+
+            int cross2Size = 0;
+            while (true) {
+                if (!canExpand(g, pos2, cross2Size)) {
+                    break;
+                }
+                cross2Size++;
+                int cross1 = 1 + (cross1Size - 1) * 4;
+                int cross2 = 1 + (cross2Size - 1) * 4;
+                answer = Math.max(answer, cross1 * cross2);
+            }
+        }
     }
 
     static void selectTwoPosition(ArrayList<Pos> poses, int idx) {
@@ -153,7 +100,7 @@ public class Main {
             Pos pos1 = poses.get(0);
             Pos pos2 = poses.get(1);
             if (graph[pos1.y][pos1.x] != CAN_PUT || graph[pos2.y][pos2.x] != CAN_PUT) return;
-            calculateSize(pos1, pos2);
+            calculateCrossSize(pos1, pos2);
             return;
         }
 
