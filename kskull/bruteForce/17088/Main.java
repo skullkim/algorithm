@@ -20,34 +20,6 @@ public class Main {
         }
     };
 
-    static class Diff {
-        public int value;
-        public Ele ele1;
-        public Ele ele2;
-
-        public Diff(int value, Ele ele1, Ele ele2) {
-            this.value = value;
-            this.ele1 = ele1;
-            this.ele2 = ele2;
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            return ((Diff)obj).value == this.value;
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(value);
-        }
-    };
-
-    public static int hasSameDiff(int[] candidate, Diff diff) {
-        for (int i = 0; i < 3; i++) {
-            if ((candidate[i] - diff.ele2.value) == diff.value) return i;
-        }
-        return -1;
-    }
 
     public static void main(String[] args) throws IOException {
         st = new StringTokenizer(br.readLine());
@@ -63,51 +35,58 @@ public class Main {
             candidates[i][2] = number + 1;
         }
 
-        Set<Diff> candidateDiffs = new HashSet<>();
+        Set<Integer> candidateDiffs = new HashSet<>();
         for (int i = 0; i < 3; i++) {
             for (int k = 0; k < 3; k++) {
                 int ele1 = candidates[0][i];
                 int ele2 = candidates[1][k];
-                candidateDiffs.add(new Diff(ele2 - ele1 , new Ele(ele1, 0), new Ele(ele2, 1)));
+                candidateDiffs.add(ele2 - ele1);
             }
         }
 
-        boolean hasAns = false;
-        if (sequenceLength <= 2) {
-            bw.write("0\n");
-            bw.flush();
-            return;
-        }
-        for (Diff diff : candidateDiffs) {
-            boolean isQualifiedDiff = true;
+        for (Integer diff : candidateDiffs) {
+            boolean isAns = true;
             int changed = 0;
-//            if (diff.ele1.value == 0 && diff.value == 3) {
-//                System.out.println(diff.ele2.value);
-//            }
-            if (diff.ele1.value != candidates[0][1]) changed++;
-            if (diff.ele2.value != candidates[1][1]) changed++;
-            for (int i = diff.ele2.index + 1; i < sequenceLength; i++) {
-                int eleIdx = hasSameDiff(candidates[i], diff);
-//                if (diff.value == 3) {
-//                    System.out.println("e1: " + diff.ele1.value + ", e2: " + diff.ele2.value);
-//                    System.out.println(eleIdx);
-//                }
-                if (eleIdx == -1) {
-                    isQualifiedDiff = false;
-                    break;
-                } else{
-                    diff.ele1 = diff.ele2;
-                    diff.ele2 = new Ele(candidates[i][eleIdx], i);
-                    if (eleIdx != 1) {
-                        changed++;
+            int lastEle = -1;
+            for (int idx = 1; idx < sequenceLength; idx++) {
+                boolean hasDiff = false;
+                int c = 10;
+                int le = -1;
+                for (int i = 0; i < 3; i++) {
+                    int ele1 = candidates[idx - 1][i];
+                    for (int k = 0; k < 3; k++) {
+                        int cc = 0;
+                        int ele2 = candidates[idx][k];
+                        if ((ele2 - ele1) == diff && (lastEle == -1 || lastEle == ele1)) {
+                            if (idx == 1) {
+                                if (i != 1) cc++;
+                                if (k != 1) cc++;
+                            } else {
+                                if (k != 1) cc++;
+                            }
+
+                            if (cc < c) {
+                                c = cc;
+                                le = ele2;
+                            }
+                            hasDiff = true;
+                        }
                     }
                 }
+                lastEle = le;
+                if (!hasDiff) {
+                    isAns = false;
+                    break;
+                } else {
+                    changed += c;
+                }
             }
-            if (isQualifiedDiff) {
+            if (isAns) {
                 answer = Math.min(answer, changed);
             }
         }
 
+        
         if (answer == 987654321) {
             bw.write("-1\n");
         } else {
