@@ -10,17 +10,6 @@ public class Main {
     static int sequenceLength;
     static int answer = 987654321;
 
-    static class Ele {
-        public int value;
-        public int index;
-    
-        public Ele(int value, int index) {
-            this.value = value;
-            this.index = index;
-        }
-    };
-
-
     public static void main(String[] args) throws IOException {
         st = new StringTokenizer(br.readLine());
         sequenceLength = Integer.parseInt(st.nextToken());
@@ -34,6 +23,12 @@ public class Main {
             candidates[i][1] = number;
             candidates[i][2] = number + 1;
         }
+        
+        if (sequenceLength <= 2) {
+            bw.write("0\n");
+            bw.flush();
+            return;
+        }
 
         for (int i = 0; i < 3; i++) {
             for (int k = 0; k < 3; k++) {
@@ -45,12 +40,6 @@ public class Main {
                 if (k != 1) changed++;
                 boolean hasAnswer = true;
                 for (int idx = 2; idx < sequenceLength; idx++) {
-//                    System.out.println(ele2 + ", " + idx + ", " + diff + ", " + (ele2 + diff));
-//                    for (int ii = 0; ii < 3; ii++) {
-//                        System.out.print(candidates[idx][ii] + " ");
-//                    }
-//                    System.out.println();
-//                    System.out.println("=====================");
                     ele2 += diff;
                     if (candidates[idx][1] == ele2) continue;
                     else if (candidates[idx][0] == ele2 || candidates[idx][2] == ele2) changed++;
@@ -59,7 +48,6 @@ public class Main {
                         break;
                     }
                 }
- //               System.out.println("diff: " + diff + ", " + changed + ", " + hasAnswer);
                 if (hasAnswer) {
                     answer = Math.min(answer, changed);
                 } 
