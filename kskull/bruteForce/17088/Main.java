@@ -35,57 +35,36 @@ public class Main {
             candidates[i][2] = number + 1;
         }
 
-        Set<Integer> candidateDiffs = new HashSet<>();
         for (int i = 0; i < 3; i++) {
             for (int k = 0; k < 3; k++) {
                 int ele1 = candidates[0][i];
                 int ele2 = candidates[1][k];
-                candidateDiffs.add(ele2 - ele1);
-            }
-        }
-
-        for (Integer diff : candidateDiffs) {
-            boolean isAns = true;
-            int changed = 0;
-            int lastEle = -1;
-            for (int idx = 1; idx < sequenceLength; idx++) {
-                boolean hasDiff = false;
-                int c = 10;
-                int le = -1;
-                for (int i = 0; i < 3; i++) {
-                    int ele1 = candidates[idx - 1][i];
-                    for (int k = 0; k < 3; k++) {
-                        int cc = 0;
-                        int ele2 = candidates[idx][k];
-                        if ((ele2 - ele1) == diff && (lastEle == -1 || lastEle == ele1)) {
-                            if (idx == 1) {
-                                if (i != 1) cc++;
-                                if (k != 1) cc++;
-                            } else {
-                                if (k != 1) cc++;
-                            }
-
-                            if (cc < c) {
-                                c = cc;
-                                le = ele2;
-                            }
-                            hasDiff = true;
-                        }
+                int diff = ele2 - ele1;
+                int changed = 0;
+                if (i != 1) changed++;
+                if (k != 1) changed++;
+                boolean hasAnswer = true;
+                for (int idx = 2; idx < sequenceLength; idx++) {
+//                    System.out.println(ele2 + ", " + idx + ", " + diff + ", " + (ele2 + diff));
+//                    for (int ii = 0; ii < 3; ii++) {
+//                        System.out.print(candidates[idx][ii] + " ");
+//                    }
+//                    System.out.println();
+//                    System.out.println("=====================");
+                    ele2 += diff;
+                    if (candidates[idx][1] == ele2) continue;
+                    else if (candidates[idx][0] == ele2 || candidates[idx][2] == ele2) changed++;
+                    else  {
+                        hasAnswer = false;
+                        break;
                     }
                 }
-                lastEle = le;
-                if (!hasDiff) {
-                    isAns = false;
-                    break;
-                } else {
-                    changed += c;
-                }
-            }
-            if (isAns) {
-                answer = Math.min(answer, changed);
+ //               System.out.println("diff: " + diff + ", " + changed + ", " + hasAnswer);
+                if (hasAnswer) {
+                    answer = Math.min(answer, changed);
+                } 
             }
         }
-
         
         if (answer == 987654321) {
             bw.write("-1\n");
