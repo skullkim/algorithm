@@ -15,29 +15,22 @@ public class Main {
     static ArrayList<Integer> questiones = new ArrayList<>();
 
     static void selectQuestiones(ArrayList<Integer> selected, int difficulty, int idx) {
-        if (idx > questionNum) return;
+        if (selected.size() > questionNum) return;
 
 
-        if (selected.size() >= 2) {
-//            System.out.println("diff: " + difficulty);
+        if (selected.size() >= 2 && (minDifficulty <= difficulty && difficulty <= maxDifficulty)) {
 //            for (Integer a : selected) {
 //                System.out.print(a + " ");
 //            }
 //            System.out.println();
 
-            if (difficulty > maxDifficulty) return;
-
-            if (difficulty >= minDifficulty) {
-                int minD = 987654321;
-                int maxD = 0;
-                for (Integer question : selected) {
-                    maxD = Math.max(maxD, question);
-                    minD = Math.min(minD, question);
-                }
-//                System.out.println(maxD + ", " + minD);
-//                System.out.println("===========");
-                if (maxD - minD < difficultyDiff) return;
-                
+            int minD = 987654321;
+            int maxD = 0;
+            for (Integer question : selected) {
+                maxD = Math.max(maxD, question);
+                minD = Math.min(minD, question);
+            }
+            if (maxD - minD >= difficultyDiff) {
                 answer++;
             }
         }
