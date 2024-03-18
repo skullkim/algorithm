@@ -19,7 +19,9 @@ public class Main {
 			int nextNode= graph.get(currNode).get(i);
 			if (vi[nextNode]) continue;
 			dfs(vi, depth + 1, nextNode);
+			if (hasAns) return;
 		}
+		vi[currNode] = false;
 	}
 
 	public static void main(String[] args) throws IOException {
