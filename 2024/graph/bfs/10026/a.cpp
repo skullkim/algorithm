@@ -35,6 +35,7 @@ void bfs(Pos pos, bool isNormal) {
 			if (isNormal && currColor != nextColor) continue;
 			if (!isNormal && currColor == 'B' && nextColor != 'B') continue;
 			if (!isNormal && currColor != 'B' && nextColor == 'B') continue;
+			vi[nextPos.y][nextPos.x] = true;
 			q.push(nextPos);
 		}
 	}
