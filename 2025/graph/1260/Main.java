@@ -53,7 +53,7 @@ class Main {
       g.get(n2).add(n1);
     }
 
-    for (int i = 1; i < nodes; i++) {
+    for (int i = 1; i <= nodes; i++) {
       Collections.sort(g.get(i));
     }
 
