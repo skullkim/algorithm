@@ -58,7 +58,16 @@ class Main {
     for (int i = 0; i < 4; i++) {
       Pos nt = new Pos(curr.y + dir[i].y, curr.x + dir[i].x);
       if (0 > nt.y || nt.y >= size || 0 > nt.x || nt.x >= size) continue;
-      ans = Math.max(ans, findAns(curr, nt, g));
+      
+      char[][] cg = new char[size][size];
+      for (int ii = 0; ii < size; ii++) {
+        for (int k = 0; k < size; k++) {
+          cg[ii][k] = g[ii][k];
+        }
+      }
+
+
+      ans = Math.max(ans, findAns(curr, nt, cg));
     }
   }
 
