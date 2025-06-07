@@ -6,19 +6,20 @@ class Main {
   static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
   static char[] a;
   static char[] b;
-  static int bInt;
+  static int bInt, bLen;
   static int ans = -1;
 
   static void f(boolean[] vi, String c) {
-    if (c.length() > b.length) return;
-    if (c.length() == a.length && c.length() == b.length) {
+    if (c.length() > bLen) return;
+    //if (c.length() <= a.length && c.length() == b.length) {
+    if (c.length() == a.length && c.length() == bLen) {
       int cc = Integer.parseInt(c);
-      if (cc > bInt) return;
+      if (cc >= bInt) return;
       //System.out.println(c);
       ans = Math.max(ans, cc);
       return;
     }
-    if (c.length() == b.length) return;
+    if (c.length() == bLen) return;
 
     for (int i = 0; i < a.length; i++) {
       if (c.length() == 0 && a[i] == '0') continue;
@@ -34,6 +35,7 @@ class Main {
     a = st.nextToken().toCharArray();
     String tmp = st.nextToken();
     b = tmp.toCharArray();
+    bLen = b.length;
     bInt = Integer.parseInt(tmp);
     
     boolean[] vi = new boolean[a.length];
