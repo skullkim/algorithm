@@ -12,7 +12,7 @@ class Main {
   static void f(boolean[] vi, String c) {
     if (c.length() > bLen) return;
     //if (c.length() <= a.length && c.length() == b.length) {
-    if (c.length() == a.length && c.length() == bLen) {
+    if (c.length() == a.length) {
       int cc = Integer.parseInt(c);
       if (cc >= bInt) return;
       //System.out.println(c);
