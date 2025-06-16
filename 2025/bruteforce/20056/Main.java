@@ -69,13 +69,18 @@ class Main {
 
     int tern = 0;
     while (moves-- > 0) {
+      List<Ball>[][] nextBoard = new ArrayList[51][51];
+      for (int i = 0; i <= boardSize; i++) {
+        for (int k = 0; k <= boardSize; k++) {
+          nextBoard[i][k] = new ArrayList<Ball>();
+        }
+      }
+
       for (int i = 1; i <= boardSize; i++) {
         for (int k = 1; k <= boardSize; k++) {
           if (board[i][k].isEmpty()) continue;
-          List<Ball> remove = new ArrayList<Ball>();
           for (Ball ball : board[i][k]) {
             if (ball.tern != tern) continue;
-            remove.add(ball);
             //int y = Math.abs(i + ball.mv * dir[ball.d].y) % boardSize;
             //int x = Math.abs(k + ball.mv * dir[ball.d].x) % boardSize;
             int y = i, x = k;
@@ -89,16 +94,21 @@ class Main {
               if (x > boardSize) x =1;
               else if (x <= 0) x = boardSize;
             }
+
             Pos p = new Pos(y, x);
-            ball.incTern();
-            //if (p.y != i || p.x != k) {
-              board[p.y][p.x].add(ball);
-            //}
+            nextBoard[p.y][p.x].add(ball);
           }
-          board[i][k].removeAll(remove);
         }
       }
-      tern++;
+      board = nextBoard;
+
+//      for (int i = 1; i <= boardSize; i++) {
+//        for (int k = 1; k <= boardSize; k++) {
+//          System.out.print(board[i][k] + " ");
+//        }
+//        System.out.println();
+//      }
+//        System.out.println();
 
       for (int i = 1; i <= boardSize; i++) {
         for (int k = 1; k <= boardSize; k++) {
