@@ -42,7 +42,7 @@ class Main {
 
         int sy = r - s, sx = c - s;
         int ey = r + s, ex = c + s;
-        while ((sx != ex) && (sy != ey)) {
+        while ((sx < ex) && (sy <= ey)) {
           for (int i = sx; i <= ex; i++) {
             swap(arr, sy, sx, sy, i);
           }
