@@ -20,9 +20,9 @@ class Main {
 			int tmpAns = 0;
 			int currPlayerNum = 0, currIn = 0;
 
+			Field[] f = new Field[10];
 			while (currIn < maxInnings) {
 				int out = 0;
-				Field[] f = new Field[10];
 				for (int i = 1; i <= 9; i++) f[i] = new Field(0, 0);
 
 				while(true) {
