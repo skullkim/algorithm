@@ -5,12 +5,7 @@ class Main {
   static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
   static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 	static int ONE = 1, TWO = 2, THREE = 3, HOME_RUN = 4, OUT = 0;
-	static class Field {
-		int p; int num;
-		public Field(int p, int num) {
-			this.p = p; this.num = num;
-		}
-	}
+	
 	static int[][] innings = new int[50][10];
 	static int maxInnings, ans = -1;
 	static boolean[] vi = new boolean[10];
@@ -20,10 +15,10 @@ class Main {
 			int tmpAns = 0;
 			int currPlayerNum = 0, currIn = 0;
 
-			Field[] f = new Field[10];
+			int[] f = new int[10];
 			while (currIn < maxInnings) {
 				int out = 0;
-				for (int i = 1; i <= 9; i++) f[i] = new Field(0, 0);
+				for (int i = 1; i <= 9; i++) f[i] = 0;
 
 				while(true) {
 					int currPlayer = tmp.get(currPlayerNum);
@@ -39,32 +34,32 @@ class Main {
 
 					if (result == ONE) {
 						for (int i = 1; i <= 9; i++) {
-							if (f[i].p != 0) f[i].p += 1;
-							if (f[i].p >= 4) {
-								tmpAns++; f[i].p = 0;
+							if (f[i] != 0) f[i] += 1;
+							if (f[i] >= 4) {
+								tmpAns++; f[i] = 0;
 							}
 						}
-						f[currPlayer].p = 1;
+						f[currPlayer] = 1;
 					} else if (result == TWO) {
 						for (int i = 1; i <= 9; i++) {
-							if (f[i].p != 0) f[i].p += 2;
-							if (f[i].p >= 4) {
-								tmpAns++; f[i].p = 0;
+							if (f[i] != 0) f[i] += 2;
+							if (f[i] >= 4) {
+								tmpAns++; f[i] = 0;
 							}
 						}
-						f[currPlayer].p = 2;
+						f[currPlayer] = 2;
 					} else if (result == THREE) {
 						for (int i = 1; i <= 9; i++) {
-							if (f[i].p != 0) f[i].p += 3;
-							if (f[i].p >= 4) {
-								tmpAns++; f[i].p = 0;
+							if (f[i] != 0) f[i] += 3;
+							if (f[i] >= 4) {
+								tmpAns++; f[i] = 0;
 							}
 						}
-						f[currPlayer].p = 3;
+						f[currPlayer] = 3;
 					} else if (result ==HOME_RUN) {
 							int a = 0;
 							for (int i = 1; i <= 9; i++) {
-								if (f[i].p != 0) a++;
+								if (f[i] != 0) a++;
 							}
 							tmpAns += (a + 1);
 					}
@@ -76,6 +71,12 @@ class Main {
 				currIn++;
 			}
 
+			if (tmpAns == 68) {
+				for (int i = 0; i < tmp.size(); i++) {
+					System.out.print(tmp.get(i) + " ");
+				}
+				System.out.println();
+			}
 			ans = Math.max(tmpAns, ans);
 			return;
 		} 
