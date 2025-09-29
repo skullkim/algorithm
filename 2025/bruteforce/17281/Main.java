@@ -22,7 +22,8 @@ class Main {
 
 			while (currIn < maxInnings) {
 				int out = 0;
-				List<Field> f = new ArrayList<>();
+				Field[] f = new Field[10];
+				for (int i = 1; i <= 9; i++) f[i] = new Field(0, 0);
 
 				while(true) {
 					int currPlayer = tmp.get(currPlayerNum);
@@ -37,32 +38,35 @@ class Main {
 					}
 
 					if (result == ONE) {
-						for (int i = 0; i < f.size(); i++) {
-							f.get(i).p += 1;
-							if (f.get(i).p >= 4) {
-								tmpAns++; f.remove(i); i--;
+						for (int i = 1; i <= 9; i++) {
+							if (f[i].p != 0) f[i].p += 1;
+							if (f[i].p >= 4) {
+								tmpAns++; f[i].p = 0;
 							}
 						}
-						f.add(new Field(1, currPlayer));
+						f[currPlayer].p = 1;
 					} else if (result == TWO) {
-						for (int i = 0; i < f.size(); i++) {
-							f.get(i).p += 2;
-							if (f.get(i).p >= 4) {
-								tmpAns++; f.remove(i); i--;
+						for (int i = 1; i <= 9; i++) {
+							if (f[i].p != 0) f[i].p += 2;
+							if (f[i].p >= 4) {
+								tmpAns++; f[i].p = 0;
 							}
 						}
-						f.add(new Field(2, currPlayer));
+						f[currPlayer].p = 2;
 					} else if (result == THREE) {
-						for (int i = 0; i < f.size(); i++) {
-							f.get(i).p += 3;
-							if (f.get(i).p >= 4) {
-								tmpAns++; f.remove(i); i--;
+						for (int i = 1; i <= 9; i++) {
+							if (f[i].p != 0) f[i].p += 3;
+							if (f[i].p >= 4) {
+								tmpAns++; f[i].p = 0;
 							}
 						}
-						f.add(new Field(3, currPlayer));
+						f[currPlayer].p = 3;
 					} else if (result ==HOME_RUN) {
-							tmpAns += (f.size() + 1);
-							f.clear();
+							int a = 0;
+							for (int i = 1; i <= 9; i++) {
+								if (f[i].p != 0) a++;
+							}
+							tmpAns += (a + 1);
 					}
 					
 					currPlayerNum++;
