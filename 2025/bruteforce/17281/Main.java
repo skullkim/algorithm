@@ -59,7 +59,10 @@ class Main {
 					} else if (result ==HOME_RUN) {
 							int a = 0;
 							for (int i = 1; i <= 9; i++) {
-								if (f[i] != 0) a++;
+								if (f[i] != 0) {
+									a++;
+									f[i] = 0;
+								}
 							}
 							tmpAns += (a + 1);
 					}
@@ -71,12 +74,6 @@ class Main {
 				currIn++;
 			}
 
-			if (tmpAns == 68) {
-				for (int i = 0; i < tmp.size(); i++) {
-					System.out.print(tmp.get(i) + " ");
-				}
-				System.out.println();
-			}
 			ans = Math.max(tmpAns, ans);
 			return;
 		} 
