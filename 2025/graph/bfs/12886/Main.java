@@ -10,6 +10,12 @@ class Main {
 
 		for (int i = 0; i < 3; i++) li[i] = Integer.parseInt(st.nextToken());
 
+		if ((li[0] + li[1] + li[2]) % 3 != 0) {
+			bw.write("0");
+			bw.flush();
+			return;
+		}
+
 		Map<String, Boolean> vi = new HashMap<>();	
 
 		int[] idx1 = {0, 0, 1};
@@ -19,6 +25,7 @@ class Main {
 		Queue<Integer[]> q = new LinkedList<>();
 		Arrays.sort(li);
 		q.add(li);
+		vi.put((li[0] + "," + li[1] + "," + li[2]), true);
 		boolean hasAns = false;
 		while (!q.isEmpty()) {
 			Integer[] curr = q.peek();	
@@ -30,11 +37,12 @@ class Main {
 				hasAns = true;
 				break;
 			}
-			vi.put((curr[0] + "," + curr[1] + "," + curr[2]), true);
 		
 			for (int i = 0; i < 3; i++) {
 				int i1 = idx1[i], i2 = idx2[i];
 				int n1 = curr[i1], n2 = curr[i2];
+				
+				if(n1 == n2) continue;
 
 				if (n1 < n2) {
 					n1 = n1 + n1; n2 = n2 - n1;
@@ -45,7 +53,9 @@ class Main {
 				Integer[] tmp = {n1, n2, curr[idx3[i]]};
 				Arrays.sort(tmp);
 			
-				if (vi.containsKey(tmp[0] + "," + tmp[1] + "," + tmp[2])) continue;
+				String key = tmp[0] + "," + tmp[1] + "," + tmp[2];
+				if (vi.containsKey(key)) continue;
+				vi.put(key, true);
 				q.add(tmp);
 			}
 		}
