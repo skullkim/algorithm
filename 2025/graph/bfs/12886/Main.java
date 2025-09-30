@@ -27,7 +27,6 @@ class Main {
 			q.poll();	
 
 			if (curr.get(0) == curr.get(1) && curr.get(1) == curr.get(2)) {
-				System.out.println(curr.get(0) + ", " + curr.get(1) + ", " + curr.get(2));
 				bw.write("1");
 				bw.flush();
 				hasAns = true;
@@ -41,7 +40,7 @@ class Main {
 				int n1 = curr.get(i1), n2 = curr.get(i2);
 
 				if (n1 < n2) {
-					n1 = n1 + n1; n2 = n2 - n2;
+					n1 = n1 + n1; n2 = n2 - n1;
 				} else {
 					n2 = n2 + n2; n1 = n1 - n2;
 				}
