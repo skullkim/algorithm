@@ -10,10 +10,7 @@ class Main {
 
 		for (int i = 0; i < 3; i++) li[i] = Integer.parseInt(st.nextToken());
 
-		boolean[][][] vi = new boolean[1001][1001][1001];
-		for (int i = 0; i < 501; i++) {
-			for (int k = 0; k < 501; k++) Arrays.fill(vi[i][k], false);
-		}
+		Map<String, Boolean> vi = new HashMap<>();	
 
 		int[] idx1 = {0, 0, 1};
 		int[] idx2 = {1, 2, 2};
@@ -33,7 +30,7 @@ class Main {
 				hasAns = true;
 				break;
 			}
-			vi[curr[0]][curr[1]][curr[2]] = true;
+			vi.put((curr[0] + "," + curr[1] + "," + curr[2]), true);
 		
 			for (int i = 0; i < 3; i++) {
 				int i1 = idx1[i], i2 = idx2[i];
@@ -48,7 +45,7 @@ class Main {
 				Integer[] tmp = {n1, n2, curr[idx3[i]]};
 				Arrays.sort(tmp);
 			
-				if (vi[tmp[0]][tmp[1]][tmp[2]]) continue;
+				if (vi.containsKey(tmp[0] + "," + tmp[1] + "," + tmp[2])) continue;
 				q.add(tmp);
 			}
 		}
