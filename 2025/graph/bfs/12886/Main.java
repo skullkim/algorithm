@@ -10,7 +10,7 @@ class Main {
 
 		for (int i = 0; i < 3; i++) li.add(Integer.parseInt(st.nextToken()));
 
-		boolean[][][] vi = new boolean[501][501][501];
+		boolean[][][] vi = new boolean[1500][1500][1500];
 		for (int i = 0; i < 501; i++) {
 			for (int k = 0; k < 501; k++) Arrays.fill(vi[i][k], false);
 		}
