@@ -6,9 +6,9 @@ class Main {
   static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
   public static void main(String[] args) throws IOException {
     StringTokenizer st = new StringTokenizer(br.readLine());
-		List<Integer> li = new ArrayList<>();
+		Integer[] li = new Integer[3];
 
-		for (int i = 0; i < 3; i++) li.add(Integer.parseInt(st.nextToken()));
+		for (int i = 0; i < 3; i++) li[i] = Integer.parseInt(st.nextToken());
 
 		boolean[][][] vi = new boolean[1001][1001][1001];
 		for (int i = 0; i < 501; i++) {
@@ -19,25 +19,25 @@ class Main {
 		int[] idx2 = {1, 2, 2};
 		int[] idx3 = {2, 1, 0};
 
-		Queue<List<Integer>> q = new LinkedList<>();
+		Queue<Integer[]> q = new LinkedList<>();
+		Arrays.sort(li);
 		q.add(li);
 		boolean hasAns = false;
 		while (!q.isEmpty()) {
-			List<Integer> curr = q.peek();	
+			Integer[] curr = q.peek();	
 			q.poll();	
 
-			if (curr.get(0) == curr.get(1) && curr.get(1) == curr.get(2)) {
+			if (curr[0] == curr[1] && curr[1] == curr[2]) {
 				bw.write("1");
 				bw.flush();
 				hasAns = true;
 				break;
 			}
-			Collections.sort(curr);
-			vi[curr.get(0)][curr.get(1)][curr.get(2)] = true;
+			vi[curr[0]][curr[1]][curr[2]] = true;
 		
 			for (int i = 0; i < 3; i++) {
 				int i1 = idx1[i], i2 = idx2[i];
-				int n1 = curr.get(i1), n2 = curr.get(i2);
+				int n1 = curr[i1], n2 = curr[i2];
 
 				if (n1 < n2) {
 					n1 = n1 + n1; n2 = n2 - n1;
@@ -45,11 +45,10 @@ class Main {
 					n2 = n2 + n2; n1 = n1 - n2;
 				}
 				if (n1 <= 0 || n2 <= 0) continue;
-				List<Integer> tmp = new ArrayList<>();
-				tmp.add(n1); tmp.add(n2); tmp.add(curr.get(idx3[i]));
-				Collections.sort(tmp);
+				Integer[] tmp = {n1, n2, curr[idx3[i]]};
+				Arrays.sort(tmp);
 			
-				if (vi[tmp.get(0)][tmp.get(1)][tmp.get(2)]) continue;
+				if (vi[tmp[0]][tmp[1]][tmp[2]]) continue;
 				q.add(tmp);
 			}
 		}
