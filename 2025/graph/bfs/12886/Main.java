@@ -52,7 +52,7 @@ class Main {
 					tn2 = n2 + n2; tn1 = n1 - n2;
 				}
 				
-				Integer[] tmp = {tn1, tn2, sum - tn1 - tn2};
+				Integer[] tmp = {tn1, tn2, sum - n1 - n2};
 				Arrays.sort(tmp);
 			
 				if (vi[tmp[0]][tmp[1]]) continue;
