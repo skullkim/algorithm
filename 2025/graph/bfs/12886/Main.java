@@ -50,9 +50,9 @@ class Main {
 				} else {
 					tn2 = n2 + n2; tn1 = n1 - n2;
 				}
-				n1 = tn1; n2 = tn2;
-				if (n1 <= 0 || n2 <= 0) continue;
-				Integer[] tmp = {n1, n2, curr[idx3[i]]};
+				
+				Integer[] tmp = Arrays.copyOf(curr, 3);
+				tmp[i1] = tn1; tmp[i2] = tn2;
 				Arrays.sort(tmp);
 			
 				String key = tmp[0] + "," + tmp[1] + "," + tmp[2];
