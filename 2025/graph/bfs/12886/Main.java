@@ -17,7 +17,7 @@ class Main {
 			return;
 		}
 
-		boolean[][] vi = new boolean[1501][1501];
+		Map<String, Boolean> vi = new HashMap<>();
 
 		int[] idx1 = {0, 0, 1};
 		int[] idx2 = {1, 2, 2};
@@ -26,7 +26,7 @@ class Main {
 		Queue<Integer[]> q = new LinkedList<>();
 		Arrays.sort(li);
 		q.add(li);
-		vi[li[0]][li[1]] = true;
+		vi.put(li[0]+","+li[1]+","+li[2], true);
 		boolean hasAns = false;
 		while (!q.isEmpty()) {
 			Integer[] curr = q.peek();	
@@ -52,11 +52,12 @@ class Main {
 					tn2 = n2 + n2; tn1 = n1 - n2;
 				}
 				
-				Integer[] tmp = {tn1, tn2, sum - n1 - n2};
+				Integer[] tmp = {tn1, tn2, curr[idx3[i]]};
 				Arrays.sort(tmp);
 			
-				if (vi[tmp[0]][tmp[1]]) continue;
-				vi[tmp[0]][tmp[1]] = true;
+				String key = tmp[0]+","+tmp[1]+","+tmp[2];
+				if (vi.containsKey(key)) continue;
+				vi.put(key, true);
 				q.add(tmp);
 			}
 		}
