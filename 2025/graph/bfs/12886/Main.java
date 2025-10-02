@@ -43,12 +43,14 @@ class Main {
 				int n1 = curr[i1], n2 = curr[i2];
 				
 				if(n1 == n2) continue;
-
+				
+				int tn1 = 0, tn2 = 0;
 				if (n1 < n2) {
-					n1 = n1 + n1; n2 = n2 - n1;
+					tn1 = n1 + n1; tn2 = n2 - n1;
 				} else {
-					n2 = n2 + n2; n1 = n1 - n2;
+					tn2 = n2 + n2; tn1 = n1 - n2;
 				}
+				n1 = tn1; n2 = tn2;
 				if (n1 <= 0 || n2 <= 0) continue;
 				Integer[] tmp = {n1, n2, curr[idx3[i]]};
 				Arrays.sort(tmp);
