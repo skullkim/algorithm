@@ -10,13 +10,14 @@ class Main {
 
 		for (int i = 0; i < 3; i++) li[i] = Integer.parseInt(st.nextToken());
 
-		if ((li[0] + li[1] + li[2]) % 3 != 0) {
+		int sum = li[0] + li[1] + li[2];
+		if (sum % 3 != 0) {
 			bw.write("0");
 			bw.flush();
 			return;
 		}
 
-		Map<String, Boolean> vi = new HashMap<>();	
+		boolean[][] vi = new boolean[1501][1501];
 
 		int[] idx1 = {0, 0, 1};
 		int[] idx2 = {1, 2, 2};
@@ -25,7 +26,7 @@ class Main {
 		Queue<Integer[]> q = new LinkedList<>();
 		Arrays.sort(li);
 		q.add(li);
-		vi.put((li[0] + "," + li[1] + "," + li[2]), true);
+		vi[li[0]][li[1]] = true;
 		boolean hasAns = false;
 		while (!q.isEmpty()) {
 			Integer[] curr = q.peek();	
@@ -51,13 +52,11 @@ class Main {
 					tn2 = n2 + n2; tn1 = n1 - n2;
 				}
 				
-				Integer[] tmp = Arrays.copyOf(curr, 3);
-				tmp[i1] = tn1; tmp[i2] = tn2;
+				Integer[] tmp = {tn1, tn2, sum - tn1 - tn2};
 				Arrays.sort(tmp);
 			
-				String key = tmp[0] + "," + tmp[1] + "," + tmp[2];
-				if (vi.containsKey(key)) continue;
-				vi.put(key, true);
+				if (vi[tmp[0]][tmp[1]]) continue;
+				vi[tmp[0]][tmp[1]] = true;
 				q.add(tmp);
 			}
 		}
