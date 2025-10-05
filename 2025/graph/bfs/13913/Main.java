@@ -50,7 +50,7 @@ class Main {
       int[] moves = {curr.p - 1, curr.p + 1, curr.p * 2};
       for (int i = 0; i < 3; i++) {
         int nt = moves[i];
-        if (nt > 100000 || vi[nt] == 1) continue;
+        if (nt < 0 || nt > 100000 || vi[nt] == 1) continue;
         path[nt] = curr.p;
         q.add(new Pos(nt, curr.times + 1));
         vi[nt] = 1;
