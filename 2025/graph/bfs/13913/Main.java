@@ -7,23 +7,24 @@ class Main {
   static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
   static int stp, target;
   static byte[] vi = new byte[200001];
+  static int path[] = new int[10010];
 
   static class Pos {
     List<Integer> path; int p; int times;
     Pos(int p) {
-      path = new ArrayList<Integer>(); this.p = p;
+      this.p = p;
       times = 0;
-      path.add(p);
     }
-    Pos(int p, List<Integer> path, int times) {
-      this.p = p; this.path = path; this.times = times;
+    Pos(int p, int times) {
+      this.p = p; this.times = times;
     }
   }
-  static List<Function<Integer, Integer>> moves = new ArrayList<>();
-  static {
-    moves.add((a) -> a - 1);
-    moves.add((a) -> a + 1);
-    moves.add((a) -> a * 2);
+
+  static void print(int idx) throws IOException {
+    if (idx != stp) {
+      print(path[idx]);
+    }
+    bw.write(idx + " ");
   }
 
   public static void main(String[] args) throws IOException {
@@ -38,21 +39,20 @@ class Main {
     while (!q.isEmpty()) {
       Pos curr = q.peek();
       q.poll();
+
       if (curr.p == target) {
         bw.write(curr.times + "\n");
-        for (int i = 0; i < curr.path.size(); i++) {
-          bw.write(curr.path.get(i) + " ");
-        }
+        print(target);
         bw.flush();
         return;
       }
 
+      int[] moves = {curr.p - 1, curr.p + 1, curr.p * 2};
       for (int i = 0; i < 3; i++) {
-        int nt = moves.get(i).apply(curr.p);
+        int nt = moves[i];
         if (nt > 200000 || vi[nt] == 1) continue;
-        List<Integer> tmp = new ArrayList<Integer>(curr.path);
-        tmp.add(nt);
-        q.add(new Pos(nt, tmp, curr.times + 1));
+        path[nt] = curr.p;
+        q.add(new Pos(nt, curr.times + 1));
         vi[nt] = 1;
       }
     }
