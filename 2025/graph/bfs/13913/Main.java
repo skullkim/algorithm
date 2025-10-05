@@ -6,8 +6,8 @@ class Main {
   static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
   static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
   static int stp, target;
-  static byte[] vi = new byte[200001];
-  static int path[] = new int[10010];
+  static byte[] vi = new byte[100100];
+  static int path[] = new int[100010];
 
   static class Pos {
     List<Integer> path; int p; int times;
@@ -50,7 +50,7 @@ class Main {
       int[] moves = {curr.p - 1, curr.p + 1, curr.p * 2};
       for (int i = 0; i < 3; i++) {
         int nt = moves[i];
-        if (nt > 200000 || vi[nt] == 1) continue;
+        if (nt > 100000 || vi[nt] == 1) continue;
         path[nt] = curr.p;
         q.add(new Pos(nt, curr.times + 1));
         vi[nt] = 1;
