@@ -21,10 +21,18 @@ class Main {
   }
 
   static void print(int idx) throws IOException {
-    if (idx != stp) {
-      print(path[idx]);
+    Stack<Integer> st = new Stack<>();
+    st.push(idx);
+
+    int curr = idx;
+    while (curr != stp) {
+      st.push(path[curr]);
+      curr = path[curr];
     }
-    bw.write(idx + " ");
+
+    while (!st.isEmpty()) {
+      bw.write(st.pop() + " ");
+    }
   }
 
   public static void main(String[] args) throws IOException {
