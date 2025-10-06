@@ -25,6 +25,13 @@ class Main {
     {new Pos(0, 0), new Pos(0, -1), new Pos(0, -2), new Pos(1, -2)},
     {new Pos(0, 0), new Pos(-1, 0), new Pos(-2, 0), new Pos(-2, -1)},
     {new Pos(0, 0), new Pos(0, 1), new Pos(0, 2), new Pos(-1, 2)},
+    //  *
+    //  *
+    // **
+    {new Pos(0, 0), new Pos(1, 0), new Pos(2, 0), new Pos(2, -1)},
+    {new Pos(0, 0), new Pos(0, -1), new Pos(0, -2), new Pos(-1, -2)},
+    {new Pos(0, 0), new Pos(-1, 0), new Pos(-2, 0), new Pos(-2, 1)},
+    {new Pos(0, 0), new Pos(0, 1), new Pos(0, 2), new Pos(1, 2)},
     // *
     // * *
     //   *
@@ -67,7 +74,7 @@ class Main {
     int ans = -1;
     for (int r = 0; r < row; r++) {
       for (int c = 0; c < col; c++) {
-        for (int s = 0; s < 13; s++) {
+        for (int s = 0; s < 17; s++) {
           Pos p1 = new Pos(r, c);
           Pos p2 = genePos(r, c, s, 1);
           Pos p3 = genePos(r, c, s, 2);
